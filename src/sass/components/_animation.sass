@@ -1,0 +1,274 @@
+// Start Animation sonarEffect
+
+.icon-circle
+	background: rgba($accent-color, 0.1)
+	transition: transform ease-out 0.1s, background 0.2s
+	&:after
+		pointer-events: none
+		position: absolute
+		width: 100%
+		height: 100%
+		border-radius: 50%
+		content: ''
+		box-sizing: content-box
+		top: 0
+		left: 0
+		padding: 0
+		z-index: -1
+		box-shadow: 0 0 0 2px rgba($accent-color, 0.1)
+		opacity: 0
+		transform: scale(0.9)
+		transition: all ease 0.90s
+	&:hover
+		background: rgba($accent-color, 0.05)
+		transform: scale(0.93)
+		color: #fff
+		&:after
+			animation: sonarEffect 1.3s ease-out 75ms
+
+@-webkit-keyframes sonarEffect
+	0%
+		opacity: 0.3
+
+	40%
+		opacity: 0.5
+		box-shadow: 0 0 0 2px rgba($accent-color, 0.1), 0 0 10px 10px $accent-color, 0 0 0 10px rgba($accent-color, 0.5)
+
+	100%
+		box-shadow: 0 0 0 2px rgba($accent-color, 0.1), 0 0 10px 10px $accent-color, 0 0 0 10px rgba($accent-color, 0.5)
+		transform: scale(1.5)
+		opacity: 0
+
+
+@-moz-keyframes sonarEffect
+	0%
+		opacity: 0.3
+
+	40%
+		opacity: 0.5
+		box-shadow: 0 0 0 2px rgba($accent-color, 0.1), 0 0 10px 10px $accent-color, 0 0 0 10px rgba($accent-color, 0.5)
+
+	100%
+		box-shadow: 0 0 0 2px rgba($accent-color, 0.1), 0 0 10px 10px $accent-color, 0 0 0 10px rgba($accent-color, 0.5)
+		transform: scale(1.5)
+		opacity: 0
+
+
+@keyframes sonarEffect
+	0%
+		opacity: 0.3
+
+	40%
+		opacity: 0.5
+		box-shadow: 0 0 0 2px rgba($accent-color, 0.1), 0 0 10px 10px $accent-color, 0 0 0 10px rgba($accent-color, 0.5)
+
+	100%
+		box-shadow: 0 0 0 2px rgba($accent-color, 0.1), 0 0 10px 10px $accent-color, 0 0 0 10px rgba($accent-color, 0.5)
+		transform: scale(1.5)
+		opacity: 0
+// Start Animation shadow
+.anim-shadow
+	display: inline-block
+	vertical-align: middle
+	transform: translateZ(0)
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0)
+	position: relative
+	transition-duration: 0.3s
+	transition-property: transform
+	&:before
+		pointer-events: none
+		position: absolute
+		z-index: -1
+		content: ''
+		top: 100%
+		left: 5%
+		height: 10px
+		width: 90%
+		opacity: 0
+		background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%)
+		transition-duration: 0.3s
+		transition-property: transform, opacity
+	&:hover, &:focus, &:active
+		transform: translateY(-5px)
+		// move the element up by 5px
+	&:hover:before, &:focus:before, &:active:before
+		opacity: 1
+		transform: translateY(5px)
+		//move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px)
+//Zoom MFP
+.mfp-with-zoom
+	.mfp-container, &.mfp-bg
+		opacity: 0
+		transition: all 0.3s ease-out
+	&.mfp-ready
+		.mfp-container
+			opacity: 1
+		&.mfp-bg
+			opacity: 0.8
+	&.mfp-removing
+		.mfp-container, &.mfp-bg
+			opacity: 0
+			
+// Start Animation toBottomFromTop
+.toBottomFromTop, .btn-down
+	&:hover
+		i
+			animation: toBottomFromTop 0.5s forwards
+
+@-webkit-keyframes toBottomFromTop
+	49%
+		-webkit-transform: translateY(100%)
+
+	50%
+		opacity: 0
+		-webkit-transform: translateY(-100%)
+
+	51%
+		opacity: 1
+
+
+@-moz-keyframes toBottomFromTop
+	49%
+		-moz-transform: translateY(100%)
+
+	50%
+		opacity: 0
+		-moz-transform: translateY(-100%)
+
+	51%
+		opacity: 1
+
+
+@keyframes toBottomFromTop
+	49%
+		transform: translateY(100%)
+
+	50%
+		opacity: 0
+		transform: translateY(-100%)
+
+	51%
+		opacity: 1
+
+/*Animation full screen menu*/
+.rotate
+	opacity: 0
+	transition: opacity 0.7s, transform 0.7s
+	transform: scale(0)
+.active-fullscreen-topnav
+	.rotate
+		opacity: 1
+		transform: scale(1)
+// Start Animation shadow
+
+.anim-shadow
+	display: inline-block
+	vertical-align: middle
+	transform: translateZ(0)
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0)
+	position: relative
+	transition-duration: 0.3s
+	transition-property: transform
+	&:before
+		pointer-events: none
+		position: absolute
+		z-index: -1
+		content: ''
+		top: 100%
+		left: 5%
+		height: 10px
+		width: 90%
+		opacity: 0
+		background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%)
+		transition-duration: 0.3s
+		transition-property: transform, opacity
+	&:hover, &:focus, &:active
+		transform: translateY(-5px)
+		// move the element up by 5px
+	&:hover:before, &:focus:before, &:active:before
+		opacity: 1
+		transform: translateY(5px)
+		//move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px)
+
+/*mfp*/
+
+
+.mfp-fade
+	&.mfp-bg
+		opacity: 0
+		-webkit-transition: all 0.15s ease-out
+		-moz-transition: all 0.15s ease-out
+		transition: all 0.15s ease-out
+		&.mfp-ready
+			opacity: 0.8
+		&.mfp-removing
+			opacity: 0
+	&.mfp-wrap
+		.mfp-content
+			opacity: 0
+			-webkit-transition: all 0.15s ease-out
+			-moz-transition: all 0.15s ease-out
+			transition: all 0.15s ease-out
+		&.mfp-ready .mfp-content
+			opacity: 1
+		&.mfp-removing .mfp-content
+			opacity: 0
+
+
+// Start Animation toTopFromBottom
+
+.toTopFromBottom
+	&:hover
+		i
+			animation: toTopFromBottom 0.5s forwards
+
+@keyframes toTopFromBottom
+	49%
+		transform: translateY(-100%)
+
+	50%
+		opacity: 0
+		transform: translateY(100%)
+
+	51%
+		opacity: 1
+
+//Animation to block delay
+.item-team
+	animation-delay: 0.6s
+.tabs
+	li
+		&:nth-child(1)
+			animation-delay: 0.6s
+		&:nth-child(2)
+			animation-delay: 0.7s
+		&:nth-child(3)
+			animation-delay: 0.8s
+		&:nth-child(4)
+			animation-delay: 0.9s
+.ui-corner-bottom
+	opacity: 0
+	transition: opacity 0.5s ease-in-out
+.ui-corner-bottom[aria-hidden="false"]
+	opacity: 1
+
+#slider-item
+	.text-fade
+		.in-item
+			position: absolute
+			left: 0
+			right: 0
+			margin: 0 auto
+			opacity: 0
+			transform: translateY(0)
+			transition: all .3s cubic-bezier(0.23, 1, 0.32, 1)
+			transition-delay: 0s
+		.active
+			z-index: 4
+			opacity: 1
+			position: relative
+			// transform: translateY(-1rem)
+			transition: all 1.5s cubic-bezier(0.23, 1, 0.32, 1)
+			transition-delay: .5s
+
+	

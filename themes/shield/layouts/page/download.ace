@@ -1,0 +1,39 @@
+= content main
+  section#top.display-page.img-parallax.bg-mask.background-image data-image=/img/bg4.jpg
+    div.container
+      div.row
+        div.col-md-12
+          div.content
+            h1 {{ .Title }}
+
+  section.service-single
+    div.container
+      div.row
+        div.col-md-3
+          ul.services-list
+            li
+              a href="#latest" Latest Release ({{ .Site.Data.releases.latest }})
+            li
+              a href="#source" Build From Source
+            li
+              a href="#older" Older Releases
+        div.col-md-9
+          div.content-service-single
+            h2 id="latest" SHIELD v{{ .Site.Data.releases.latest }}
+            {{ $latest := .Site.Data.releases.latest }}
+            {{ range .Site.Data.releases.all }}
+              {{ if eq .version $latest }}
+                {{ .notes | markdownify }}
+              {{ end }}
+            {{ end }}
+
+           h2 id="source" Build From Source
+           {{ .Content }}
+
+           h2 id="older" Older Releases
+           {{ range .Site.Data.releases.all }}
+             {{ if ne .version $latest }}
+               h3 id="v{{ .version }}" SHIELD v{{ .version }}
+               {{ .notes | markdownify }}
+             {{ end }}
+           {{ end }}

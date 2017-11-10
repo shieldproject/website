@@ -1,0 +1,9 @@
+applications:
+  - name: web
+    memory: 32M
+    instances: 2
+    buildpack: staticfile_buildpack
+    path: public
+    routes:
+      - route: shieldproject.io
+      - route: www.shieldproject.io

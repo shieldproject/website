@@ -1,0 +1,11 @@
+{
+  "latest": "8.0.2",
+  "all": [
+    {"version": "8.0.2",
+     "notes": "These are **release** notes",
+     "url": "http://www.github.com/starkandwayne/shield"},
+	{"version": "8.0.1",
+		"notes": "These are _old_ notes",
+     "url": "http://www.github.com/starkandwayne/shield"}
+  ]
+}

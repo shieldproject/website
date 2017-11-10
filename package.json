@@ -1,0 +1,16 @@
+{
+  "name": "SHIELD",
+  "version": "1.0.0",
+  "description": "HTML template",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglifyjs": "^0.6.2",
+    "node-bourbon": "^4.2.8"
+  }
+}

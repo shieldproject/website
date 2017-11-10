@@ -1,0 +1,667 @@
+/*=============== Start blog pages =================*/
+.video-post
+	iframe
+		width: 100%
+
+/*.blog-classic*/
+.read-post-classic
+	padding-bottom: 88px
+hr
+	+mt(0.3s)
+.blog-classic
+	.post-content-classic
+		.post-data
+			padding-top: 0
+	.post-thumb
+	.post.sticky
+		.post-data,.content
+			padding: 0
+		.post-data
+			margin-bottom: 20px
+	>	
+		div
+			margin-bottom: 30px
+
+	.type-post
+		&:hover
+			hr
+				border-color: $accent-color
+			.btn-default
+				background-color: $dark-accent
+
+/* endblog-classic*/	
+/* .right-sidebar*/
+.right-sidebar
+	#sidebar
+		position: relative
+		padding-top: 100px
+		&:before
+			content: ''
+			position: absolute
+			height: 100%
+			width: 200%
+			top: 0
+			bottom: 0
+			right: auto
+			left: -20%
+	
+.pagination-btns
+	background: $accent-color
+	text-align: center
+	h2
+		display: none
+	.pagination
+		margin: 0 auto
+		.current
+			background: $dark-accent
+		a
+			text-decoration: none
+			transition: all ease 0.76s
+			color: $white
+			&:hover
+				background: rgba(0, 0, 0, 0.2)
+			padding: 20px
+			display: inline-block
+			font-size: rem(28px)
+			font-weight: 400
+		span
+			padding: 20px
+			display: inline-block
+			font-size: rem(28px)
+			font-weight: 400
+			color: #fff
+
+#sidebar
+	position: relative
+	padding-top: 90px
+	&:before
+		content: ''
+		position: absolute
+		height: 100%
+		width: 200%
+		top: 0
+		bottom: 0
+		right: -15%
+		background: #f8f8f8
+		z-index: -1
+	&.right:before
+		left: -15%
+	h4
+		&:first-child
+			margin-top: 0
+		font-size: 18px
+		margin: 60px 0 20px 0
+		&:after
+			content: ""
+			display: block
+			height: 2px
+			width: 40px
+			background-color: $accent-color
+			margin-top: 9px
+			margin-bottom: 15px
+	h2, h3, h4, h5, h6
+		text-align: left
+	h2:after, h3:after, h5:after, h6:after
+		display: none
+	ul
+		margin: 0
+		padding: 0
+		overflow: hidden
+		li
+			list-style: none
+			margin: 0 0 10px 0
+			a
+				color: #5c5c5c
+				text-decoration: none
+				transition: all ease 0.57s
+				&:hover
+					color: $accent-color
+			.children li a:hover, .sub-menu li a:hover
+				color: $accent-color
+			&.cat-item a:before
+				font-family: FontAwesome
+				content: "\f192"
+				font-size: 11px
+				color: $accent-color
+				transform: translateY(-4px)
+				margin-right: 10px
+		&.menu li a:before
+			font-family: FontAwesome
+			content: "\f192"
+			font-size: 11px
+			color: $accent-color
+			transform: translateY(-4px)
+			margin-right: 10px
+		li
+			.children, .sub-menu
+				margin: 10px 0 0 25px
+			.children li a, .sub-menu li a
+				color: #7e7e7e
+				font-size: 14px
+	label
+		font-size: 14px
+	select
+		background: #fff url("images/arrow-down.png") 95% 50% no-repeat
+		border: 1px solid rgba(0, 0, 0, 0.1)
+		border-radius: 4px
+		text-overflow: ''
+		text-indent: 0.01px
+		padding: 10px
+		width: 100%
+		font-size: 14px
+		appearance: none
+	.tagcloud
+		overflow: hidden
+		a
+			display: block
+			float: left
+			background: rgba(0, 0, 0, 0.1)
+			border-radius: 2px
+			color: #5c5c5c
+			font-size: 14px
+			padding: 6px 12px
+			margin: 0 6px 6px 0
+			transition: all ease 0.55s
+			text-decoration: none
+			&:hover
+				background: $accent-color
+				color: #fff
+	.search-form
+		label
+			width: 96%
+			margin: 0
+			input
+				background: #fff url("../img/search.png") 95% 50% no-repeat
+				width: 95%
+				border-radius: 3px
+				border: 1px solid #dadada
+				padding-left: 20px
+				padding-top: 10px
+				padding-bottom: 10px
+				font-size: 14px
+				+mt(0.3s)
+				&:focus
+					box-shadow: none
+					outline: none
+					border-color: $accent-color
+			span
+				display: none
+		.search-submit
+			display: none
+	ul.social-links
+		overflow: visible
+		margin-top: 25px
+		margin-left: 7px
+		li
+			margin-right: 17px
+			&:last-child
+				margin-right: 0
+			a
+				color: $white
+
+// Blog posts 
+
+.blog-page
+	.single-post
+		p
+			margin: 0 0 20px 0
+			color: #5c5c5c
+	.single-post
+		padding-top: 100px
+		.heading-title
+			margin-top: 30px
+			margin-bottom: 50px
+			h2
+		
+				font-weight: 500
+	.small-heading
+		h2
+			font-size: 23px
+			font-weight: 600
+
+	.post-data
+		padding-top: 30px
+		margin-bottom: 15px
+		p
+			color: #6b6b6b
+			font-size: 14px
+			display: inline-block
+			margin-bottom: 0px
+			&:after
+				content: ""
+				color: $accent-color
+				display: inline-block
+				position: relative
+				margin-right: 9px
+				margin-left: 14px
+				font-family: "FontAwesome"
+			&:last-child
+				&:after
+					display: none
+			a
+				color: #6b6b6b
+				+mt(0.3s)
+				text-decoration: none
+				&:hover
+					color: $accent-color
+.blog-single-post
+	header
+		position: relative
+		background-color: $dark-accent
+	.sf-menu
+		a
+			color: $dark-accent
+		>li
+			&.sfHover
+				background: none
+				> a
+					color: $accent-color
+			> a
+				border-bottom: 5px solid transparent
+				transition: all .5s ease
+				color: $white
+				&:hover
+					color: $accent-color
+		ul
+			border-top: 2px solid $accent-color
+			background-color: $white
+			li
+				border-bottom: 1px dashed rgba(0, 0, 0, 0.1)
+				&:last-child
+					border-bottom: none
+				&:hover
+					// background-color: $white-blue-background
+					a
+						color: $dark-accent
+	.sf-arrows		
+		li
+			> .sf-with-ul:after
+				border-top-color: $white
+			.sf-with-ul:focus:after,&:hover > .sf-with-ul:after
+				border-top-color: $accent-color
+		.sfHover
+			.sf-with-ul:after
+				border-top-color: $accent-color
+.comment-respond
+	.small-heading
+		margin-bottom: 50px
+.post
+	margin-bottom: 60px
+	padding-bottom: 60px
+	border-bottom: 1px solid #e7e7e7
+	&:last-child
+		margin-bottom: 0
+		padding-bottom: 0
+		border: none
+	&.sticky
+		padding-bottom: 0
+		border-bottom: none
+	.post-thumb
+		position: relative
+	
+	&.sticky .post-thumb
+		margin-bottom: 0
+		
+	img
+		max-width: 100%
+		vertical-align: bottom
+		transition: ease-in-out 0.50s
+	// .img-wrap
+	// 	overflow: hidden
+	// 	display: block
+	// 	background: $accent-color
+	// 	&:hover img
+	// 		opacity: 0.3
+	// 		margin-left: 0
+	// 		transition: all ease 0.50s
+
+	.content 
+		h3
+			font-size: 21px
+			margin: 0 0 10px 0
+			color: #393939
+			font-weight: 700
+			+ p a
+				color: #979797
+		p
+			color: #606060
+			font-size: 14px
+			letter-spacing: 0.5px
+			line-height: 25px
+		&:after
+			display: none
+		a
+			color: #383838
+			text-decoration: none
+			transition: ease-in-out 0.60s
+			&:hover
+				color: $accent-color
+		+ p
+			font-size: 14px
+			font-weight: 700
+			color: #979797
+
+		.btn-default
+			color: $white
+			background-color: $accent-color
+			&:hover
+				color: #fff
+				background: $dark-accent
+	h2
+		font-size: 22px
+		margin: 0 0 10px 0
+		font-weight: 900
+.slider-portfolio-single
+	.slide
+		img
+			width: 100%
+.post.sticky
+	position: relative
+	background: #f8f8f8
+	.post-data
+		padding-top: 30px
+		padding-left: 30px
+		padding-right: 30px
+		p
+			margin-bottom: 0
+	.content
+		padding: 30px
+		padding-top: 15px
+	&:after
+		content: ''
+		display: block
+		position: absolute
+		top: 0
+		right: 10px
+		width: 0
+		height: 0
+		border-style: solid
+		border-width: 0 50px 50px 0
+		border-color: transparent $accent-color transparent transparent
+	&:before
+		content: "\f135"
+		position: absolute
+		color: #fff
+		z-index: 1
+		top: 7px
+		right: 17px
+		font-size: 14px
+		display: inline-block
+		font-family: 'FontAwesome'
+		font-style: normal
+		font-weight: 400
+		line-height: 1
+		-webkit-font-smoothing: antialiased
+		-moz-osx-font-smoothing: grayscale
+	&:after
+		right: 0
+	&:before
+		right: 10px
+
+
+
+//Blog posts
+
+.post-thumbnail
+	margin-bottom: 20px
+.single-post
+	padding-bottom: 50px
+.info span
+	margin: 0 5px
+	&:first-child
+		margin-left: 0
+
+.author-bio
+	overflow: hidden
+	background: $dark-accent
+	padding: 30px 0
+	h3
+		color: #fff
+		font-size: 18px
+		font-weight: 600
+		margin-top: 0
+		margin-bottom: 10px
+	p
+		color: #eee
+		font-size: 14px
+
+	.profile-img
+		text-align: center
+		img
+			border-radius: 50%
+			margin-left: 10px
+	.author-info
+		padding-left: 25px
+		.author-description
+			color: #eee
+			margin: 0
+
+.entry-content blockquote
+	margin: 30px 0
+
+.format
+	display: inline-block
+	background: #f8f8f8
+	font-size: 0
+	letter-spacing: 0
+	margin: 10px 0 0 10px
+	border-radius: 50%
+	width: 45px
+	height: 45px
+	line-height: 45px
+	text-align: center
+	vertical-align: middle
+	font-weight: normal
+	&:hover
+		background: #f8f8f8
+	&:before
+		font-family: FontAwesome
+		display: inherit
+		font-size: 15px
+		vertical-align: middle
+		color: #979797
+
+.format-chat .format:before
+	content: "\f086"
+
+.format-quote .format:before
+	content: "\f10d"
+
+.format-link .format:before
+	content: "\f0c1"
+
+.format-status .format:before
+	content: "\f075"
+
+.format-aside .format:before
+	content: "\f10c"
+
+.format-video .format:before
+	content: "\f04b"
+
+.format-audio .format:before
+	content: "\f025"
+
+.format-image .format:before
+	content: "\f03e"
+
+.format-gallery .format:before
+	content: "\f030"
+
+.gallery-item
+	display: inline-block
+	padding: 1.79104477%
+	text-align: center
+	vertical-align: top
+	width: 100%
+	figcaption
+		padding: 15px 5px 0 5px
+
+.gallery-columns-4 .gallery-item
+	max-width: 25%
+
+.gallery-columns-3 .gallery-item
+	max-width: 33.33%
+
+.gallery-item a
+	transition: all 300ms ease-in-out
+	&:hover
+		opacity: 0.6
+.format-gallery
+	.post-thumb
+		margin-bottom: 0
+.excerpt
+	margin-top: 30px
+
+article.post .nav-links a, .comment-navigation div a
+	display: inline-block
+	background: #f8f8f8
+	padding: 10px
+	width: 49%
+	text-align: center
+	margin-top: 30px
+
+article.post .nav-links a:hover
+	background: #26a1e0
+	color: #fff
+
+.comment-navigation
+	div a:hover
+		background: #26a1e0
+		color: #fff
+	h1
+		display: none
+	div a
+		margin-top: 0
+
+#comment-nav-below
+	margin-bottom: 30px
+
+.page-links
+	margin-bottom: 30px
+	a
+		display: inline-block
+		color: #fff
+		padding: 10px 15px
+		background: #26a1e0
+	span
+		margin-right: 5px
+	a span
+		margin: 0
+
+.share-post
+	h4,ul.share-post-links
+		display: inline-block
+// Comments
+.blog-page
+	.comments-area
+		p
+			font-size: 14px
+		.info
+			margin-bottom: 10px
+		.user
+			font-weight: 600
+	.comment-list
+		padding: 0
+		list-style: none
+		> li
+			margin: 15px 0
+			padding: 15px 0 30px 0
+			ul, ol
+				margin-bottom: 30px
+		img
+			border-radius: 50%
+		.user
+			font-size: 18px
+			margin-bottom: 0
+			span
+				background: $accent-color
+				font-size: 9px
+				display: inline-block
+				text-transform: uppercase
+				font-weight: 600
+				padding: 4px 5px
+				border-radius: 3px
+				margin-left: 5px
+				transform: translateY(-2px)
+				transition: all .3s ease-in-out
+				a
+					color: #fff
+					transition: all .3s ease-in-out
+					text-decoration: none
+				&:hover
+					background: #f8f8f8
+					a
+						color: #5c5c5c
+		.info
+			font-size: 14px
+			font-weight: 400
+			color: #979797
+			margin-bottom: 10px
+		.children
+			list-style: none
+			padding: 0
+			border-top: 1px solid #e7e7e7
+			li
+				border-bottom: 1px solid #e7e7e7
+				padding-left: 100px
+				padding-top: 40px
+				padding-bottom: 40px
+			.children
+				border: none
+				li
+					padding-left: 200px
+
+h3#reply-title:after
+	content: ''
+	display: block
+	height: 2px
+	width: 70px
+	background: #26a1e0
+	margin: 20px 0 0 0
+	animation: title-border .5s ease-in
+
+.comment-form-author, .comment-form-email
+	float: left
+	width: 33.3%
+	padding-right: 30px
+
+.comment-form-comment:before, .comment-form-url:after
+	content: "."
+	visibility: hidden
+	display: block
+	height: 0
+	clear: both
+
+.comment-notes
+	margin-bottom: 30px
+
+/*Masonry*/
+.grid-sizer
+	width: 25%
+.masonry-container
+	.masonry-item
+		padding: 0
+		margin-bottom: 40px
+		border-bottom: none
+		article
+			box-shadow: 0 0 18px 0 rgba(0,0,0,.06)
+			+mt(0.4s)
+			border: 1px solid #eaeaea
+			margin-bottom: 20px
+			margin-left: 10px
+			margin-right: 10px
+			&:hover
+				box-shadow: 0 0 19px 0 rgba(80, 70, 69, 0.35)
+			.post-data
+				padding-left: 15px
+				padding-right: 15px
+				padding-top: 20px
+			.content
+				padding-left: 15px
+				padding-right: 15px
+				padding-bottom: 20px
+				p
+					font-size: 13px
+				h3
+					font-size: 19px

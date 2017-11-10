@@ -1,0 +1,57 @@
+title:        SHIELD - Data Protection
+baseURL:      https://shieldproject.io
+languageCode: en-us
+theme:        shield
+
+menu:
+  main:
+    - name: Home
+      url:  /
+      weight: 1
+    - name: Download
+      url:  /download
+      weight: 2
+    - name: Documentation
+      url:  /documentation
+      weight: 3
+    - name: Developers
+      url:  /developers
+      weight: 4
+
+  footer1:
+    - name: Download SHIELD
+      url:  /download
+      weight: 1
+    - name: Getting Started
+      url:  '#'
+      weight: 2
+    - name: Documentation
+      url:  /documentation
+      weight: 3
+    - name: Community Support
+      url:  '#'
+      weight: 4
+
+  footer2:
+    - name: SHIELD Core
+      url: '#'
+      weight: 1
+    - name: SHIELD Agent
+      url: '#'
+      weight: 2
+    - name: Buckler CLI
+      url: '#'
+      weight: 3
+    - name: Plugins
+      url: '#'
+      weight: 4
+
+params:
+  copyright: © 2017 Stark & Wayne. All Rights Reserved.
+  footer:
+    text: |
+      **SHIELD** is funded and supported by **Stark & Wayne**,
+      the premier BOSH and Cloud Foundry consulting firm.
+      <br>Stark & Wayne: We Know Cloud.
+    nav1: SHIELD
+    nav2: Reference
