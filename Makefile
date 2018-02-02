@@ -3,9 +3,14 @@ default: build
 setup:
 	npm install
 
-build:
+template:
 	gulp
-	# right now we are concatenating to libs.js, but not using it
-	# so copy over libs/ for now.  FIXME
-	rm -rf public/libs
-	cp -a src/libs public/libs
+
+build:
+	hugo
+
+staging:
+	cf push -f manifest-stage.yml
+
+publish:
+	cf push -f manifest.yml

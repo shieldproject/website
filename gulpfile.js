@@ -13,7 +13,7 @@ gulp.task('styles', function () {
 	}).on('error', sass.logError))
 	.pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
 	.pipe(minifycss())
-	.pipe(gulp.dest('theme/shield/static/css/'));
+	.pipe(gulp.dest('themes/shield/static/css/'));
 });
 
 gulp.task('scripts', function() {
