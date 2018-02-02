@@ -30,6 +30,7 @@ cat git/data/releases.json | \
     jq -r '{"all":.all}' | spruce merge -
 echo "- notes: |"
 cat releases/body | sed -e 's/^/    /'
+echo
 echo "  url:     $RELEASE"
 echo "  version: $VERSION"
 ) | spruce json | jq -r .
