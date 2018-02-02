@@ -1,0 +1,8 @@
+applications:
+  - name: staging
+    memory: 32M
+    instances: 2
+    buildpack: staticfile_buildpack
+    path: public
+    routes:
+      - route: staging.shieldproject.io
