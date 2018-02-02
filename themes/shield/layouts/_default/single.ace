@@ -1,28 +1,18 @@
-{{ partial "header" . }}
+= content main
 
-section#top.display-page.img-parallax.bg-mask.background-image data-image="img/bg4.jpg"
-  div.container
-    div.row
-      div.col-md-12
-        div.content
-          h1 {{ .Title }}
+  section#top.display-page.img-parallax.bg-mask.background-image data-image="img/bg4.jpg"
+    div.container style="margin-left: 0px;"
+      div.row
+        div.col-md-12
+          div.content
+            h1 {{ .Title}}
 
-section.service-single
-  div.container
-    div.row
-      div.col-md-3
-        {{ .TableOfContents }}
-        ul.services-list
-          li
-            a href="#" Downloading SHIELD
-          li
-            a href="#" Using Docker
-          li
-            a href="#" Using BOSH
-          li
-            a href="#" Accessing the Web UI
-          li
-            a href="#" Utilizing the CLI
-      div.col-md-9
-        div.content-service-single
-          {{ .Content }}
+  section.service-single
+    div.container id=container style="margin-left:0;"
+      div.row
+        div.col-sm-3
+          {{ .TableOfContents }}
+        div.col-md-9 id=content
+          div.content-service-single
+            {{ .Content }}
+

@@ -1,0 +1,20 @@
+= content main
+
+
+  section#top.display-page.img-parallax.bg-mask.background-image data-image="img/bg4.jpg"
+    div.container
+      div.row
+        div.col-md-12
+          div.content
+            h1 {{ .Title }}
+
+  section.service-single
+    div.container style="text-align: center;"
+      div.row
+        div.content-service-single
+          ul.services-list
+            {{range .Pages}}
+            li style="display:block" 
+              a href="{{.URL}}" {{.File.TranslationBaseName}}
+          
+            {{end}}

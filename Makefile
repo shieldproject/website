@@ -14,3 +14,6 @@ staging:
 
 publish:
 	cf push -f manifest.yml
+
+dev: template
+	hugo server -D 

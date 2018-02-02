@@ -156,17 +156,15 @@
   / Blog
   section.section-blog style="padding-top: 0"
     img.blog-header style="width:100%" src="/img/blog1.jpg"
-    div.container
-      div.row
-        div.col-md-8.col-md-push-2
-          div.center.heading-title
-            / FIXME need to put actual blog content here
-            h2 SHIELD - Looking Forward
-            div.small-desd October 27th, 2017
-            p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet.  Sed ut perspiciatis unde omnis iste natus error sit voluptatem. Neque porro quisquam est, qui dolorem ipsum quia dolor. Nam libero tempore.
-            div.buttons-section style="margin-top: 45px"
-              a.btn.large-btn.white-btn href="#" Read More
-
-
-
-
+    div.container.feed
+      {{ range .Site.Data.blog }}
+        div.row
+          div.col-md-8.col-md-push-2
+            div.center.heading-title
+              h2 {{ .Title }}
+              div.small-desd {{ .PubDate }}
+              div.syndicated
+                {{ .Description | safeHTML }}
+              div.buttons-section style="margin-top: 45px"
+                a.btn.large-btn.white-btn href="#" Read More
+      {{ end }}
