@@ -1,0 +1,49 @@
+---
+meta:
+  github:
+    website:
+      uri: https://github.com/shieldproject/website
+      branch: ci
+      #private_key: (( vault "..." ))
+
+    starkandwayne:
+      access_token: (( vault "secret/pipelines/shared/github:access_token" ))
+
+jobs:
+  - name: build
+    plan:
+      - aggregate:
+        - get: git
+        - get: releases
+      - task: build
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: starkandwayne/concourse
+              tag:        latest
+          inputs:
+            - name: git
+            - name: releases
+          run:
+            path: ./git/ci/scripts/build
+            args: []
+          params:
+            FOO: bar
+
+
+resources:
+  - name: git
+    type: git
+    source:
+      uri:         (( grab meta.github.website.uri ))
+      branch:      (( grab meta.github.website.branch ))
+      #private_key: (( grab meta.github.website.private_key ))
+
+  - name: releases
+    type: github-release
+    source:
+      user:         starkandwayne
+      repository:   shield
+      access_token: (( grab meta.github.starkandwayne.access_token ))

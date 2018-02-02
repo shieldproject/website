@@ -1,0 +1,8 @@
+#!/bin/bash
+set -eux
+
+echo "HI!"
+
+ls -lah
+
+set
