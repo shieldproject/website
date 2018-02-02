@@ -29,7 +29,7 @@ RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag
 cat git/data/releases.json | \
     jq -r '{"all":.all}' | spruce merge -
 echo "- notes: |"
-cat NOTES | sed -e 's/^/    /'
+cat releases/body | sed -e 's/^/    /'
 echo "  url:     $RELEASE"
 echo "  version: $VERSION"
 ) | spruce json
