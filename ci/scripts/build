@@ -25,5 +25,11 @@ VERSION=$(cat releases/version)
 NOTES=$(cat releases/body)
 RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag)"
 
+(
 cat git/data/releases.json | \
-    jq -r '{ "latest": .latest, "all": [{"version":"'"$VERSION"'", "notes":"'"$NOTES"'","url":"'"$RELEASE"'"}, .all] | flatten }'
+    jq -r '{"all":.all}' | spruce merge -
+echo "- notes: |"
+cat NOTES | sed -e 's/^/    /'
+echo "  url:     $RELEASE"
+echo "  version: $VERSION"
+) | spruce json
