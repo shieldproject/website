@@ -47,9 +47,4 @@ gulp.task('scripts', function() {
 		.pipe(gulp.dest('./themes/shield/static/js/'));
 });
 
-gulp.task('watch', function () {
-	gulp.watch('src/sass/**/**/*.sass', ['styles']);
-	gulp.watch('src/libs/**/*.js', ['scripts']);
-});
-
-gulp.task('default', ['styles', 'scripts', 'watch']);
+gulp.task('default', ['styles', 'scripts']);
