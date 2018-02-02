@@ -14,7 +14,9 @@ jobs:
     plan:
       - aggregate:
         - get: git
+          trigger: true
         - get: releases
+          trigger: true
       - task: build
         config:
           platform: linux
