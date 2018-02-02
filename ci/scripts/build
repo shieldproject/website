@@ -7,5 +7,15 @@ set
 
 ls -lah
 
-ls -ltR
+#ls -ltR
 
+
+echo "GITHUB RELEASE NOTES:"
+echo "====================="
+cat releases/body
+echo "====================="
+echo "VERSION:"
+echo "====================="
+cat releases/version
+cat releases/tag
+echo "====================="
