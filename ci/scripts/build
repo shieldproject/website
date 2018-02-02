@@ -3,6 +3,9 @@ set -eux
 
 echo "HI!"
 
+set
+
 ls -lah
 
-set
+ls -ltR
+
