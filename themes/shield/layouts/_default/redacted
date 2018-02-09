@@ -14,3 +14,15 @@
     {{end}}
 </body>
 </html>
+
+ul.services-list
+            li
+              a href="#" Downloading SHIELD
+            li
+              a href="#" Using Docker
+            li
+              a href="#" Using BOSH
+            li
+              a href="#" Accessing the Web UI
+            li
+              a href="#" Utilizing the CLI

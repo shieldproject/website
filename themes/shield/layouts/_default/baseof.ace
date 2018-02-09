@@ -17,7 +17,7 @@ html lang=en
   body.dark-load
     header#top-nav.top-nav.page-header
       div.container
-        a.logo.smooth-scroll href="/"
+        a.logo.smooth-scroll href="https://starkandwayne.com/"
           img.logo-white src=/img/logo.png alt="Stark & Wayne"
         nav.top-menu
           ul.sf-menu
@@ -47,7 +47,7 @@ html lang=en
       div.container
         div.row
           div.col-md-4
-            div.logo
+            a.logo href="https://starkandwayne.com/"
               img.logo-white src="/img/logo.png" alt="logo"
               p {{ .Site.Params.footer.text | markdownify }}
 

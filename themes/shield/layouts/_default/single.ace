@@ -5,24 +5,13 @@
       div.row
         div.col-md-12
           div.content
-            h1 {{ .Title }}
+            h1 {{ .Title}}
 
   section.service-single
     div.container id=container style="margin-left:0;"
       div.row
         div.col-sm-3
           {{ .TableOfContents}}
-          ul.services-list
-            li
-              a href="#" Downloading SHIELD
-            li
-              a href="#" Using Docker
-            li
-              a href="#" Using BOSH
-            li
-              a href="#" Accessing the Web UI
-            li
-              a href="#" Utilizing the CLI
         div.col-md-9 id=content style="padding-left: 15%"
           div.content-service-single
             {{ .Content }}
