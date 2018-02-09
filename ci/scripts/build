@@ -28,7 +28,7 @@ echo "  version: $VERSION"
 # FIXME: put releases json SOMEWHERE
 
 header "Syncing docs/ from SHIELD codebase"
-cp shield-code/docs git/content/docs
+cp -a shield-code/docs git/content/docs
 ls -lah git/content/docs
 
 header "Publishing staging.shieldproject.io"
