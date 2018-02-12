@@ -1,30 +1,21 @@
 #!/bin/bash
-set -eux
+set -eu
 
-echo "HI!"
-
-set
-
-ls -lah
-
-#ls -ltR
-
-
-echo "GITHUB RELEASE NOTES:"
-echo "====================="
-cat releases/body
-echo "====================="
-echo "VERSION:"
-echo "====================="
-cat releases/version
-cat releases/tag
-echo "====================="
-
+header() {
+	echo "#########################################"
+	echo
+	echo $*
+	echo
+	echo "#########################################"
+	echo
+	echo
+}
 
 VERSION=$(cat releases/version)
-NOTES=$(cat releases/body)
 RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag)"
 
+header "Getting Release Notes for SHIELD v$VERSION"
+cat releases/body
 (
 cat git/data/releases.json | \
     jq -r '{"all":.all}' | spruce merge -
@@ -34,7 +25,32 @@ echo
 echo "  url:     $RELEASE"
 echo "  version: $VERSION"
 ) | spruce json | jq -r .
+# FIXME: put releases json SOMEWHERE
 
-git clone git@github.com:starkandwayne/shield.git
-cd shield
-cp docs ../../../content
+header "Syncing docs/ from SHIELD codebase"
+cp -a shield-code/docs git/content/docs
+ls -lah git/content/docs
+
+header "Downloading hugo" # FIXME: put in starkandwayne/concourse
+mkdir hugo
+pushd hugo
+	curl -LO https://github.com/gohugoio/hugo/releases/download/v0.36/hugo_0.36_Linux-64bit.tar.gz
+	tar -xzvf hugo_0.36_Linux-64bit.tar.gz
+	chmod 755 hugo
+popd
+export PATH=$PATH:$PWD/hugo
+
+header "Re-building Website Static Assets"
+pushd git
+	make
+popd
+
+header "Publishing staging.shieldproject.io"
+pushd git
+	cf api $CF_API_URL
+	cf auth $CF_USERNAME "$CF_PASSWORD"
+	cf target -o $CF_ORG -s $CF_SPACE
+	cf push -f manifest-stage.yml
+popd
+
+echo "DONE"
