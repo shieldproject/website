@@ -11,7 +11,7 @@
     div.container id=container style="margin-left:0;"
       div.row
         div.col-sm-3
-          {{ .TableOfContents}}
+          {{ .TableOfContents }}
         div.col-md-9 id=content style="padding-left: 15%"
           div.content-service-single
             {{ .Content }}
