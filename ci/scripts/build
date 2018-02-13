@@ -60,9 +60,9 @@ fi
  git add -A
  git status
  git commit -m "Bumped static files")
-
-cp -a ${REPO_ROOT} ${REPO_OUT}
 popd
+cp -a ${REPO_ROOT} ${REPO_OUT}
+
 
 header "Publishing staging.shieldproject.io"
 pushd git

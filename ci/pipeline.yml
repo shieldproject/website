@@ -44,6 +44,7 @@ jobs:
             CF_SPACE:    shieldproject
             REPO_ROOT: git
             REPO_OUT: pushme
+            BRANCH: ((grab meta.github.website.branch))
       - put: git
         params:
           rebase: true
