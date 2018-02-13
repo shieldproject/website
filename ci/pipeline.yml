@@ -36,8 +36,6 @@ jobs:
           run:
             path: ./git/ci/scripts/build
             args: []
-          run:
-            path: ./git/ci/scripts/push
           params:
             CF_API_URL:  https://api.run.pivotal.io
             CF_USERNAME: (( vault "secret/pivotal/bot:username" ))

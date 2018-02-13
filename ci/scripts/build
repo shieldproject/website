@@ -62,7 +62,7 @@ fi
  git commit -m "Bumped static files")
 
 cp -a ${REPO_ROOT} ${REPO_OUT}
-
+popd
 
 header "Publishing staging.shieldproject.io"
 pushd git
