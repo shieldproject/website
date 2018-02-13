@@ -2,6 +2,16 @@
 
 set -eu
 
+header() {
+	echo "#########################################"
+	echo
+	echo $*
+	echo
+	echo "#########################################"
+	echo
+	echo
+}
+
 header "Publishing staging.shieldproject.io"
 pushd git
 	cf api $CF_API_URL
