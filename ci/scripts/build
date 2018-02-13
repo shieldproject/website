@@ -55,7 +55,7 @@ if [[ -z $(git config --global user.name) ]]; then
   git config --global user.name "CI Bot"
 fi
 
-(cd ${REPO_ROOT}
+(
  git merge --no-edit ${BRANCH}
  git add -A
  git status
