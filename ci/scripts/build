@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eu
 
+
 header() {
 	echo "#########################################"
 	echo
@@ -44,6 +45,24 @@ header "Re-building Website Static Assets"
 pushd git
 	make
 popd
+
+pushd ${REPO_ROOT}
+
+if [[ -z $(git config --global user.email) ]]; then
+  git config --global user.email "ci@starkandwayne.com"
+fi
+if [[ -z $(git config --global user.name) ]]; then
+  git config --global user.name "CI Bot"
+fi
+
+(cd ${REPO_ROOT}
+ git merge --no-edit ${BRANCH}
+ git add -A
+ git status
+ git commit -m "Bumped static files")
+
+cp -a ${REPO_ROOT} ${REPO_OUT}
+
 
 header "Publishing staging.shieldproject.io"
 pushd git

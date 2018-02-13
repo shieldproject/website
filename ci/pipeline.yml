@@ -31,15 +31,27 @@ jobs:
             - name: git
             - name: shield-code
             - name: releases
+          outputs: 
+            - name: pushme
           run:
             path: ./git/ci/scripts/build
             args: []
+          run:
+            path: ./git/ci/scripts/push
           params:
             CF_API_URL:  https://api.run.pivotal.io
             CF_USERNAME: (( vault "secret/pivotal/bot:username" ))
             CF_PASSWORD: (( vault "secret/pivotal/bot:password" ))
             CF_ORG:      starkandwayne
             CF_SPACE:    shieldproject
+            REPO_ROOT: git
+            REPO_OUT: pushme
+      - put: git
+        params:
+          rebase: true
+          repository: pushme/git
+
+
 
 
 resources:
