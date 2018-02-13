@@ -75,7 +75,8 @@ jobs:
           CF_PASSWORD: (( vault "secret/pivotal/bot:password" ))
           CF_ORG:      starkandwayne
           CF_SPACE:    shieldproject
-  - name: Prod
+          MANIFEST:    manifest-stage.yml
+  - name: prod
     plan:
       - aggregate:
         - { get: git, passed: [staging] }
@@ -98,6 +99,7 @@ jobs:
             CF_PASSWORD: (( vault "secret/pivotal/bot:password" ))
             CF_ORG:      starkandwayne
             CF_SPACE:    shieldproject
+            MANIFEST:    manifest.yml
 
 
 
