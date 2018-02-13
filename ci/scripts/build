@@ -46,23 +46,24 @@ pushd git
 	make
 popd
 
-pushd ${REPO_ROOT}
+if [[ -n "$(cd ${REPO_ROOT}; git status --porcelain)" ]]; then
+	pushd ${REPO_ROOT}
 
-if [[ -z $(git config --global user.email) ]]; then
-  git config --global user.email "ci@starkandwayne.com"
-fi
-if [[ -z $(git config --global user.name) ]]; then
-  git config --global user.name "CI Bot"
-fi
+	if [[ -z $(git config --global user.email) ]]; then
+	git config --global user.email "ci@starkandwayne.com"
+	fi
+	if [[ -z $(git config --global user.name) ]]; then
+	git config --global user.name "CI Bot"
+	fi
 
-(
- git merge --no-edit ${BRANCH}
- git add -A
- git status
- git commit -m "Bumped static files")
-popd
+	(
+	git merge --no-edit ${BRANCH}
+	git add -A
+	git status
+	git commit -m "Bumped static files")
+	popd
+fi
 cp -a ${REPO_ROOT} ${REPO_OUT}
-
 
 header "Publishing staging.shieldproject.io"
 pushd git

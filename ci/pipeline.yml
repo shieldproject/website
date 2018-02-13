@@ -2,12 +2,13 @@
 meta:
   github:
     website:
-      uri: https://github.com/shieldproject/website
+      uri: git@github.com:shieldproject/website
       branch: ci
-      #private_key: (( vault "..." ))
+      private_key:  (( vault "secret/pipelines/shared/shield-bot/github:private" ))
+      access_token: (( vault "secret/pipelines/shared/shield-bot/github:access_token" ))
 
     starkandwayne:
-      access_token: (( vault "secret/pipelines/shared/github:access_token" ))
+      access_token: (( vault "secret/pipelines/shared/shield-bot/github:access_token" ))
 
 jobs:
   - name: build
@@ -59,7 +60,7 @@ resources:
     source:
       uri:         (( grab meta.github.website.uri ))
       branch:      (( grab meta.github.website.branch ))
-      #private_key: (( grab meta.github.website.private_key ))
+      private_key: (( grab meta.github.website.private_key ))
 
   - name: shield-code
     type: git
