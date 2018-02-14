@@ -26,7 +26,9 @@ pushd git
 	make
 popd
 
-cp nginx.conf public/
+pushd git
+	cp nginx.conf public/
+popd
 
 header "Publishing staging.shieldproject.io"
 pushd git
