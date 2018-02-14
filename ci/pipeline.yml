@@ -26,13 +26,13 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: starkandwayne/concourse
+              repository: davidlohle/concourse-hugo
               tag:        latest
           inputs:
             - name: git
             - name: shield-code
             - name: releases
-          outputs: 
+          outputs:
             - name: pushme
           run:
             path: ./git/ci/scripts/build
@@ -54,7 +54,7 @@ jobs:
     plan:
     - aggregate:
       -  get: git
-         passed: [build] 
+         passed: [build]
          trigger: true
     - task: build
       config:
