@@ -62,7 +62,7 @@ jobs:
         image_resource:
           type: docker-image
           source:
-            repository: starkandwayne/concourse
+            repository: davidlohle/concourse-hugo
             tag:        latest
         inputs:
           - name: git
@@ -86,7 +86,7 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: starkandwayne/concourse
+              repository: davidlohle/concourse-hugo
               tag:        latest
           inputs:
             - name: git
