@@ -10,6 +10,14 @@ meta:
     starkandwayne:
       access_token: (( vault "secret/pipelines/shared/shield-bot/github:access_token" ))
 
+  slack:
+    webhook: (( vault "secret/slack/botspam:webhook" ))
+    channel: '#botspam'
+    username:      starkandwayne-ci
+    icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
+    pipeline_success: 'shieldproject.io pipeline has succeeded'
+    pipeline_failure: 'shieldproject.io pipeline has failed'
+
 jobs:
   - name: build
     plan:
@@ -46,6 +54,20 @@ jobs:
             REPO_ROOT: git
             REPO_OUT: pushme
             BRANCH: ((grab meta.github.website.branch))
+        on_failure:
+          put: notify
+          params:
+            channel:  (( grab meta.slack.channel ))
+            username: (( grab meta.slack.username ))
+            icon_url: (( grab meta.slack.icon ))
+            text:     (( grab meta.slack.pipeline_failure ))
+        on_failure:
+          put: notify
+          params:
+            channel:  (( grab meta.slack.channel ))
+            username: (( grab meta.slack.username ))
+            icon_url: (( grab meta.slack.icon ))
+            text:     'shieldproject.io pipeline has failed to build'
       - put: git
         params:
           rebase: true
@@ -76,6 +98,20 @@ jobs:
           CF_ORG:      starkandwayne
           CF_SPACE:    shieldproject
           MANIFEST:    manifest-stage.yml
+      on_failure:
+          put: notify
+          params:
+            channel:  (( grab meta.slack.channel ))
+            username: (( grab meta.slack.username ))
+            icon_url: (( grab meta.slack.icon ))
+            text:     'shieldproject.io pipeline has failed to stage'
+      on_success:
+          put: notify
+          params:
+            channel:  (( grab meta.slack.channel ))
+            username: (( grab meta.slack.username ))
+            icon_url: (( grab meta.slack.icon ))
+            text:     'shieldproject.io pipeline has succeeded and been pushed to staging. https://10.200.131.2.netip.cc/teams/main/pipelines/shieldproject.io. '
   - name: prod
     plan:
       - aggregate:
@@ -100,8 +136,27 @@ jobs:
             CF_ORG:      starkandwayne
             CF_SPACE:    shieldproject
             MANIFEST:    manifest.yml
+        on_failure:
+          put: notify
+          params:
+            channel:  (( grab meta.slack.channel ))
+            username: (( grab meta.slack.username ))
+            icon_url: (( grab meta.slack.icon ))
+            text:     'shieldproject.io pipeline has failed to push to prod'
+        on_success:
+            put: notify
+            params:
+              channel:  (( grab meta.slack.channel ))
+              username: (( grab meta.slack.username ))
+              icon_url: (( grab meta.slack.icon ))
+              text:     'shieldproject.io pipeline has succeeded and been pushed to prod. shieldproject.io. '
 
 
+resource_types:
+  - name: slack-notification
+    type: docker-image
+    source:
+      repository: cfcommunity/slack-notification-resource
 
 
 
@@ -125,3 +180,8 @@ resources:
       user:         starkandwayne
       repository:   shield
       access_token: (( grab meta.github.starkandwayne.access_token ))
+
+  - name: notify
+    type: slack-notification
+    source:
+      url: (( grab meta.slack.webhook ))
