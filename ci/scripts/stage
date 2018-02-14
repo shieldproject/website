@@ -26,6 +26,8 @@ pushd git
 	make
 popd
 
+cp nginx.conf public/
+
 header "Publishing staging.shieldproject.io"
 pushd git
 	cf api $CF_API_URL
