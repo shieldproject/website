@@ -12,14 +12,14 @@ header() {
 	echo
 }
 
-header "Downloading hugo" # FIXME: put in starkandwayne/concourse
-mkdir hugo
-pushd hugo
-	curl -LO https://github.com/gohugoio/hugo/releases/download/v0.36/hugo_0.36_Linux-64bit.tar.gz
-	tar -xzvf hugo_0.36_Linux-64bit.tar.gz
-	chmod 755 hugo
-popd
-export PATH=$PATH:$PWD/hugo
+# header "Downloading hugo" # FIXME: put in starkandwayne/concourse
+# mkdir hugo
+# pushd hugo
+# 	curl -LO https://github.com/gohugoio/hugo/releases/download/v0.36/hugo_0.36_Linux-64bit.tar.gz
+# 	tar -xzvf hugo_0.36_Linux-64bit.tar.gz
+# 	chmod 755 hugo
+# popd
+# export PATH=$PATH:$PWD/hugo
 
 header "Re-building Website Static Assets"
 pushd git
