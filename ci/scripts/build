@@ -65,5 +65,4 @@ if [[ -n "$(cd ${REPO_ROOT}; git status --porcelain)" ]]; then
 fi
 cp -a ${REPO_ROOT} ${REPO_OUT}
 
-
 echo "DONE"
