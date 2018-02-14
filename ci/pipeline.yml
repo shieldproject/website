@@ -15,8 +15,6 @@ meta:
     channel: '#botspam'
     username:      starkandwayne-ci
     icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
-    pipeline_success: 'shieldproject.io pipeline has succeeded'
-    pipeline_failure: 'shieldproject.io pipeline has failed'
 
 jobs:
   - name: build
@@ -60,14 +58,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:     (( grab meta.slack.pipeline_failure ))
-        on_failure:
-          put: notify
-          params:
-            channel:  (( grab meta.slack.channel ))
-            username: (( grab meta.slack.username ))
-            icon_url: (( grab meta.slack.icon ))
-            text:     'shieldproject.io pipeline has failed to build'
+            text:     'The shieldproject.io failed to build. <https://10.200.131.2.netip.cc/teams/main/pipelines/shieldproject.io|More information.>'
       - put: git
         params:
           rebase: true
@@ -104,14 +95,14 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:     'shieldproject.io pipeline has failed to stage'
+            text:     'The shieldproject.io failed to push to staging. <https://10.200.131.2.netip.cc/teams/main/pipelines/shieldproject.io|More information.>'
       on_success:
           put: notify
           params:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:     'shieldproject.io pipeline has succeeded and been pushed to staging. https://10.200.131.2.netip.cc/teams/main/pipelines/shieldproject.io. '
+            text:     'An updated shieldproject.io has been successfully built and pushed to <http://staging.projectshield.io|staging>. <https://10.200.131.2.netip.cc/teams/main/pipelines/shieldproject.io|Push to prod?>'
   - name: prod
     plan:
       - aggregate:
@@ -142,14 +133,14 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:     'shieldproject.io pipeline has failed to push to prod'
+            text:     'The shieldproject.io push to production failed. <https://10.200.131.2.netip.cc/teams/main/pipelines/shieldproject.io|More information here.'
         on_success:
             put: notify
             params:
               channel:  (( grab meta.slack.channel ))
               username: (( grab meta.slack.username ))
               icon_url: (( grab meta.slack.icon ))
-              text:     'shieldproject.io pipeline has succeeded and been pushed to prod. shieldproject.io. '
+              text:     'The shieldproject.io push to production succeeded. <http://shieldproject.io|View here.>'
 
 
 resource_types:
