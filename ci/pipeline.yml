@@ -102,7 +102,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:     'An updated shieldproject.io has been successfully built and pushed to <http://staging.projectshield.io|staging>. <https://10.200.131.2.netip.cc/teams/main/pipelines/shieldproject.io|Push to prod?>'
+            text:     'An updated shieldproject.io has been successfully built and pushed to <http://staging.shieldproject.io|staging>. <https://10.200.131.2.netip.cc/teams/main/pipelines/shieldproject.io|Push to prod?>'
   - name: prod
     plan:
       - aggregate:
