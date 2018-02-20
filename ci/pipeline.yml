@@ -144,35 +144,35 @@ jobs:
 
 
 resource_types:
-  - name: slack-notification
-    type: docker-image
-    source:
-      repository: cfcommunity/slack-notification-resource
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
 
 
 
 resources:
-  - name: git
-    type: git
-    source:
-      uri:         (( grab meta.github.website.uri ))
-      branch:      (( grab meta.github.website.branch ))
-      private_key: (( grab meta.github.website.private_key ))
+- name: git
+  type: git
+  source:
+    uri:         (( grab meta.github.website.uri ))
+    branch:      (( grab meta.github.website.branch ))
+    private_key: (( grab meta.github.website.private_key ))
 
-  - name: shield-code
-    type: git
-    source:
-      uri: https://github.com/starkandwayne/shield
-      branch: website-ci
+- name: shield-code
+  type: git
+  source:
+    uri: https://github.com/starkandwayne/shield
+    branch: website-ci
 
-  - name: releases
-    type: github-release
-    source:
-      user:         starkandwayne
-      repository:   shield
-      access_token: (( grab meta.github.starkandwayne.access_token ))
+- name: releases
+  type: github-release
+  source:
+    user:         starkandwayne
+    repository:   shield
+    access_token: (( grab meta.github.starkandwayne.access_token ))
 
-  - name: notify
-    type: slack-notification
-    source:
-      url: (( grab meta.slack.webhook ))
+- name: notify
+  type: slack-notification
+  source:
+    url: (( grab meta.slack.webhook ))
