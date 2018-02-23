@@ -28,6 +28,10 @@ echo "  version: $VERSION"
 ) | spruce json | jq -r .
 # FIXME: put releases json SOMEWHERE
 
+header "placing blog posts"
+cp -a /blogPosts git/content/blogPosts
+ls -lah git/content/blogPosts
+
 header "Syncing docs/ from SHIELD codebase"
 cp -a shield-code/docs git/content/docs
 ls -lah git/content/docs

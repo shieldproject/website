@@ -26,6 +26,7 @@ jobs:
           trigger: true
         - get: releases
           trigger: true
+        - get: rss-feed
       - task: build
         config:
           platform: linux
@@ -38,6 +39,8 @@ jobs:
             - name: git
             - name: shield-code
             - name: releases
+            - name: rss-feed
+              path: blogPosts
           outputs:
             - name: pushme
           run:
@@ -148,6 +151,11 @@ resource_types:
   type: docker-image
   source:
     repository: cfcommunity/slack-notification-resource
+- name: rss
+  type: docker-image
+  source:
+    repository: starkandwayne/shield-rss
+
 
 
 
@@ -176,3 +184,7 @@ resources:
   type: slack-notification
   source:
     url: (( grab meta.slack.webhook ))
+
+- name: rss-feed
+  type: rss
+  source:
