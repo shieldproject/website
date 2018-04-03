@@ -162,9 +162,9 @@
           div.col-md-8.col-md-push-2
             div.center.heading-title
               h2 {{ .Title }}
-              div.small-desd {{ .PubDate }}
+              div.small-desd {{ int (.PubDate) | dateFormat "Monday, Jan 2, 2006" }}
               div.syndicated
                 {{ .Description | safeHTML }}
               div.buttons-section style="margin-top: 45px"
-                a.btn.large-btn.white-btn href="#" Read More
+                a.btn.large-btn.white-btn href={{ .Link }} Read More
       {{ end }}
