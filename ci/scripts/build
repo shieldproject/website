@@ -35,7 +35,7 @@ cp -a blog/posts/*.json git/data/blog/
 ls -lah git/data/blog
 
 header "Syncing docs/ from SHIELD codebase"
-cp -a code/docs/ git/content/documentation
+cp -R code/docs/* git/content/documentation
 ls -lah git/content/documentation
 
 header "Re-building Website Static Assets"
