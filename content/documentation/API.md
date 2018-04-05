@@ -1,8 +1,3 @@
----
-title: SHIELD API
-date: 2017-11-09T16:09:33-05:00
-layout: download
----
 # SHIELD v2 API
 
 This document specifies the behavior of the SHIELD API, version 2,
