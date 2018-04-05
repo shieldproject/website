@@ -14,5 +14,7 @@
           {{ .TableOfContents }}
         div.col-md-9 id=content
           div.content-service-single
-            {{ .Content }}
+            = css
+                img { width: 100%; }
+            {{ .Content | replaceRE "src=\".*images" "src=\"/documentation/images" | markdownify }}
 
