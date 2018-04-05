@@ -39,7 +39,7 @@ menu:
     - name: SHIELD Agent
       url: '#'
       weight: 2
-    - name: Buckler CLI
+    - name: Shield CLI
       url: '#'
       weight: 3
     - name: Plugins

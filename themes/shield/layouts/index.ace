@@ -47,7 +47,7 @@
             h2 Get 
               span Started
             / FIXME NEED COPY for Getting Started Lead-in
-            p Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum
+            p SHIELD provides a centralized solution and interface designed to make it easier for operations to protect their critical infrastructure. SHIELD excels at managing core Cloud Foundry backups, BOSH deployed services, and more. The SHIELD daemon is lightweight and low-impact, and it enables you to quickly have a fully-functional disaster recovery plan.
             p
             div.buttons-section
               a.btn.white-btn.large-btn href=# Get Started
@@ -108,7 +108,7 @@
         div.col-md-8.col-md-push-2
           div.center
             / FIXME NEED COPY for Enterprise Support lead-in
-            p Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum
+            p Stark & Wayne is the leading cloud technology consulting firm, offering design, implementation, and operations services, enabling enterprises to operate highly available and extensible platforms on their infrastructure.
             div.buttons-section style="margin-top: 45px"
               a.btn.large-btn.white-btn href="#" Contact Us
 
