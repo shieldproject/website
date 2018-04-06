@@ -13,9 +13,11 @@ header() {
 }
 
 VERSION=$(cat releases/version)
+CURRENT_VERSION=$(cat git/data/releases.json | jq -r .latest)
 RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag)"
 
-header "Getting Release Notes for SHIELD v$VERSION"
+if [[ "$CURRENT_VERSION" != "$VERSION" ]]; then
+header "Getting New Release Notes for SHIELD v$VERSION"
 cat releases/body
 (
 cat git/data/releases.json | jq -r '{"all":.all}' | spruce merge -
@@ -26,7 +28,8 @@ echo "  url:     $RELEASE"
 echo "  version: $VERSION"
 echo "latest:  $VERSION"
 ) | spruce json | jq -r . | sponge git/data/releases.json
-# FIXME: put releases json SOMEWHERE
+fi
+
 
 header "Syncing blog/ syndication from upstream RSS feed"
 rm -rf git/data/blog
@@ -36,9 +39,13 @@ ls -lah git/data/blog
 
 header "Syncing docs/ from SHIELD codebase"
 rm -rf git/content/documentation
-cp -R code/docs/ops/* git/content/documentation
-cp -R code/docs/dev/* git/content/developers
+rm -rf git/content/developers
+mkdir -p git/content/documentation
+mkdir -p git/content/developers
+cp -a code/docs/ops/* git/content/documentation
+cp -a code/docs/devs/* git/content/developers
 ls -lah git/content/documentation
+ls -lah git/content/developers
 
 header "Re-building Website Static Assets"
 pushd git
