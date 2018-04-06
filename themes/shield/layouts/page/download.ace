@@ -31,7 +31,7 @@
            {{ .Content }}
 
            h2 id="older" Older Releases
-           {{ range .Site.Data.releases.all }}
+           {{ range sort .Site.Data.releases.all ".version"  "desc" }}
              {{ if ne .version $latest }}
                h3 id="v{{ .version }}" SHIELD v{{ .version }}
                {{ .notes | markdownify }}

@@ -14,7 +14,8 @@
         div.content-service-single
           ul.services-list
             {{range .Pages}}
+            {{ $header := index (findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content 1) 0 | replaceRE "<h[1-6].*\">" "" | replaceRE "</h[1-6].*>" "" }}
             li style="display:block" 
-              a href="{{.URL}}" {{.File.TranslationBaseName}}
+              a href="{{.URL}}" {{ $header }}
           
             {{end}}
