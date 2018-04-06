@@ -24,6 +24,8 @@
             {{ range .Site.Data.releases.all }}
               {{ if eq .version $latest }}
                 {{ .notes | markdownify }}
+                h1 Download v{{.version}}
+                a href="{{.url}}" target=_blank Download v{{.version}} release from GitHub
               {{ end }}
             {{ end }}
 
@@ -35,5 +37,7 @@
              {{ if ne .version $latest }}
                h3 id="v{{ .version }}" SHIELD v{{ .version }}
                {{ .notes | markdownify }}
+               h1 Download v{{.version}}
+               a href="{{.url}}" target=_blank Download v{{.version}} release from GitHub
              {{ end }}
            {{ end }}
