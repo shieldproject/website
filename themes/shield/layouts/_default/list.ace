@@ -6,7 +6,7 @@
       div.row
         div.col-md-12
           div.content
-            h1 {{ substr .Title 0 -1 }}
+            h1 {{ .Page.Type }}
 
   section.service-single
     div.container style="text-align: center;"
