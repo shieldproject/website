@@ -16,5 +16,5 @@
           div.content-service-single
             = css
                 img { width: 100%; }
-            {{ .Content | replaceRE "src=\".*images" "src=\"/documentation/images" | markdownify }}
+            {{ .Content | replaceRE "src=\".*images" "src=\"/images" | markdownify }}
 
