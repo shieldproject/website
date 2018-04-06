@@ -11,13 +11,16 @@
   section.service-single
     div.container style="text-align: center;"
       div.row
-        div.content-service-single
-          ul.services-list
-            {{range .Pages}}
-            {{ $header := index (findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content 1) 0 | replaceRE "<h[1-6].*\">" "" | replaceRE "</h[1-6].*>" "" }}
-            li style="display:block" 
-              a href="{{.URL}}" 
-                h2 {{ $header }}
-                p {{slicestr .Summary 0 200}}
-          
-            {{end}}
+        div.col-md-3 id=tocwrapper
+          nav id="TableOfContents"
+            ul
+              {{range .Pages}}
+                {{ $header := index (findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content 1) 0 | replaceRE "<h[1-6].*\">" "" | replaceRE "</h[1-6].*>" "" }}
+                li style="display:block" 
+                  a href="{{.URL}}" {{ $header }}
+              {{end}}
+        div.col-md-9 style="text-align: left;"
+          div.content-service-single
+            h2 SHIELD Documentation
+            p Welcome to the SHIELD Documentation. If you are new to SHIELD, check out the <a href=/documentation/getting-started> getting started guide.</a>
+            . For more in depth configuration options and features, see the other topics on the left.

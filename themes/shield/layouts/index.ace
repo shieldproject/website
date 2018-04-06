@@ -14,7 +14,7 @@
                 div.slide-title Data Protection
                 div.description-slide Because a data source that isn't backed up is just a cache.
                 div.buttons-section
-                  a.btn.white-btn.large-btn href=# Get Started
+                  a.btn.white-btn.large-btn href=/documentation/getting-started/ Get Started
                   a.btn.dark-btn.large-btn href=# Contact us
     div.dots-control-carousel#dots-control-full-slider
 
@@ -50,7 +50,7 @@
             p SHIELD provides a centralized solution and interface designed to make it easier for operations to protect their critical infrastructure. SHIELD excels at managing core Cloud Foundry backups, BOSH deployed services, and more. The SHIELD daemon is lightweight and low-impact, and it enables you to quickly have a fully-functional disaster recovery plan.
             p
             div.buttons-section
-              a.btn.white-btn.large-btn href=# Get Started
+              a.btn.white-btn.large-btn href=/documentation/getting-started/ Get Started
 
   / Data Systems - FIXME classes and IDs are wrong
   section#data-systems.bg-dark-section

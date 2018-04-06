@@ -23,7 +23,7 @@ menu:
       url:  /download
       weight: 1
     - name: Getting Started
-      url:  '#'
+      url:  /documentation/getting-started/
       weight: 2
     - name: Documentation
       url:  /documentation
@@ -37,13 +37,13 @@ menu:
       url: '#'
       weight: 1
     - name: SHIELD Agent
-      url: '#'
+      url: /developers/agent/
       weight: 2
     - name: Shield CLI
-      url: '#'
+      url: /developers/shield-cli-architecture/
       weight: 3
     - name: Plugins
-      url: '#'
+      url: /developers/plugins/
       weight: 4
 
 params:
