@@ -114,6 +114,38 @@
 #TableOfContents  > ul > li > ul
 	padding-left: 8px
 
+#TableOfContents
+	margin: 0
+	padding: 0
+	border: 1px solid #eee
+	li
+		list-style: none
+		font-weight: 500
+		padding-top: 10px
+		padding-bottom: 10px
+		padding-left: 10px
+		font-size: 18px
+		border-bottom: 1px dashed #ccc
+		+mt(0.5s)
+		&:hover
+			a
+				color: $accent-color
+		&:last-child
+			border-bottom: none
+		a
+			color: $dark-accent
+			text-decoration: none
+			+mt(0.5s)
+	.active
+		background-color: shade($accent-color, 10%)
+		border-bottom: none
+		&:hover
+			background-color: tint($accent-color, 10%)
+			a
+				color: $white
+		a
+			color: $white
+
 #TableOfContents *
 	list-style-type: none
 

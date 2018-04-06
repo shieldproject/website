@@ -10,7 +10,7 @@
   section.service-single
     div.container id=container style="margin-left:0;"
       div.row
-        div.col-sm-3
+        div.col-md-3
           {{ .TableOfContents }}
         div.col-md-9 id=content
           div.content-service-single
