@@ -16,6 +16,8 @@
             {{range .Pages}}
             {{ $header := index (findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content 1) 0 | replaceRE "<h[1-6].*\">" "" | replaceRE "</h[1-6].*>" "" }}
             li style="display:block" 
-              a href="{{.URL}}" {{ $header }}
+              a href="{{.URL}}" 
+                h2 {{ $header }}
+                p {{slicestr .Summary 0 200}}
           
             {{end}}

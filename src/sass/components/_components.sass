@@ -1912,6 +1912,7 @@ form.contact-form-bg
 
 /*services-list*/
 .services-list
+	columns: 2
 	margin: 0
 	padding: 0
 	border: 1px solid #eee
@@ -1921,8 +1922,10 @@ form.contact-form-bg
 		padding-top: 10px
 		padding-bottom: 10px
 		padding-left: 10px
+		padding-right: 10px
 		font-size: 18px
 		border-bottom: 1px dashed #ccc
+		break-inside: avoid-column
 		+mt(0.5s)
 		&:hover
 			a
