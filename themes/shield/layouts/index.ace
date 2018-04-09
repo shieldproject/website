@@ -15,7 +15,7 @@
                 div.description-slide Because a data source that isn't backed up is just a cache.
                 div.buttons-section
                   a.btn.white-btn.large-btn href=/documentation/getting-started/ Get Started
-                  a.btn.dark-btn.large-btn href=# Contact us
+                  a.btn.dark-btn.large-btn href="https://starkandwayne.activehosted.com/f/24" Contact us
     div.dots-control-carousel#dots-control-full-slider
 
   / Features
@@ -110,7 +110,7 @@
             / FIXME NEED COPY for Enterprise Support lead-in
             p Stark & Wayne is the leading cloud technology consulting firm, offering design, implementation, and operations services, enabling enterprises to operate highly available and extensible platforms on their infrastructure.
             div.buttons-section style="margin-top: 45px"
-              a.btn.large-btn.white-btn href="#" Contact Us
+              a.btn.large-btn.white-btn href="https://starkandwayne.activehosted.com/f/24" Contact Us
 
   / Your Platform
   section#platform.bg-dark-section
