@@ -21,6 +21,5 @@
               {{end}}
         div.col-md-9 style="text-align: left;"
           div.content-service-single
-            h2 SHIELD Documentation
-            p Welcome to the SHIELD Documentation. If you are new to SHIELD, check out the <a href=/documentation/getting-started> getting started guide.</a>
-            . For more in depth configuration options and features, see the other topics on the left.
+            h2 {{ .Title }}
+            {{ .Content }}

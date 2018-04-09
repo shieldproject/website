@@ -38,12 +38,6 @@ cp -a blog/posts/*.json git/data/blog/
 ls -lah git/data/blog
 
 header "Syncing docs/ from SHIELD codebase"
-rm -rf git/content/documentation
-rm -rf git/content/developers
-rm -rf git/content/images
-mkdir -p git/content/documentation
-mkdir -p git/content/developers
-mkdir -p git/content/images
 cp -a code/docs/ops/* git/content/documentation
 cp -a code/docs/images/* git/content/images
 cp -a code/docs/devs/* git/content/developers
