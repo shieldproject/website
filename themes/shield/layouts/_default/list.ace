@@ -1,5 +1,5 @@
 = content main
-
+  script type="text/javascript" src="/libs/jquery/table_of_contents.js"
 
   section#top.display-page.img-parallax.bg-mask.background-image data-image="img/bg4.jpg"
     div.container
@@ -13,12 +13,23 @@
       div.row
         div.col-md-3 id=tocwrapper
           nav id="TableOfContents"
-            ul
-              {{range .Pages}}
-                {{ $header := index (findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content 1) 0 | replaceRE "<h[1-6].*\">" "" | replaceRE "</h[1-6].*>" "" }}
-                li style="display:block" 
-                  a href="{{.URL}}" {{ $header }}
-              {{end}}
+            ul class=super
+              {{ range  (index .Site.Data.table_of_contents .Page.Type) }}
+                {{ if .url }}
+                  li style="display:block"
+                    a href={{ .url }} {{ .name }}
+                {{ else }}
+                li style="display:block" class=topmenu
+                  a href="#" {{ .name }}
+                  div class=submenu
+                    ul style="display:none"
+                      {{ range .list }}
+                        li style="display:block" 
+                          a href="{{ .url }}" {{ .name }}
+                      {{ end }}
+                {{ end }}
+              {{ end }}
+
         div.col-md-9 style="text-align: left;"
           div.content-service-single
             h2 {{ .Title }}

@@ -7,5 +7,4 @@ jQuery(document).ready(function($) {
 		.not('[href*="' + window.location.host + '"]')
 		.attr('rel', 'noopener noreferrer')
 		.attr('target', '_blank');
-    console.log("done!")
 });

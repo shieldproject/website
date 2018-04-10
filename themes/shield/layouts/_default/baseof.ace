@@ -13,8 +13,8 @@ html lang=en
     link rel=icon href=/favicon.ico
     link rel=stylesheet href=/css/libs.css
     link rel=stylesheet href=/css/main.css
-    script type="text/javascript" src="libs/jquery/jquery.min.js"
-    script type="text/javascript" src="libs/jquery/open_external_in_new_tab.js"
+    script type="text/javascript" src="/libs/jquery/jquery.min.js"
+    script type="text/javascript" src="/libs/jquery/open_external_in_new_tab.js"
 
   body.dark-load
     header#top-nav.top-nav.page-header

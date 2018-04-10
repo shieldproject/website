@@ -113,6 +113,7 @@
 #TableOfContents  > ul
 	padding-left: 8px
 	padding-right: 8px
+	text-align: left
 
 #TableOfContents  > ul > li > ul
 	padding-left: 8px
@@ -130,15 +131,14 @@
 		font-size: 18px
 		border-bottom: 1px dashed #ccc
 		+mt(0.5s)
-		&:hover
-			a
-				color: $accent-color
 		&:last-child
 			border-bottom: none
 		a
 			color: $dark-accent
 			text-decoration: none
 			+mt(0.5s)
+			&:hover
+				color: $accent-color
 	.active
 		background-color: shade($accent-color, 10%)
 		border-bottom: none
@@ -163,3 +163,18 @@
 
 #content * h3
 	padding-top: 30px
+
+.submenu
+	ul
+		padding: 3px 0px 0px 0px !important
+	li
+		padding: 5px 0px 0px 25px !important
+		border-bottom: none !important
+		font-size: 16px !important
+		font-weight: normal !important
+		padding: 5px 0px 0px 10px !important
+		text-align: left
+	a
+		color: #6106060 !important
+		&:hover
+			color: $accent-color !important
