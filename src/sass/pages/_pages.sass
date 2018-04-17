@@ -97,31 +97,26 @@
 	ul.list
 		margin-top: 15px
 
-#tocwrapper 
+#tocwrapper
 	position: sticky
 	top: 60px
-
-#TableOfContents ul ul ul 
-    display: none
-	
-
-#TableOfContents 
-	border: 1px black dotted
-	position: sticky
-	top: 60px
-
-#TableOfContents  > ul
-	padding-left: 8px
-	padding-right: 8px
-	text-align: left
-
-#TableOfContents  > ul > li > ul
-	padding-left: 8px
 
 #TableOfContents
+	position: sticky
+	top: 60px
 	margin: 0
 	padding: 0
 	border: 1px solid #eee
+	*
+		list-style-type: none
+	> ul
+		padding-left: 8px
+		padding-right: 8px
+		text-align: left
+		> li > ul
+			padding-left: 8px
+	ul ul ul
+		display: none;
 	li
 		list-style: none
 		font-weight: 500
@@ -148,9 +143,6 @@
 				color: $white
 		a
 			color: $white
-
-#TableOfContents *
-	list-style-type: none
 
 #content * pre
 	padding: 10px
