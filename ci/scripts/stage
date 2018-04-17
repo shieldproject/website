@@ -16,8 +16,8 @@ pushd git
 	make
 popd
 
-header "Publishing $(spruce json $MANIFEST | jq -r '.applications[0].routes[0].route') via cf manifest $MANIFEST"
 pushd git
+	header "Publishing $(spruce json $MANIFEST | jq -r '.applications[0].routes[0].route') via cf manifest $MANIFEST"
 	cf api $CF_API_URL
 	cf auth $CF_USERNAME "$CF_PASSWORD"
 	cf target -o $CF_ORG -s $CF_SPACE
