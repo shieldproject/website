@@ -1,6 +1,6 @@
 = content main
 
-  section#top.display-page.img-parallax.bg-mask.background-image data-image="img/bg4.jpg"
+  section#top.display-page.img-parallax.bg-mask.background-image data-image="/img/hbg.jpg"
     div.container style="margin-left: 0px;"
       div.row
         div.col-md-12

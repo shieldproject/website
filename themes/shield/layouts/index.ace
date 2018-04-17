@@ -4,7 +4,7 @@
       div#status
     div.intro.full-slider
       / start slide
-      div.slide.bg-mask.background-image.full-vh data-image="/img/bgn12.jpg"
+      div.slide.bg-mask.background-image.full-vh data-image="/img/hbg.jpg"
         div.container-slide.vertical-align.center
           div.container
             div.row
@@ -19,7 +19,7 @@
     div.dots-control-carousel#dots-control-full-slider
 
   / Features
-  div#into.into-slider.background-image data-image=/img/bgn1.jpg
+  div#into.into-slider
     div.container-fluid
       div.row
         div.col-md-4
