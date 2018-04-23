@@ -29,7 +29,7 @@ menu:
       url:  /documentation
       weight: 3
     - name: Community Support
-      url:  '#'
+      url:  'https://cloudfoundry.slack.com/messages/shield/'
       weight: 4
 
   footer2:
