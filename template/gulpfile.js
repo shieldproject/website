@@ -13,7 +13,8 @@ gulp.task('styles', function () {
 	}).on('error', sass.logError))
 	.pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
 	.pipe(minifycss())
-	.pipe(gulp.dest('../theme/default/assets/css/'));
+	.pipe(gulp.dest('../theme/shield/assets/css/'))
+	.pipe(gulp.dest('../htdocs/css/'));
 });
 
 gulp.task('scripts', function() {
@@ -44,7 +45,8 @@ gulp.task('scripts', function() {
 		])
 		.pipe(concat('libs.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest('../theme/default/assets/js/'));
+		.pipe(gulp.dest('../theme/shield/assets/js/'))
+		.pipe(gulp.dest('../htdocs/js/'));
 });
 
 gulp.task('default', ['styles', 'scripts']);

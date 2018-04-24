@@ -19,8 +19,7 @@ cards:
   - title: Multi-Tenancy
     icon:  cloud-upload
     blurb: |
-      SHIELD lets you set up multiple tenants, each with their own private
-      backup job configurations.
+      Set up multiple tenants, each with their own private configurations.
   - title: Data Security
     icon:  door-lock
     blurb: |
@@ -28,8 +27,7 @@ cards:
   - title: Ease-of-Use
     icon:  like
     blurb: |
-      SHIELD features a modern web user interface, optimized for operator
-      efficiency.
+      A modern web user interface, optimized for operator efficiency.
 
 systems:
   - title: PostgreSQL
