@@ -1,0 +1,26 @@
+<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container" style="margin-left:0">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <h1>[% page.attrs.title %]</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section [% IF page.attrs.wrap %]id="[% page.attrs.wrap %]" [% END %]class="service-single">
+  <div id="container" class="container" style="margin-left:0">
+    <div class="row">
+      <div id="tocwrapper" class="col-md-3">
+        [% page.attrs.toc %]
+      </div>
+      <div id="content" class="col-md-9">
+        <div class="content-service-single">
+        [% page.attrs.body %]
+      </div>
+    </div>
+  </div>
+</section>

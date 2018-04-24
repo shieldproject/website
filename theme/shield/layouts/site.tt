@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+[% if dometa %]
+<meta name="twitter:card"       content="summary">
+[% if site.id.twitter %]
+<meta name="twitter:site"       content="@[% site.id.twitter %]">
+[% end %]
+
+<meta property="og:type"        content="article">
+<meta property="og:title"       content="[% article.attrs.title %]">
+<meta property="og:site_name"   content="[% site.title %]">
+<meta property="og:url"         content="[% site.canon %]/writings/[% article.attrs.permalink %].html">
+
+[% if article.attrs.thumb %]
+<meta property="og:image"       content="[% site.canon %]/content/wrt/stack.jpg">
+
+[% end %]
+<meta property="og:description" content="[% filter collapse %]
+[% if article.attrs.abstract %][% article.attrs.abstract %]
+[% else %]I'm sure it's enthralling and interesting[% end %]
+[% end %]">
+[% if site.id.facebook %]
+<meta property="article:author" content="[% site.id.facebook %]">
+[% end %]
+
+<title>[% article.attrs.title %] - [% site.title %]</title>
+
+[% else %]
+<title>[% site.title %]</title>
+
+[% end %]
+<style type="text/css">
+h2 > span { padding-left: 0.5ex; }
+</style>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="alternate home" type="application/rss+xml" title="[% site.title %] - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="https://starkandwayne.com/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/documentation">Documentation</a></li>
+					<li><a href="/developers">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/documentation">Documentation</a></li>
+							<li><a href="/developers">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	[% content %]
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/documentation/getting-started">Getting Started</a></li>
+							<li><a href="/documentation">Documentation</a></li>
+							<li><a href="https://cloudfoundry.slack.com/messages/shield/">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>Reference</h5>
+						<ul class="list">
+							<li><a href="#">SHIELD Core</a></li>
+							<li><a href="/developers/agent">SHIELD Agent</a></li>
+							<li><a href="/developers/shield-cli-architecture">SHIELD CLI</a></li>
+							<li><a href="/developers/plugins">Plugins</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2018 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- FIXME: these don't exist: -->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="/libs/html5shiv/es5-shim.min.js"></script>
+		<script type="text/javascript" src="/libs/html5shiv/html5shiv.min.js"></script>
+		<script type="text/javascript" src="/libs/html5shiv/html5shiv-printshiv.min.js"></script>
+		<script type="text/javascript" src="/libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<script type="text/javascript" src="/libs/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/libs/jquery/open_external_in_new_tab.js"></script>
+	<script type="text/javascript" src="/js/libs.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
+</body>
+</html>
