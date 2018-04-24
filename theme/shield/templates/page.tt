@@ -1,24 +1,22 @@
 <section id="top" class="display-page img-parallax bg-mask background-image"
          data-image="/img/hbg.jpg">
-  <div class="container" style="margin-left:0">
+  <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="content">
-          <h1>[% page.attrs.title %]</h1>
-        </div>
+        <h1>[% page.attrs.title %]</h1>
       </div>
     </div>
   </div>
 </section>
 
-<section [% IF page.attrs.wrap %]id="[% page.attrs.wrap %]" [% END %]class="service-single">
-  <div id="container" class="container" style="margin-left:0">
+<section [% IF page.attrs.wrap %]id="[% page.attrs.wrap %]" [% END %]class="page">
+  <div id="container" class="container">
     <div class="row">
-      <div id="tocwrapper" class="col-md-3">
+      <div class="col-md-3 toc">
         [% page.attrs.toc %]
       </div>
-      <div id="content" class="col-md-9">
-        <div class="content-service-single">
+      <div class="col-md-8 col-md-push-1">
+        <div class="content">
         [% page.attrs.body %]
       </div>
     </div>

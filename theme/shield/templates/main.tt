@@ -14,7 +14,7 @@
                 -->
                 <div class="buttons-section">
                   <a class="btn white-btn large-btn"
-                     href="/documentation/getting-started">Get Started</a>
+                     href="/docs/getting-started">Get Started</a>
                   <a class="btn dark-btn large-btn"
                      href="https://starkandwayne..activehosted.com/f/24">Contact us</a>
                 </div>
@@ -55,7 +55,7 @@
           <p></p>
           <div class="buttons-section">
             <a class="btn white-btn large-btn"
-               href="/documentation/gettings-started">Get Started</a>
+               href="/docs/getting-started">Get Started</a>
           </div>
         </div>
       </div>

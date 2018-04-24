@@ -9,9 +9,8 @@ use File::Find;
 use List::Util qw/max/;
 
 dir "{site}";
-copy "{theme}/assets/*"   if exist "{theme}/assets";
-copy "{root}/content"     if exist "{root}/content";
-copy "{root}/static/*"    if exist "{root}/static";
+copy "{theme}/assets/*"  if exist "{theme}/assets";
+copy "{root}/content/*"  if exist "{root}/content";
 
 my @blog = reverse
 	sort { ($a->{__dated} || 0) cmp ($b->{__dated} || 0) }

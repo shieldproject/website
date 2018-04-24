@@ -373,11 +373,6 @@
 	});
 
 	/*-------------------------------------
-		Select size
-	-------------------------------------*/
-	$("form select").selectize();
-
-	/*-------------------------------------
 		Full screen slider - Slick
 	-------------------------------------*/
 	$('.full-slider').slick({
@@ -865,9 +860,42 @@
 	}
 
 	$('.item-service', this).each(function() {
-
 		var height = $(this).find('.content-service').outerHeight();
-
 		$(this).find('.icon-service').css('height', height);
 	});
+
+
+  if ($('.content').length > 0) {
+    var headings = $('.content').find('h1,h2'),
+        main = $('<ul>'),
+       outer, inner, li;
+
+    headings.each(function (i,e) {
+      var type = e.nodeName,
+          text = $(e).text();
+
+      var anchor = text.toLowerCase()
+                       .replace(/['"+()[]]+/g,  '')
+                       .replace(/[^a-z0-9-]+/g, '-')
+                       .replace(/^-/g, '')
+                       .replace(/-$/g, '')
+
+      $(e).attr('id', anchor);
+
+      li = $('<li><a href="#'+anchor+'">'+text+'</a></li>');
+      if (type == 'H1') {
+        outer = $(li);
+        main.append(outer);
+        inner = undefined;
+      } else {
+        if (typeof(inner) === 'undefined') {
+          inner = $('<ul>');
+          outer.append(inner);
+        }
+        inner.append($(li));
+      }
+    });
+    $('.toc').html(main);
+  }
+
 })(jQuery);

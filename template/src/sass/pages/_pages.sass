@@ -97,16 +97,11 @@
 	ul.list
 		margin-top: 15px
 
-#tocwrapper
-	position: sticky
-	top: 60px
-
-#TableOfContents
+.toc
 	position: sticky
 	top: 60px
 	margin: 0
 	padding: 0
-	border: 1px solid #eee
 	*
 		list-style-type: none
 	> ul
@@ -118,16 +113,20 @@
 	ul ul ul
 		display: none;
 	li
+		border-top: 2px solid rgba(0,113,188,0.1)
 		list-style: none
-		font-weight: 500
-		padding-top: 10px
-		padding-bottom: 10px
-		padding-left: 10px
+		font-weight: bold
+		padding: 10px;
 		font-size: 18px
-		border-bottom: 1px dashed #ccc
 		+mt(0.5s)
-		&:last-child
-			border-bottom: none
+		&:first-child
+			border-top: none
+
+		li
+			padding: 3px;
+			font-weight: normal
+			border: none;
+
 		a
 			color: $dark-accent
 			text-decoration: none
@@ -144,17 +143,26 @@
 		a
 			color: $white
 
-#content * pre
-	padding: 10px
-	border-radius: 6px
-	background-color: #555
-	color: #fff
+.content
+	p
+		font-family: $body-font
+		font-size: 14pt;
 
-#content * h2
-	padding-top: 60px
+	pre
+		display: block;
+		padding: 10px
+		border-radius: 6px
+		background-color: #333
+		color: #fff
+	h2
+		padding-top: 60px
 
-#content * h3
-	padding-top: 30px
+	h3
+		padding-top: 30px
+
+	img
+		margin: 1em auto
+		display: block
 
 .submenu
 	ul
