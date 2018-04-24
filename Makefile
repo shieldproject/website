@@ -6,6 +6,9 @@ build:
 	rm -rf htdocs
 	./bin/verse build
 
+demo: build
+	./bin/verse run
+
 local:
 	rm -rf htdocs
 	./bin/verse build --local
