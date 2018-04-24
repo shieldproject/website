@@ -24,24 +24,11 @@ gulp.task('scripts', function() {
 		'./src/libs/pace/pace.min.js',
 		'./src/libs/slick/slick.min.js',
 		'./src/libs/jquery.directional-hover/jquery.directional-hover.min.js',
-		'./src/libs/waypoints/waypoints.min.js',
-		'./src/libs/animnum/animnum.js',
-		'./src/libs/magnific-popup/jquery.magnific-popup.min.js',
 		'./src/libs/animate/animate-css.js',
 		'./src/libs/parallax/parallax.min.js',
 		'./src/libs/imagesloaded/imagesloaded.pkgd.min.js',
-		'./src/libs/isotope/isotope.pkgd.min.js',
-		'./src/libs/textillate/jquery.fittext.js',
-		'./src/libs/textillate/jquery.lettering.js',
-		'./src/libs/textillate/jquery.textillate.js',
 		'./src/libs/superfish-master/js/superfish.min.js',
-		'./src/libs/selectize/dist/js/standalone/selectize.js',
-		'./src/libs/ytp-player/jquery.mb.YTPlayer.min.js',
-		'./src/libs/jquery-ui-1.12.1.custom/jquery-ui.min.js',
-		'./src/libs/countdown/jquery.countdown.min.js',
-		'./src/libs/googlemaps/gmap3.min.js',
-		'./src/libs/canvas-bg/particles.min.js',
-		'./src/libs/canvas-bg/demo-2.js'
+		'./src/libs/jquery-ui-1.12.1.custom/jquery-ui.min.js'
 		])
 		.pipe(concat('libs.js'))
 		.pipe(uglify())

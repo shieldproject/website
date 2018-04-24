@@ -8,8 +8,10 @@
             <div class="col-md-12">
               <div class="heading-title-big">SHIELD</div>
               <div class="col-md-8 col-md-push-2">
-                <div class="slide-title">Data Protection</div>
-                <div class="description-slide">Bedcause a data source that isn't backed up is just a cache.</div>
+                <div class="slide-title">Data Protection For A Modern Cloud</div>
+                <!--
+                <div class="description-slide">Because a data source that isn't backed up is just a cache.</div>
+                -->
                 <div class="buttons-section">
                   <a class="btn white-btn large-btn"
                      href="/documentation/getting-started">Get Started</a>

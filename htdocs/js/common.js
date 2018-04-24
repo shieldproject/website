@@ -1,13 +1,4 @@
-/*
-   Theme Name: Kanter
-   Author: Brainiak
-   Description: Kanter - Creative Responsive Minimalistic HTML Template
-   Version: 1.0.0
-*/
-
-"use strict";
-
-(function ($) {
+;(function ($) {
 
 	/*-------------------------------------
 		Loader
@@ -16,79 +7,6 @@
 		$('#status').fadeOut();
 		$('#preloader').delay(1000).fadeOut('slow');
 		$('body.dark-load').removeClass('dark-load');
-
-		/*-------------------------------------
-		Top menu - Textillate
-		-------------------------------------*/
-		$('.tlt').textillate({
-			// the default selector to use when detecting multiple texts to animate
-			selector: '.texts',
-
-			// enable looping
-			loop: true,
-
-			// sets the minimum display time for each text before it is replaced
-			minDisplayTime: 500,
-
-			// sets the initial delay before starting the animation
-			// (note that depending on the in effect you may need to manually apply
-			// visibility: hidden to the element before running this plugin)
-			initialDelay: 0,
-
-			// set whether or not to automatically start animating
-			autoStart: true,
-
-			// custom set of 'in' effects. This effects whether or not the
-			// character is shown/hidden before or after an animation
-			inEffects: [],
-
-			// custom set of 'out' effects
-			outEffects: [ 'hinge' ],
-
-			// in animation settings
-			in: {
-			// set the effect name
-			effect: 'rollIn',
-
-			// set the delay factor applied to each consecutive character
-			delayScale: 0.4,
-
-			// set the delay between each character
-			delay: 50,
-
-			// set to true to animate all the characters at the same time
-			sync: false,
-
-			// randomize the character sequence
-			// (note that shuffle doesn't make sense with sync = true)
-			shuffle: false,
-
-			// reverse the character sequence
-			// (note that reverse doesn't make sense with sync = true)
-			reverse: false,
-
-			// callback that executes once the animation has finished
-			callback: function () {}
-			},
-
-			// out animation settings.
-			out: {
-				effect: 'fadeOutDown',
-				delayScale: 0.5,
-				delay: 70,
-				sync: false,
-				shuffle: false,
-				reverse: false,
-				callback: function () {}
-			},
-
-			// callback that executes once textillate has finished
-			callback: function () {},
-
-			// set the type of token to animate (available types: 'char' and 'word')
-			type: 'char'
-		});
-
 	})
 
 	/*-------------------------------------
@@ -99,21 +17,6 @@
 		headertp1.addClass("page-header");	
 		headertp1.attr('id', 'top-nav');	
 	}
-
-	/*-------------------------------------
-	Masonry portfolio
-	—-----------------------------------*/
-	$(function(){
-		var masonry_layout = $(".masonry-portfolio")
-		masonry_layout.imagesLoaded(function () {
-			masonry_layout.isotope('layout');
-		});
-
-		masonry_layout.isotope({
-			layoutMode: 'masonry',
-			transitionDuration: '0.3s'
-		});
-	});
 
 	/*-------------------------------------
 	Top nav
@@ -193,151 +96,16 @@
 	});
 
 	/*-------------------------------------
-		Portfolio popup
-	-------------------------------------*/
-	$('.link-portfolio').magnificPopup({
-		type:'image',
-		gallery:{enabled:true},
-		zoom:{enabled: true, duration: 300},
-		callbacks: {
-		open: function() {
-			$('html').css('margin-right', 0);
-			}
-		}
-	});
-
-	/*-------------------------------------
-		Portfolio isotope
-	-------------------------------------*/
-	$(function() {
-		if ($(".portfolio-items").length) {
-			var a = $(".portfolio-items").isotope({
-				singleMode: true,
-				layout: 'masonry',
-				itemSelector: ".portfolio-item",
-				transitionDuration: '0.8s'
-			});
-			a.imagesLoaded(function() {
-				a.isotope("layout");
-			});
-			
-			$('#control-portfolio li').on('click', function (e) {
-				e.preventDefault();
-
-				var $this = $(this);
-
-				$('#control-portfolio li').removeClass('active');
-				$(this).addClass('active');
-
-				$('.portfolio-items').isotope({
-					filter: $(this).attr('data-filter')
-				});
-
-				return false;
-			});
-		}	
-	});
-
-	/*-------------------------------------
-		Portfolio masonry
-	-------------------------------------*/
-	$(function() {
-		if ($(".portfolio-items-masonry").length) {
-			var a = $(".portfolio-items-masonry").isotope({
-				singleMode: true,
-				// columnWidth: ".grid-sizer, .grid-second",
-				// itemSelector: ".item-portfolio, .item-second",
-				transitionDuration: '0.8s'
-			});
-			a.imagesLoaded(function() {
-				a.isotope("layout");
-			});
-			
-			$('#control-portfolio li').on('click', function (e) {
-				e.preventDefault();
-
-				var $this = $(this);
-
-				$('#control-portfolio li').removeClass('active');
-				$(this).addClass('active');
-				$('.portfolio-items-masonry').isotope({
-					filter: $(this).attr('data-filter')
-				});
-
-				return false;
-			});
-
-			 $(".gallery-items").isotope("on", "layoutComplete", function(a, b) {
-			var b = a.length;
-			$(".num-album").html(b);
-		});
-		var b = $(".gallery-item").length;
-		$(".all-album , .num-album").html(b);
-		}	
-	});
-
-	/*-------------------------------------
 	Accordion
 	-------------------------------------*/
 	$('.accordion:nth-child(1n)').accordion({
 		heightStyle: 'content'
-	});
-	
-	/*-------------------------------------
-		MFP
-	-------------------------------------*/
-	$('.open-popup-link').magnificPopup({
-		type:'inline',
-		midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
-		removalDelay: 300,
-		mainClass: 'mfp-fade'
 	});
 
 	/*-------------------------------------
 		Parallax
 	-------------------------------------*/
 	$('.img-parallax').parallax("50%", .50);
-
-	/*-------------------------------------
-		Animations
-	-------------------------------------*/
-	$(function () {
-		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-			} else {
-				$(".heading-title > h2").animated("fadeInDown");
-				$(".heading-title > p").animated("fadeInUp");
-				$(".heading-title > .small-desd").animated("fadeIn");
-				$(".animated-service").animated("fadeIn");
-				$(".masonry-item-pr, .masonry-item").animated("fadeIn");
-			}
-	}());
-	
-	
-	/*-------------------------------------
-		MagnificPopup
-	-------------------------------------*/
-	$('.image-modal-gallery').magnificPopup({
-		type:'inline',
-		fixedContentPos: true,
-		removalDelay: 100,
-		closeBtnInside: true,
-		preloader: true,
-		mainClass: 'mfp-fade',
-		callbacks: {
-			open: initSliders 
-		}
-	});
-
-
-
-	$('.image-modal').magnificPopup({
-		type:'inline',
-		fixedContentPos: true,
-		removalDelay: 100,
-		closeBtnInside: true,
-		preloader: false,
-		mainClass: 'mfp-fade'
-	});
 
 	/*-------------------------------------
 		Slider portfolio
@@ -424,12 +192,6 @@
 		Tabs
 	-------------------------------------*/
 	$( ".tabs:nth-child(1n)" ).tabs();
-	//animation tab
-	// $(".ui-corner-bottom").animated("fadeIn");
-
-	/*-------------------------------------
-		Tabs
-	-------------------------------------*/
 	$('#data-systems .carousel:nth-child(1n)').slick({
 		dots: true,
 		dotsClass: 'dots',
@@ -584,18 +346,6 @@
 	$('img, a').on('dragstart', function(event) { event.preventDefault(); });
 
 	/*-------------------------------------
-	Particles
-	-------------------------------------*/
-	$('#particles-js').particleground({
-		dotColor: 'rgba(255, 255, 255, 0.40)',
-		lineColor: 'rgba(255, 255, 255, 0.21)',
-		parallaxMultiplier: 5,
-		particleRadius: 5,
-		proximity: 130,
-		density: 12000
-	});
-
-	/*-------------------------------------
 		Smooth Scroll to link
 	-------------------------------------*/
 	$('a.smooth-scroll').on('click', function (event) {
@@ -610,17 +360,6 @@
 			}
 		});
 		event.preventDefault();
-	});
-
-	/*-------------------------------------
-		Masonry blog
-	-------------------------------------*/
-	$('.masonry-container').imagesLoaded(function(){
-		$('.masonry-container').isotope({
-			layoutMode: 'masonry',
-			itemSelector: '.masonry-item',
-			transitionDuration: '0.3s'
-		});
 	});
 
 	/*-------------------------------------
@@ -811,61 +550,6 @@
 	 // settings: "unslick"
 	 // instead of a settings object
 		]
-	});
-
-	/*-------------------------------------
-		MagnificPopup
-	-------------------------------------*/
-	$('.icon-play').magnificPopup({
-		type: 'iframe',
-		autoFocusLast: false,
-		mainClass: 'mfp-with-zoom',
-		iframe: {
-			markup: '<div class="mfp-iframe-scaler">'+
-			'<div class="mfp-close"></div>'+
-			'<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
-			'</div>', // HTML markup of popup, `mfp-close` will be replaced by the close button
-
-			patterns: {
-				youtube: {
-					index: 'youtube.com/', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
-					id: 'v=', // String that splits URL in a two parts, second part should be %id%
-						// Or null - full URL will be returned
-						// Or a function that should return %id%, for example:
-						// id: function(url) { return 'parsed id'; }
-					src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
-				},
-
-				vimeo: {
-					index: 'vimeo.com/',
-					id: '/',
-					src: '//player.vimeo.com/video/%id%?autoplay=1'
-				},
-
-				gmaps: {
-					index: '//maps.google.',
-					src: '%id%&output=embed'
-				}
-
-			},
-			zoom: {
-				enabled: true, // By default it's false, so don't forget to enable it
-
-				duration: 300, // duration of the effect, in milliseconds
-				easing: 'ease-in-out', // CSS transition easing function
-
-				// The "opener" function should return the element from which popup will be zoomed in
-				// and to which popup will be scaled down
-				// By defailt it looks for an image tag:
-				opener: function(openerElement) {
-					// openerElement is the element on which popup was initialized, in this case its <a> tag
-					// you don't need to add "opener" option if this code matches your needs, it's defailt one.
-					return openerElement.is('img') ? openerElement : openerElement.find('img');
-					}
-			},
-
-			srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
-		}
 	});
 
 	/*-------------------------------------
@@ -1186,27 +870,4 @@
 
 		$(this).find('.icon-service').css('height', height);
 	});
-
-	/*-------------------------------------
-		Skills
-	-------------------------------------*/
-	$('.skillbar').each(function(){
-		var $ths_out = $(this),
-			$ths_in = $(this).find('.skillbar-bar');
-
-
-		$ths_in.waypoint(function (dir) {
-			if (dir === "down") {
-				$ths_in.animate({
-					width:$ths_out.attr('data-percent')
-				},1500);
-			}
-			else {
-				$ths_in.css('width', '0');
-			}
-			}, {
-				offset: "90%"
-			});
-	});
-
 })(jQuery);
