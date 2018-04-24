@@ -24,11 +24,11 @@ for my $page (page->read_all) {
 		at     => "{site}/".$page->attrs->{url};
 }
 
-my $latest = max map { $_->{timestamp} } @blog;
-render { articles => [@blog], latest => $latest },
-	using  => "rss.tt",
-	layout => "rss.tt",
-	at     => "{site}/feed.xml";
+#my $latest = max map { $_->{timestamp} } @blog;
+#render { articles => [@blog], latest => $latest },
+#	using  => "rss.tt",
+#	layout => "rss.tt",
+#	at     => "{site}/feed.xml";
 
 dir "{site}/blog";
 for my $post (@blog) {
