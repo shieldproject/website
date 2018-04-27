@@ -21,10 +21,7 @@
 <meta property="og:image"       content="[% site.canon %]/content/wrt/stack.jpg">
 
 [% end %]
-<meta property="og:description" content="[% filter collapse %]
-[% if article.attrs.abstract %][% article.attrs.abstract %]
-[% else %]I'm sure it's enthralling and interesting[% end %]
-[% end %]">
+<meta property="og:description" content="[% if article.attrs.abstract %][% article.attrs.abstract %][% else %]I'm sure it's enthralling and interesting[% end %]">
 [% if site.id.facebook %]
 <meta property="article:author" content="[% site.id.facebook %]">
 [% end %]

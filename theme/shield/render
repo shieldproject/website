@@ -30,11 +30,11 @@ for my $page (page->read_all) {
 #	layout => "rss.tt",
 #	at     => "{site}/feed.xml";
 
-dir "{site}/blog";
-for my $post (@blog) {
-	render $post,
-		using => "article.tt",
-		at    => "{site}/blog/{permalink}/index.html";
-}
+#dir "{site}/blog";
+#for my $post (@blog) {
+#	render $post,
+#		using => "article.tt",
+#		at    => "{site}/blog/{permalink}/index.html";
+#}
 
 1;
