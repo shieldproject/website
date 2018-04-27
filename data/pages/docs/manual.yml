@@ -1,0 +1,165 @@
+---
+# vim:ft=markdown:tw=76
+title:  SHIELD Manual
+url:    /docs/manual/index.html
+format: markdown
+--- |-
+
+
+
+# What is Data Protection?
+
+
+# How This Manual Is Laid Out
+
+# What is SHIELD?
+
+## SHIELD Core
+
+## Shield Agents
+
+## Target / Store Plugins
+
+## Job Configuration
+
+## Authentication
+
+## Tenancy
+
+## Encryption
+
+# Installation
+
+## SHIELD Core
+
+## SHIELD Agents
+
+## Considerations for Production Environments
+
+## Network Access / Topology
+
+## Configuration Reference
+
+# Getting around in SHIELD
+
+## Logging into the Web UI
+
+## General Web UI Layout
+
+## The Web UI HUD / Health
+
+## Using the CLI
+
+## CLI Authentication
+
+## Auth Tokens
+
+## Getting help from the CLI
+
+# Configuring Backups
+
+## Wizard Walkthrough
+
+## The Systems Page
+
+## Adding a second schedule
+
+# Running Backups / Restores
+
+## Ad hoc vs. Scheduled
+
+## The Ad hoc backup Wizard
+
+## The Timeline View
+
+## Annotating Tasks
+
+## Restoring from the Timeline Page
+
+## The Restore Wizard
+
+# Managing Storage and Retention Policies
+
+## How SHIELD Uses Cloud Storage
+
+## Retention Policies
+
+## How the HUD interacts
+
+## Storage Thresholds
+
+## The Storage Display Page
+
+## Shared Storage
+
+# Multi-Tenancy
+
+## What is a Tenant?
+
+## Switching Tenants
+
+## Role Assignments (and what they mean)
+
+## Authentication Providers and Tenants
+
+### UAA
+
+### Github
+
+## The default tenant
+
+# Encryption
+
+## What is Encryption
+
+## Why do I Care?
+
+## How does SHIELD use encryption?
+
+## At-rest vs. in-flight encryption
+
+# Administration
+
+## Initializing a new SHIELD Core
+
+## The Master Password
+
+## The Administrative Backend
+
+### Tenants
+
+### Shared Storage
+
+### Retention Policy Templates
+
+### Managing Agents
+
+### Authentication Providers
+
+### Local User Management
+
+### Rekeying SHIELD
+
+### Session Management
+
+# Backing up and Restoring SHIELD Itself
+
+## The problems of encryption
+
+## The important bits of SHIELD
+
+## Configuring the fs plugin
+
+## "Normal-mode" Restores
+
+# Monitoring SHIELD
+
+## Using the HUD
+
+## API Access for Monitoring
+
+## Metrics of interest
+
+## Log messages to watch
+
+## "Normal-mode" Restores 
