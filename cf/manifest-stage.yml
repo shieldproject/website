@@ -3,6 +3,6 @@ applications:
     memory: 32M
     instances: 2
     buildpack: staticfile_buildpack
-    path: htdocs
+    path: ../htdocs
     routes:
       - route: staging.shieldproject.io
