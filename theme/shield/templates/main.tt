@@ -51,12 +51,12 @@
       <div class="col-md-8 col-md-push-2">
         <div class="left heading-title">
           <h2>Get <span>Started</span></h2>
-          <p>[% page.attrs.copy.getstarted %]</p>
-          <p></p>
-          <div class="buttons-section">
-            <a class="btn white-btn large-btn"
-               href="/docs/getting-started">Get Started</a>
-          </div>
+        </div>
+        <p>[% page.attrs.copy.getstarted %]</p>
+        <p></p>
+        <div class="buttons-section">
+          <a class="btn white-btn large-btn"
+             href="/docs/getting-started">Get Started</a>
         </div>
       </div>
     </div>
