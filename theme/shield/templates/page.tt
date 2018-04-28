@@ -9,7 +9,11 @@
   </div>
 </section>
 
+
 <section [% IF page.attrs.wrap %]id="[% page.attrs.wrap %]" [% END %]class="page">
+[%IF page.attrs.title == "SHIELD Manual" %] 
+    <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+    [% END %]
   <div id="container" class="container">
     <div class="row">
       <div class="col-md-3 toc">
@@ -22,3 +26,5 @@
     </div>
   </div>
 </section>
+
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
