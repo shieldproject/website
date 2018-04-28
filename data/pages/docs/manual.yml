@@ -1,165 +1,415 @@
 ---
 # vim:ft=markdown:tw=76
-title:  SHIELD Manual
+title:  SHIELD Operator's Manual
 url:    /docs/manual/index.html
 format: markdown
 --- |-
 
+Hello, and welcome to the **SHIELD Operator's Manual**, an in-depth look at
+all things SHIELD.  This guide aims to be an exhaustive guide to the
+installation and operation of the SHIELD Data Protection solution.
 
+If you are looking for a more easy-going start-up guide, you may want to
+check out the [Getting Started](/docs/getting-started) guide.
 
-# What is Data Protection?
+If you are interested in contributing to SHIELD itself, or wish to write a
+plugin to extend the capabilities of your SHIELD installation, head on over
+to the [SHIELD Developer Documentation](/devs).
 
-
-# How This Manual Is Laid Out
 
 # What is SHIELD?
 
-## SHIELD Core
+SHIELD is a _data protection_ solution.  It is designed to run scheduled
+tasks to backup your important data systems to off-site cloud storage
+solutions, and facilitate the restoration of backup archives in the event of
+outages or data loss.
 
-## Shield Agents
+SHIELD supports lots of different data systems, through its flexible and
+modular plugin architecture.  We currently support:
 
-## Target / Store Plugins
+  - **PostgreSQL** databases, via the [`postgres` plugin][postgres-plugin].
+  - **MySQL** / **MariaDB**, via the [`mysql` plugin][mysql-plugin], or the
+    [`xtrabackup` plugin][xtrabackup-plugin].
+  - **Redis** key-value store, via the [`redis` plugin][redis-plugin].
+  - ... and [many more][target-plugins].
 
-## Job Configuration
 
-## Authentication
+[postgres-plugin]:   /docs/plugins/postgres
+[mysql-plugin]:      /docs/plugins/mysql
+[xtrabackup-plugin]: /docs/plugins/xtrabackup
+[redis-plugin]:      /docs/plugins/redis
+[target-plugins]:    /docs/plugins#target-plugins
 
-## Tenancy
+Cloud Storage systems are likewise pluggable.  Out of the box, SHIELD
+supports:
 
-## Encryption
+  - **Amazon S3** (and S3 work-alikes) via the [`s3` plugin][s3-plugin].
+  - **Microsoft Azure Blobstore** via the [`azure` plugin][azure-plugin].
+  - **GCP Blobstore** via the [`google` plugin][google-plugin].
+  - On-premise **WebDAV** endpoints, via the [`webdav` plugin][webdav-plugin].
+  - ... and [several others][store-plugins].
+
+[s3-plugin]:     /docs/plugins/s3
+[azure-plugin]:  /docs/plugins/azure
+[google-plugin]: /docs/plugins/google
+[webdav-plugin]: /docs/plugins/webdav
+[store-plugins]: /docs/plugins/#store-plugins
+
+SHIELD is a distributed system.  The SHIELD _core_ leverages a network of
+_agents_ to do the heavy lifting of data backup and restore.  When you
+deploy SHIELD into your infrastructure, yet get to choose how many agents
+you want to provision, and where in the network they sit.
+
+// FIXME: link to more in-depth docs on the architecture of SHIELD
+
+_Multi-tenancy_ is baked right into SHIELD via a robust role-based access
+control (RBAC) system in place to help isolate different subsets of users
+from one another.  People in one tenant are unable to see configurations
+made by people in another tenant.  This allows a single SHIELD to support
+multiple, independent teams.
+
+// FIXME: link to more in-depth docs on MT and RBAC
+
+SHIELD also supports a sophisticated authentication system.  You can hook
+up to your external Cloud Foundry UAA server, a BOSH UAA instance, or even
+Github (both public and on-premise).  As users log in via their external
+credentials, SHIELD will automatically create the necessary tenants and
+assign roles based on the SHIELD configuration.
+
+// FIXME: link to more in-depth docs on how Authn works
+
+We believe strongly in encryption.  Whenever SHIELD communicates across the
+network, it does so over encrypted channels (SSH, TLS/HTTPS), with endpoint
+identity verification (host keys, mutual TLS, etc.).  All backup archives
+are encrypted with unique key material, to ensure that data at-rest is also
+resistent to snooping and tampering.
+
+// FIXME: link to more in-depth docs on how SHIELD encryption works
 
 # Installation
 
-## SHIELD Core
+Before you can begin to use SHIELD to protect your important data, you're
+going to need to install it.  You have three options: via [BOSH][bosh]
+(ideal for Cloud Foundry users), via [Docker][docker], and manually.
 
-## SHIELD Agents
+[bosh]:   https://bosh.io
+[docker]: https://docker.com
 
-## Considerations for Production Environments
+## Planning Your Installation
 
-## Network Access / Topology
+TBD
+
+### Network Topologies
+
+TBD
+
+### Considerations for Production Environments
+
+TBD
+
+### Where to Co-locate SHIELD Agents
+
+TBD
+
+## Using BOSH
+
+TBD
+
+### Deploying the SHIELD Core
+
+TBD
+
+### Deploying SHIELD Agents
+
+TBD
+
+### Using Runtime Config for Agent Deployments
+
+TBD
+
+
+## Using Docker
+
+### The SHIELD Core Image
+
+TBD
+
+### The SHIELD Agent Standalone Image
+
+TBD
+
+### Embedding the SHIELD Agent
+
+TBD
+
+
+## Manual Installation
+
+TBD
+
+### Deploying The SHIELD Core
+
+TBD
+
+### Setting up the `nginx` Proxy
+
+TBD
+
+### Deploying SHIELD Agents
+
+TBD
+
 
 ## Configuration Reference
 
+TBD
+
 # Getting around in SHIELD
+
+TBD
 
 ## Logging into the Web UI
 
+TBD
+
 ## General Web UI Layout
+
+TBD
 
 ## The Web UI HUD / Health
 
+TBD
+
 ## Using the CLI
+
+TBD
 
 ## CLI Authentication
 
+TBD
+
 ## Auth Tokens
+
+TBD
 
 ## Getting help from the CLI
 
+TBD
+
 # Configuring Backups
+
+TBD
 
 ## Wizard Walkthrough
 
+TBD
+
 ## The Systems Page
+
+TBD
 
 ## Adding a second schedule
 
+TBD
+
 # Running Backups / Restores
+
+TBD
 
 ## Ad hoc vs. Scheduled
 
+TBD
+
 ## The Ad hoc backup Wizard
+
+TBD
 
 ## The Timeline View
 
+TBD
+
 ## Annotating Tasks
+
+TBD
 
 ## Restoring from the Timeline Page
 
+TBD
+
 ## The Restore Wizard
 
-# Managing Storage and Retention Policies
+TBD
+
+# Managing Storage
+
+TBD
 
 ## How SHIELD Uses Cloud Storage
 
+TBD
+
 ## Retention Policies
+
+TBD
 
 ## How the HUD interacts
 
+TBD
+
 ## Storage Thresholds
+
+TBD
 
 ## The Storage Display Page
 
+TBD
+
 ## Shared Storage
+
+TBD
 
 # Multi-Tenancy
 
+TBD
+
 ## What is a Tenant?
+
+TBD
 
 ## Switching Tenants
 
+TBD
+
 ## Role Assignments (and what they mean)
+
+TBD
 
 ## Authentication Providers and Tenants
 
+TBD
+
 ### UAA
+
+TBD
 
 ### Github
 
+TBD
+
 ## The default tenant
+
+TBD
 
 # Encryption
 
+TBD
+
 ## What is Encryption
+
+TBD
 
 ## Why do I Care?
 
+TBD
+
 ## How does SHIELD use encryption?
+
+TBD
 
 ## At-rest vs. in-flight encryption
 
+TBD
+
 # Administration
 
-## Initializing a new SHIELD Core
+TBD
+
+## Initializing A SHIELD Core
+
+TBD
 
 ## The Master Password
 
+TBD
+
 ## The Administrative Backend
+
+TBD
 
 ### Tenants
 
+TBD
+
 ### Shared Storage
+
+TBD
 
 ### Retention Policy Templates
 
+TBD
+
 ### Managing Agents
+
+TBD
 
 ### Authentication Providers
 
+TBD
+
 ### Local User Management
+
+TBD
 
 ### Rekeying SHIELD
 
+TBD
+
 ### Session Management
 
-# Backing up and Restoring SHIELD Itself
+TBD
 
-## The problems of encryption
+# How Do I Backup &lt;X&gt;?
 
-## The important bits of SHIELD
+## SHIELD Itself
 
-## Configuring the fs plugin
+### The Problem With Encryption
 
-## "Normal-mode" Restores
+TBD
+
+### The Important Bits of SHIELD
+
+TBD
+
+### Configuring the `fs` Plugin
+
+TBD
+
+### "Normal-mode" Restores
+
+TBD
+
+## Cloud Foundry UAA
+
+## Cloud Foundry CCDB
+
+## BOSH
 
 # Monitoring SHIELD
 
+TBD
+
 ## Using the HUD
+
+TBD
 
 ## API Access for Monitoring
 
+TBD
+
 ## Metrics of interest
+
+TBD
 
 ## Log messages to watch
 
-## "Normal-mode" Restores 
+TBD
