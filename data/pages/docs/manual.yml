@@ -97,35 +97,171 @@ going to need to install it.  You have three options: via [BOSH][bosh]
 
 ## Planning Your Installation
 
-TBD
+Before you start installing the software, it's worthwhile to take a step
+back and plan out your installation
 
-### Network Topologies
+### Network Topology
 
-TBD
+SHIELD operates best on flat network topologies, without <abbr>NAT</abbr>
+devices or HTTP(S) proxy services.
 
-### Considerations for Production Environments
+![A Flat Network Topology](/docs/manual/flat-topology.png)
 
-TBD
+SHIELD requires _mutual network visibility_ between the core and all
+cooperating agents.  Each agent issues a small HTTP request to the core,
+to inform the core that it is alive, and ready to be inventoried.  This is
+called the _registration ping_.  For each registration ping received, the
+core records the name and port given and the remote address of the
+connecting TCP socket.  At some later time, the SHIELD core will initiate an
+SSH connection to the recorded agent IP address, and gather agent
+information.
 
-### Where to Co-locate SHIELD Agents
+Because of this, NAT devices tend to confound SHIELD.  The registration ping
+originats (at the TCP level) from the NAT gateway, not the host running the
+SHIELD agent software.  When the core attempts to connect back to the agent,
+it initiates a connection to the _NAT device_ on the agent port, which
+generally fails.
 
-TBD
+Flat networks with HTTP(S) proxies are not impossible, but they can be
+unruly.  When configuring proxy clients (via `http_proxy` / `https_proxy`,
+`no_proxy` environment varialbes, or similar mechanisms), you will want to
+be especially cognizant of the HTTP(S) connections needed by the SHIELD
+software itself.  Often, these connections will need to bypass am
+Internet-bound proxy (i.e. one in a DMZ) in order to function.
+
+![A Proxied Network Topology](/docs/manual/proxied-topology.png)
+
+Likewise, if your cloud storage solution is to be dealt with over HTTP(S),
+you will need to make sure that either your proxy server can contact it on
+behalf of each SHIELD agent, or that each agent blacklists the domains
+and/or IP addresses of the storage endpoints in something like `no_proxy`.
+
+### Where to Colocate SHIELD Agents
+
+Depending on the data systems you wish to backup, and their configuration
+with respect to access control, you may be able to get away without
+colocating _any_ SHIELD agents in your infrastructure.
+
+There are really only two reasons for colocating a SHIELD agent on a data
+system installation: plugin requirements and host access control
+configuration.
+
+Most SHIELD plugins stream their data through, without relying on any
+temporary local storage.  This removes a throughput bottleneck (the disk),
+as well as a capacity concern (how much temporary space do you need?).  Some
+plugins, however, require local disk.  If the target system doesn't require
+local access (more on that in a moment), you may want to spin up some
+machines with large ephemeral disks just to handle these backup / restore
+operations.  The conversation for backing up data then looks like this:
+
+![A Dedicated SHIELD Agent](/docs/manual/dedicated-shield-agent.png)
+
+Some plugins absolutely cannot be executed across the network.  The
+[Filesystem Plugin][fs], for example, can only deal with files on the local
+filesystem (networked filesystems notwithstanding).  Therefore, if you need
+to back up files on a host, you will need to deploy a SHIELD agent to run on
+that host.
+
+[fs]: /docs/plugins/fs
+
 
 ## Using BOSH
 
-TBD
+[BOSH][bosh] is a cloud-agnostic deployment and orchestration tool that
+excels at lifecycle management of software at all scales.  SHIELD has a
+_BOSH release_ that can be used to deploy both the SHIELD core, and SHIELD
+agents into new and existing BOSH deployments.
+
+If you're already using BOSH (for example, if you are deploying Cloud
+Foundry), adding SHIELD into your infrastructure should be easy.  If you are
+still looking for a great release engineering framework, you can get your
+feet wet with a SHIELD deployment or three.
+
+The SHIELD BOSH release can be found [on Github][release].
+
+[release]: https://github.com/starkandwayne/shield-boshrelease/releases
 
 ### Deploying the SHIELD Core
 
-TBD
+Usually, the SHIELD core is a standalone, self-contained deployment.  To
+deploy, you'll need to find or create a deployment manifest.  A good
+starting point can be found [here][manifest.yml].
+
+//[manifest.yml]: https://github.com/starkandwayne/shield-boshrelease/blob/master/manifests/shield.yml
+[manifest.yml]: /docs/manual/shield.yml
+
+Save that file locally, as `shield.yml`, and then run:
+
+    $ bosh -e my-bosh deploy \
+        -d shield \
+        -v static_ip=192.0.2.5 \
+        -v domain=shield.example.com \
+        shield.yml
+
+Replace `domain` with the FQDN of your SHIELD management console, and
+`192.0.2.5` with a static IP that you want to deploy SHIELD on.  You may
+need to consult your BOSH [cloud-config][bosh-cc] to find a suitable IP in
+the `default` network.  Optionally, you may modify the deployment manifest
+to specify a different network.
+
+[bosh-cc]: https://bosh.io/docs/cloud-config
+
+**NOTE**: The provided deployment manifest assumes that your BOSH director
+has been deployed with a _config-server_ that can generate the necessary
+certificates and keys for securing SHIELD's communications.  If that is not
+the case, you will need to provide additional command-line options to the
+`bosh deploy` command to store the generated credentials locally.  See
+[the BOSH documentation][bosh-vars] for more information.
+
+[bosh-vars]: https://bosh.io/docs/cli-int/#vars-store
+
+Once BOSH has finished deploying SHIELD, you should be able to access the
+SHIELD management console at [https://$IP](#).  The default login will be
+`admin` (username) and `shield` (password).
 
 ### Deploying SHIELD Agents
 
-TBD
+If you need to colocate agents on other BOSH deployments, you have a few
+options.  The fastest method is to modify those deployment manifests to
+include the `shield-agent` job in the appropriate BOSH instance groups, like
+this:
 
-### Using Runtime Config for Agent Deployments
+    instance_groups:
+      - name: some-database
+        jobs:
+          # ... other jobs ....
+          - name:    shield-agent
+            release: shield
 
-TBD
+        # ... rest of configuration ...
+
+This can get out of hand fast.  A more elegant solution is to use [BOSH
+runtime configs][bosh-rcs] and _inject_ the SHIELD agent job into other
+deployments without mucking about with their deployment manifests.
+
+[bosh-rcs]: https://bosh.io/docs/runtime-config
+
+Here's a working runtime config:
+
+    ---
+    releases:
+      - name:    shield
+        version: 8.0.8
+
+    addons:
+      - name: shield
+        jobs:
+          - name:    shield-agent
+            release: shield
+
+To use this, update your existing runtime-config:
+
+    $ bosh update-runtime-config addons.yml
+
+Then, `bosh deploy` your pre-existing manifests, without changing them.
+For more information, including how to limit the `shield` addon to just
+specific deployments / VMs, read the
+[BOSH runtime-configs documentation][bosh-rcs].
 
 
 ## Using Docker
