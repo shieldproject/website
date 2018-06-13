@@ -44,7 +44,12 @@
       "notes": "# Improvements\n\n- Stop giving out bad advice in the help output of `create-job`\n  and `update-job`, with respect to propery schedule syntax.\n\n- Better error messaging in filepath walker when the `fs` plugin\n  encounters an error or missing stat info.\n\n- Credentials (as defined by plugins) are now redacted in task\n  output, based on the rights of the viewer.\n\n- The xtrabackup plugin now supports the `mysql_socket` option,\n  for specifying the absolute path to the MySQL socket.\n\n\n# Bug Fixes\n\n- Properly set the job name and notes (summary) from the web ui\n  wizard, instead of ignoring what the user provided.  Fixes #387.\n\n- The `webdav` plugin no longer panics if you omit the `https://`\n  or `http://` URL scheme from your DAV server URL.  Instead, it\n  assumes HTTPS and keeps on truckin'.  Other URL parse errors are\n  properly handled now as well.\n\n- Handle people who don't set up their Github profiles properly,\n  and are missing display names.  The Github API returns these as\n  nil string pointers, instead of pointers to the empty string.\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.9",
       "version": "8.0.9"
+    },
+    {
+      "notes": "# Bug Fixes\n\n- Sometimes, code gets lost.  This happened on 8.0.9, when we\n  merged some PRs that blew away PR's #395, #393, #398, and #399.\n  These changes dealt with initialization and SHIELD recovery.\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.10",
+      "version": "8.0.10"
     }
   ],
-  "latest": "8.0.9"
+  "latest": "8.0.10"
 }
