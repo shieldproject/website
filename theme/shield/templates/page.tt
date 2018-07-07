@@ -11,7 +11,7 @@
 
 
 <section [% IF page.attrs.wrap %]id="[% page.attrs.wrap %]" [% END %]class="page">
-[%IF page.attrs.title == "SHIELD Manual" %] 
+[%IF page.attrs.toplinks %]
     <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
     [% END %]
   <div id="container" class="container">

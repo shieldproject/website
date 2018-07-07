@@ -61,7 +61,7 @@ h2 > span { padding-left: 0.5ex; }
 
 
 <section class="page">
- 
+
     <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
     
   <div id="container" class="container">
@@ -137,8 +137,8 @@ resistent to snooping and tampering.</p>
 <h1>Installation</h1>
 
 <p>Before you can begin to use SHIELD to protect your important data, you're
-going to need to install it.  You have three options: via <a href="https://bosh.io">BOSH</a>
-(ideal for Cloud Foundry users), via <a href="https://docker.com">Docker</a>, and manually.</p>
+going to need to install it.  You have two options: via <a href="https://bosh.io">BOSH</a>
+(ideal for Cloud Foundry users), or via <a href="https://docker.com">Docker</a>.</p>
 
 <h2>Planning Your Installation</h2>
 
@@ -149,8 +149,6 @@ back and plan out your installation</p>
 
 <p>SHIELD operates best on flat network topologies, without <abbr>NAT</abbr>
 devices or HTTP(S) proxy services.</p>
-
-<p><img src="/docs/manual/flat-topology.png" alt="A Flat Network Topology" title=""></p>
 
 <p>SHIELD requires <em>mutual network visibility</em> between the core and all
 cooperating agents.  Each agent issues a small HTTP request to the core,
@@ -173,8 +171,6 @@ unruly.  When configuring proxy clients (via <code>http_proxy</code> / <code>htt
 be especially cognizant of the HTTP(S) connections needed by the SHIELD
 software itself.  Often, these connections will need to bypass am
 Internet-bound proxy (i.e. one in a DMZ) in order to function.</p>
-
-<p><img src="/docs/manual/proxied-topology.png" alt="A Proxied Network Topology" title=""></p>
 
 <p>Likewise, if your cloud storage solution is to be dealt with over HTTP(S),
 you will need to make sure that either your proxy server can contact it on
@@ -312,25 +308,100 @@ specific deployments / VMs, read the
 
 <p>TBD</p>
 
-<h2>Manual Installation</h2>
-
-<p>TBD</p>
-
-<h3>Deploying The SHIELD Core</h3>
-
-<p>TBD</p>
-
-<h3>Setting up the <code>nginx</code> Proxy</h3>
-
-<p>TBD</p>
-
-<h3>Deploying SHIELD Agents</h3>
-
-<p>TBD</p>
-
 <h2>Configuration Reference</h2>
 
-<p>TBD</p>
+<p>This section contains detailed descriptions of all configuration options for
+the SHIELD core, and SHIELD agents.</p>
+
+<h3>SHIELD Core Configuration File Reference</h3>
+
+<p>The SHIELD core configuration file is a YAML file, read at started by the
+<code>shieldd</code> binary.</p>
+
+<ul>
+<li><p><strong>listen_addr</strong> - The IP address and TCP port that the SHIELD core daemon
+should bind to and listen on for incoming API (HTTP) requests.  Defaults
+to <code>*:8888</code>.  <code>*</code> is interpreted to mean <em>all interfaces</em>.</p></li>
+<li><p><strong>workers</strong> - How many worker threads should the SHIELD core spin.  This
+defaults to <code>2</code>, but you should increase the 1.5 times the number of
+concurrent backup tasks you expect to see, at peak.</p>
+
+<p>Low worker counts can cause the SHIELD scheduler to "stall out" and not
+execute scheduled tasks in a timely fashion.  The 1.5x multiplier accounts
+for purge operations, cloud storage tests, and other background tests.</p></li>
+<li><p><strong>debug</strong> - Whether or not to enable verbose debug logging.  This is a
+boolean, and it defaults to <code>no</code>, which is a sane choice for any
+production or staging environment.  Debug logging is verbose, and very
+low-level.  It is of primary value to SHIELD developers.</p></li>
+<li><p><strong>data_directory</strong> - The absolute path to the directory where SHIELD will
+store all of its persistent data.  Important files stored here include:</p>
+
+<ul>
+<li><code>$data_directory/shield.db</code> - The SHIELD metadata database.</li>
+<li><code>$data_directory/vault/*</code> - The encrypted files that back the vault.</li>
+<li><code>$data_directory/vault.crypt</code> - The encrypted file which stores the seal
+keys to the SHIELD Vault.  This file is encrypted with the SHIELD master
+password.</li>
+<li><code>$data_directory/bootstrap.log</code> - A log of what occurred during a SHIELD
+<em>from-nothing</em> recovery.</li>
+</ul></li>
+<li><p><strong>fast_loop</strong> - The frequency, in seconds, of the SHIELD scheduler's "fast
+loop."  On every iteration of the fast loop, SHIELD will schedule backup
+jobs that ought to run, execute pending tasks (if it has workers available),
+and handle inbound agent registration pings.</p>
+
+<p>By default, the fast loop executes once a second.  Unles you have an
+urgent need otherwise, you shouldn't change this.</p></li>
+<li><p><strong>slow_loop</strong> - The frequency, in seconds, of the SHIELD scheduler's "slow
+loop."  The slow loop handles administrative tasks for the SHIELD core,
+including archive expiration and purgation, session clearing, data
+analytics, and cloud storage testing.</p>
+
+<p>By default, the slow loop exucutes once every 300 seconds (5 minutes).
+Turning up the frequency will result in higher load on external cloud
+storage systems.  Decreasing the frequency will cause expired archives to
+remain in cloud storage for longer.</p></li>
+<li><p><strong>web_root</strong> - The root path to the SHIELD web management UI assets.
+Defaults to the relative path <code>web</code>, which is probably not what you want.</p></li>
+<li><p><strong>environment</strong> - An name for the environment, that SHIELD will pass
+through to clients accessing its API and web management console.  This can
+be useful for differentiating your staging SHIELD from your production
+SHIELD.  By default, no environment is set.</p></li>
+<li><p><strong>color</strong> - You can color code your SHIELD Web User Interfaces!  Set a hex
+value here (i.e. <code>##003300</code>) or other CSS-compatible color identifier, and
+the web UI will use it to colorize the environment name.</p></li>
+<li><p><strong>motd</strong> - A (hopefully) short message to display to operators on the
+login screen.  You can use this for compliance messages, important
+notices, an explanation of which authentication method people should use,
+who to contact for help, etc.  By default, there is no MOTD.</p></li>
+<li><p><strong>vault_address</strong> - The URL of the SHIELD Vault.  This should almost
+always be <code>https://127.0.0.1:8200</code>.  If you are using the BOSH release,
+this cannot be configured.</p></li>
+<li><p><strong>vault_ca_cert</strong> - The X.509 Certificate Authority certificate,
+PEM-encoded, for validating the Vault certificate.  If you are using the
+BOSH release, this cannot be configured (nor does it need to be).</p></li>
+<li><p><strong>encryption_type</strong> - Which encryption algorithm and chaining mode to use
+for encrypting backup archives.  Supported values are:</p>
+
+<ul>
+<li><code>aes256-ctr</code> - 256-bit AES, in Counter CBC mode.</li>
+</ul>
+
+<p>We plan to introduce more types as the need arises.</p>
+
+<p>Each backup archive tracks which encryption type was in force when it was
+taken, to allow operators to change this value without rendering previous
+backup archives unusable.</p></li>
+<li><p><strong>session_timeout</strong></p></li>
+<li><p><strong>failsafe</strong></p>
+
+<ul>
+<li><strong>username</strong></li>
+<li><strong>password</strong></li>
+</ul></li>
+</ul>
+
+<h3>SHIELD Agent Configuration File Reference</h3>
 
 <h1>Getting around in SHIELD</h1>
 
