@@ -17,33 +17,19 @@ CURRENT_VERSION=$(cat git/data/releases.json | jq -r .latest)
 RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag)"
 
 if [[ "$CURRENT_VERSION" != "$VERSION" ]]; then
-header "Getting New Release Notes for SHIELD v$VERSION"
-cat releases/body
-(
-cat git/data/releases.json | jq -r '{"all":.all}' | spruce merge -
-echo "- notes: |"
-cat releases/body | sed -e 's/^/    /'
-echo
-echo "  url:     $RELEASE"
-echo "  version: $VERSION"
-echo "latest:  $VERSION"
-) | spruce json | jq -r . | sponge git/data/releases.json
+	header "Getting New Release Notes for SHIELD v$VERSION"
+	cat releases/body
+	(
+		cat git/data/releases.json | jq -r '{"all":.all}' | spruce merge -
+		echo "- notes: |"
+		cat releases/body | sed -e 's/^/    /'
+		echo
+		echo "  url:     $RELEASE"
+		echo "  version: $VERSION"
+		echo "latest:  $VERSION"
+	) | spruce json | jq -r . > git/data/releases.json.tmp
+	mv git/data/releases.json.tmp git/data/releases.json
 fi
-
-
-header "Syncing blog/ syndication from upstream RSS feed"
-rm -rf git/data/blog
-mkdir -p git/data/blog
-cp -a blog/posts/*.json git/data/blog/
-ls -lah git/data/blog
-
-header "Syncing docs/ from SHIELD codebase"
-cp -a code/docs/ops/* git/content/documentation
-cp -a code/docs/images/* git/content/images
-cp -a code/docs/devs/* git/content/developers
-ls -lah git/content/documentation
-ls -lah git/content/developers
-ls -lah git/content/images
 
 header "Re-building Website Static Assets"
 pushd git
@@ -54,17 +40,17 @@ if [[ -n "$(cd ${REPO_ROOT}; git status --porcelain)" ]]; then
 	pushd ${REPO_ROOT}
 
 	if [[ -z $(git config --global user.email) ]]; then
-	git config --global user.email "ci@starkandwayne.com"
+		git config --global user.email "ci@starkandwayne.com"
 	fi
 	if [[ -z $(git config --global user.name) ]]; then
-	git config --global user.name "CI Bot"
+		git config --global user.name "CI Bot"
 	fi
 
 	(
 	git merge --no-edit ${BRANCH}
 	git add -A
 	git status
-	git commit -m "Bumped static files")
+	git commit -m "Updated download page for latest SHIELD release")
 	popd
 fi
 cp -a ${REPO_ROOT} ${REPO_OUT}

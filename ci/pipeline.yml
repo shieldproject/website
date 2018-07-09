@@ -34,7 +34,7 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: davidlohle/concourse-hugo
+              repository: huntprod/verse
               tag:        latest
           inputs:
             - name: git
@@ -79,7 +79,7 @@ jobs:
         image_resource:
           type: docker-image
           source:
-            repository: davidlohle/concourse-hugo
+            repository: huntprod/verse
             tag:        latest
         inputs:
           - name: git
@@ -117,7 +117,7 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: davidlohle/concourse-hugo
+              repository: huntprod/verse
               tag:        latest
           inputs:
             - name: git
