@@ -382,38 +382,124 @@ The SHIELD core configuration file is a YAML file, read at started by the
 
 ### SHIELD Agent Configuration File Reference
 
+TDB
 
-# Getting around in SHIELD
+
+# Using SHIELD
+
+SHIELD features a beautiful web user interface and a robust command-line
+interface.  We like to think of the web UI as providing more visibility into
+the configuration of SHIELD, while the CLI provides more flexibility in
+terms of automation.
+
+## The Web UI
+
+You can access the web UI by pointing your browser at the IP address of your
+SHIELD core installation.  SHIELD forces all HTTP traffic over TLS, via port
+443, for security reasons.
+
+### Logging In
+
+Before you can interact with SHIELD, you must log in.
+
+![The SHIELD Web UI Login Screen](/docs/manual/ui/login-screen.png)
+
+On the right is the login form for local authentication.  On the left is a
+list of the configured _authentication providers_.  These allow SHIELD
+administrators to integrate SHIELD authentication with 3rd-party, external
+identity systems like Github, or Cloud Foundry UAA.
+
+Note: You may not have any authentication providers listed.
+
+### The Heads-up Display
+
+All logged in?  Great!
+
+At the top of the screen, you should see the _heads-up display_:
+
+![The SHIELD Heads-Up Display](/docs/manual/ui/hud.png)
+
+To the left is identifying information about this SHIELD core, including the
+configured SHIELD environment name, the IP address and/or fully-qualified
+domain, and the version of SHIELD.
+
+The first pane summarizes the overall health of SHIELD and the current
+tenant's configuration.
+
+  - **SHIELD is ...** - Reports the current status of the SHIELD API.
+    If all is well, this will say _SHIELD is up_, in a reassuring green hue.
+    If the SHIELD core is not responding to API calls, this will say _SHIELD
+    is DOWN_, in red.  Sometimes, it may report that the SHIELD is locked,
+    in which case an administrator needs to intervene to unlock it.
+
+  - **Cloud Storage is ...** - Reports the health of all global cloud
+    storage systems, as well as the health of all cloud storage specific to
+    the currently selected tenant.
+
+  - **Jobs are ...** - Reports the status of all backup jobs for the current
+    tenant.  It considers only the most recent execution of each job,
+    whether it was scheduled or run manually (ad hoc).
+
+The second pane, titled _Data Protection Summary_, provides some numbers for your
+consideration.  All of these are per-tenant.
+
+  - **Scheduled Backup Jobs** - How many total jobs are scheduled to run.
+
+  - **Backup Archives** - How many backup archives exist.
+
+  - **Cloud Storage Used** - How much of cloud storage is being used by the
+    backup archives for this tenant's jobs.
+
+  - **Daily Storage Increase** - A simple linear projection of the amount of
+    additional cloud storage that will be used, each day, given the current
+    schedules, retention policies, and archive sizes.
+
+The heads-up display is partially dependent on the current tenant, so if you
+switch to a different tenant, you might get different numbers / statuses.
+
+### The Task Sidebar
+
+To the left of the screen is a sidebar with links to the common tasks you
+may want to perform:
+
+  - Run an ad hoc backup
+  - Restore data from a backup
+  - Configure a new backup job
+
+### The Top Bar
 
 TBD
 
-## Logging into the Web UI
+### The Navigation Bar
+
+The black navigation bar (immediately under the heads-up display) will stick
+to the top of the viewport as you scroll.  It provides top-level navigation,
+including:
+
+- **Systems** - Your data systems are the things that SHIELD protects, by
+  making copies of the important data contained within them, on a scheduled
+  and recurring basis.  THis page lets you review and manage those systems.
+
+- **Storage** - Cloud storage is where SHIELD keeps the backup copies of
+  your data.  You can configure however many storage systems you want, in
+  whatever configuration you deem appropriate.  This page lets you access
+  both global (shared) cloud storage systems, and those specific to your
+  tenant.
+
+- **Retention** - SHIELD doesn't keep backup archives forever.  Every backup
+  job needs a _retention policy_ so that SHIELD knows when it is okay to
+  delete older archives, to conserve space.  This page lets you review and
+  manage those policies.
+
+- **Admin** - This one is for SHIELD administrators only.  It provides
+  access to a host of administrative functions like tenant and user
+  management, global cloud storage management, etc.
+
+
+## The CLI
 
 TBD
 
-## General Web UI Layout
-
-TBD
-
-## The Web UI HUD / Health
-
-TBD
-
-## Using the CLI
-
-TBD
-
-## CLI Authentication
-
-TBD
-
-## Auth Tokens
-
-TBD
-
-## Getting help from the CLI
-
-TBD
 
 # Configuring Backups
 
@@ -459,7 +545,7 @@ TBD
 
 TBD
 
-# Managing Storage
+# Cloud Storage
 
 TBD
 
@@ -587,7 +673,7 @@ TBD
 
 TBD
 
-# How Do I Backup &lt;X&gt;?
+# How Do I Backup _X_?
 
 ## SHIELD Itself
 
