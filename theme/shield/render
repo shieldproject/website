@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+
+use Verse qw/verse/;
+use Verse::Theme;
+use File::Find;
+use List::Util qw/max/;
+
+dir "{site}";
+copy "{theme}/assets/*"  if exist "{theme}/assets";
+copy "{root}/content/*"  if exist "{root}/content";
+
+my @blog = reverse
+	sort { ($a->{__dated} || 0) cmp ($b->{__dated} || 0) }
+	grep { !$_->attrs->{draft} } blog->read_all;
+$_->{timestamp} = $_->{__dated} for @blog;
+
+for my $page (page->read_all) {
+	render [$page, { articles => [@blog] }],
+		using  => $page->attrs->{template} || "page.tt",
+		layout => $page->attrs->{layout}   || "page.tt",
+		at     => "{site}/".$page->attrs->{url};
+}
+
+#my $latest = max map { $_->{timestamp} } @blog;
+#render { articles => [@blog], latest => $latest },
+#	using  => "rss.tt",
+#	layout => "rss.tt",
+#	at     => "{site}/feed.xml";
+
+#dir "{site}/blog";
+#for my $post (@blog) {
+#	render $post,
+#		using => "article.tt",
+#		at    => "{site}/blog/{permalink}/index.html";
+#}
+
+1;

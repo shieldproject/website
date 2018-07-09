@@ -1,0 +1,664 @@
+/*home*/
+.dark-load
+	header
+		z-index: 6
+		background-color: #1d1d1d
+
+/*About us*/
+.about-us
+	background-color: $white
+	position: relative
+
+/*Into slider*/
+.into-slider
+	padding: 0
+	position: relative
+	.item
+		background-color: #111
+		color: $white
+		text-align: center
+		padding-top: 30px
+		padding-bottom: 50px
+		padding-left: 15px
+		padding-right: 15px
+
+		i
+			font-size: rem(65px)
+			color: $white
+		h4
+			font-size: rem(18px)
+			font-weight: 500
+			margin-top: 0
+			margin-bottom: 10px
+			text-transform: uppercase
+			letter-spacing: 0.6px
+		p
+			font-size: rem(14px)
+			color: $white
+	> div
+		> div
+			> div
+				padding: 0
+				&:nth-child(2n)
+					.item
+						background-color: rgba(#111, 0.9)
+
+.item-about
+	.icon
+		display: inline-block
+		padding-right: 10px
+		float: left
+		i
+			font-size: 73px
+			color: #555
+		.bg-icon
+			position: absolute
+			top: -60px
+			left: 50px
+			i
+				font-size: 152px
+				opacity: 0.05
+	.content
+		padding-left: 20px
+		overflow: hidden
+		h3
+			font-size: 18px
+			font-weight: 600
+			letter-spacing: 0.8px
+			text-transform: uppercase
+			color: #555
+			margin-bottom: 0
+			span
+				color: $accent-color
+		p
+			margin-top: 8px
+			font-size: 14px
+			line-height: 22px
+			color: #606060
+.light-item
+	.icon
+		i
+			color: $white
+	.content
+		h3
+			color: $white		
+		p		
+			color: #e2e2e2
+
+/*Services section*/
+.services-section
+	.slick-list
+		overflow: visible
+	.ui-tabs-panel
+		.heading-title
+			margin-bottom: 0
+		p
+			font-size: 14px
+			line-height: 23px
+	.link-full
+		padding-top: 60px
+
+/*  How we work section */
+.section-how-we-work
+	background-color: #fafafa
+	.icon-container
+		border-radius: 50%
+		border: 3px solid rgba(#424242, 0.47)
+		height: 195px
+		width: 195px
+		text-align: center
+		margin: 0 auto
+		margin-bottom: 35px
+		transition: all .26s ease
+		&:after
+			content: ""
+			display: block
+			width: 70px
+			height: 1px
+			border-top: 2px dashed #ccc
+			position: absolute
+			right: -37px
+			top: 28%
+		&:hover
+			border-color: $accent-color
+			.icon
+				border-color: lighten($accent-color, 90%)
+				background-color: $accent-color
+		.icon
+			width: 90px
+			height: 90px
+			background-color: #424242
+			display: inline-block
+			@include vertical-align()
+			border-radius: 50%
+			transition: all ease 0.75s
+			i
+				@include vertical-align()
+				font-size: 40px
+				color: $white
+	.item-icon
+		&:last-child
+			.icon-container
+				&:after
+					display: none
+		p
+			color: #606060
+			font-weight: 400
+			margin-top: 14px
+			letter-spacing: 0.4px
+			font-size: 14px
+	h3, p
+		text-align: center
+	h3
+		font-size: rem(18px)
+		font-weight: 600
+		margin-bottom: 10px
+		color: #555
+		text-transform: uppercase
+
+.container-carousel
+		position: relative
+.content-wrap
+	height: 100%
+	width: 100%
+	overflow: hidden
+	display: table
+	.content-va
+		display: table-cell
+		vertical-align: middle
+
+.item-wrap
+	position: relative
+	overflow: hidden
+	.content-wrap
+		position: relative
+
+	img
+		+mt(0.5s)
+		transition-delay: 0.3s
+	&:hover
+		.content
+			opacity: 1
+		img
+			filter: blur(10px)
+		.content
+			&::before
+				background-color: rgba(#000, 0.7)
+		h2, p
+			color: $white
+	.content
+		padding-left: 40px
+		padding-right: 40px
+		position: absolute
+		text-align: center
+		height: 100%
+		width: 100%
+		top: 0
+		&::before
+			display: block
+			top: 10px
+			+mt(0.5s)
+			right: 10px
+			bottom: 10px
+			left: 10px
+			position: absolute
+			content: ''
+	h2
+		font-size: 18px
+		margin-bottom: 0px
+		line-height: 18px
+		color: $white
+		font-weight: 600
+		text-transform: uppercase
+		&:after
+			content: ""
+			display: block
+			height: 1px
+			width: 30px
+			background-color: $accent-color
+			margin: 0 auto
+			margin-top: 12px
+			margin-bottom: 5px
+	p
+		margin-top: 10px
+		font-size: 14px
+		color: $white
+
+/*Section trigger*/
+.section-trigger
+	.heading-title
+		margin-bottom: 35px
+		h2
+			&:after
+				display: none
+
+/*Section We are in numbers*/
+.section-we-are-numbers
+	.item-number
+		text-align: center
+		.num
+			background-color: tint($dark-accent, 10%)
+			h2
+				font-size: 65px
+				line-height: 65px
+				padding-top: 22px
+				padding-bottom: 13px
+				font-weight: 600
+				margin-bottom: 0
+				margin-top: 0
+				color: $white
+		.name
+			background-color: rgba($dark-accent, 0.5)
+			padding-top: 36px
+			padding-bottom: 36px
+			p
+				font-size: 18px
+				margin-top: 0
+				font-weight: 500
+				color: $white
+				text-transform: uppercase
+	div
+		>
+			div
+				&:nth-child(2n)
+					.item-number
+						.num
+							background-color: rgba($dark-accent, 0.5)
+						.name
+							background-color: tint($dark-accent, 10%)
+
+/*Team section*/
+.item-team
+	ul.social-links
+		position: absolute
+		top: 50%
+		+mt(0.5s)
+		transform: translateY(-50%)
+		left: 0
+		right: 0
+		text-align: center
+		li
+			opacity: 0
+			transform: translateY(10px)
+			transition: all .3s cubic-bezier(0.23, 1, 0.32, 1)
+			transition-delay: 0s
+
+	&:hover
+		.mask-info
+			opacity: 0.6
+		ul.social-links
+			li
+				opacity: 1
+				transform: translateY(0)
+				transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1)
+				&:nth-of-type(1)
+					transition-delay: .3s
+				&:nth-of-type(2)
+					transition-delay: .4s
+				&:nth-of-type(3)
+					transition-delay: .5s
+				&:nth-of-type(4)
+					transition-delay: .6s
+				&:nth-of-type(5)
+					transition-delay: .7s
+				&:nth-of-type(6)
+					transition-delay: .8s
+	h2
+		font-size: 16px
+		color: #222
+		font-weight: 500
+		margin-top: 17px
+		margin-bottom: 4px
+	span
+		color: $accent-color
+	p
+		margin-bottom: 0
+		margin-top: 10px
+		font-size: 14px
+		color: #606060
+
+.img-wrap
+	position: relative
+	img
+		width: 100%
+.mask-info
+	+mt(0.5s)
+	opacity: 0
+	position: absolute
+	top: 0
+	width: 100%
+	height: 100%
+	background-color: $white
+	border: 4px solid $accent-color
+
+/*==========   Start Testimonials Section  ==========*/
+.section-testimonials
+	overflow: hidden
+	.dots-control-carousel
+		margin-top: 0
+	.prev-next-block-rotate
+		.wrap-prev,.wrap-next
+			z-index: 4
+	.dots-control-carousel
+		margin-top: 50px
+.testimonials-items
+	*
+		outline: none
+
+.item-testimonials
+	padding: 25px
+	text-align: center
+	background-color: rgba(tint($dark-accent, 2%),0.35)
+	border-radius: 3px
+	transition: all ease-in-out .6s
+	&:hover
+		transform: translateY(-2%)
+		img
+			border-color: $accent-color
+	img
+		border-radius: 50%
+		width: 118px
+		margin: 0 auto
+		display: inline-block
+		border: 4px solid tint($dark-accent, 2%)
+		transition: all ease .6s
+	p
+		padding-top: 10px
+		color: $white
+		font-weight: 300
+		font-size: rem(15px)
+		letter-spacing: .2px
+		padding-bottom: 22px
+	span
+		display: block
+		font-size: rem(16px)
+	.name
+		color: $accent-color
+		font-weight: 500
+	.person
+		color: #a5a5a5
+
+/*==========   Start Choose us  ==========*/
+.item-choose
+	position: relative
+	margin-bottom: 50px
+	.content
+		h3
+			letter-spacing: 0.2px
+			margin-top: 0
+	.icon
+		.icon-default
+
+/*==========   Start Our clients  ==========*/
+.our-clients
+	overflow: hidden
+	padding-top: 70px
+	padding-bottom: 70px
+	position: relative
+	background-color: $accent-color
+	.item-carousel
+		img
+			position: relative
+			left: 0
+			right: 0
+			margin: 0 auto
+.clients-carousel
+	*
+		outline: none
+
+/*========= Start our location ==========*/
+.our-locations
+	padding: 0
+	.heading-location
+		background-color: $accent-color
+		text-align: center
+		color: $white
+		font-size: 18px
+		font-weight: 500
+		text-transform: uppercase
+		padding-top: 15px
+		padding-bottom: 15px
+		+mt(0.5s)
+		cursor: pointer
+		&:hover
+			background-color: $dark-accent
+	.active-map
+		background-color: $dark-accent
+	.map-section
+		// opacity: 0
+		// height: 1px
+
+
+/*========= Start Footer ==========*/
+footer
+	padding-top: 80px
+	background-color: #212124
+	>
+		div
+			padding-bottom: 80px
+			&:last-child
+				padding-bottom: 20px
+	.logo
+		img
+			height: 32px;
+	p
+		color: $white
+		font-size: 13px
+		margin-top: 25px
+		line-height: 26px
+	ul.social-links
+		margin-top: 30px
+		margin-left: 5px
+	.down-footer
+		background-color: #272729
+		padding-top: 20px
+		p
+			display: inline-block
+			float: left
+			margin-top: 0
+			a
+				color: $accent-color
+		ul
+			padding-left: 0
+			margin: 0
+			float: right
+			li
+				font-size: 14px
+				text-transform: uppercase
+				font-weight: 500
+				list-style: none
+				display: inline-block
+				margin-right: 15px
+				&:last-child
+					margin-right: 0
+				a 
+					color: $white
+					text-decoration: none
+					+mt(0.5s)
+					&:hover
+						color: $accent-color
+	.links
+		p
+			margin-top: 0
+
+.footer-minimal
+	.down-footer
+		p
+			display: block
+			float: none
+
+/*Who we are*/
+.whe-we-are
+	padding-top: 0
+	padding-bottom: 0
+	.heading-title
+		margin-bottom: 0
+.center-all
+	// display: table-cell
+	// vertical-align: middle
+	// text-align: center
+.buttons-section
+	// text-align: center
+	.white-btn
+		background-color: $accent-color
+		border-color: $white
+		color: $white
+		&:hover
+			background-color: shade($accent-color, 20%)
+.right-full
+	background-color: rgba($white, 0.95)
+	position: relative
+	padding-top: 80px
+	padding-bottom: 80px
+	.center-all
+		width: 50%
+		transform: translateX(50%)
+.left-full
+	position: relative
+	.center-all
+		position: absolute
+		top: 50%
+		left: 0
+		right: 0
+		margin: 0 auto
+		text-align: center
+		transform: translateY(-50%)
+
+/*.section-our-services*/
+.section-our-services
+	padding-bottom: 50px
+/*==========   Start Price Table Section  ==========*/
+
+
+.item-price
+	background-color: $white
+	box-shadow: 4px 0 19px rgba($dark-accent, 0.35)
+	transition: all ease-in-out .4s
+	&:hover
+		transform: translateY(-3%)
+		.head
+			.name-wrap
+				&:after
+					transform: translateY(-2%)
+	.head
+		background-color: #f8f8f8
+		.name-wrap
+			color: $white
+			background-color: #2d2c2c
+			position: relative
+			text-align: center
+			padding-top: 15px
+			h2
+				font-size: 17px
+				font-weight: 400
+				margin-top: 0
+				margin-bottom: 0
+				// padding-bottom: 3px
+				letter-spacing: .3px
+			&:after
+				content: ""
+				display: block
+				width: 100%
+				height: 30px
+				position: absolute
+				background-image: url('../img/s1_triangle1.svg')
+				background-size: contain
+				background-repeat: no-repeat
+		.price-wrap
+			color: $accent-color
+			text-align: center
+			padding-top: 30px
+			p
+				font-weight: 300
+				font-size: 55px
+				position: relative
+				top: -5px
+				color: $dark-accent
+				span
+					font-weight: 600
+					font-size: rem(24px)
+					vertical-align: top
+					margin-right: 4px
+					line-height: rem(69px)
+
+			.per-mn
+				display: block
+				position: relative
+				top: -15px
+	.body
+		ul
+			padding-left: 0
+			margin-top: 0
+			li
+				text-align: center
+				color: #5c5757
+				font-size: rem(14px)
+				font-weight: 400
+				list-style: none
+				padding-top: 11px
+				padding-bottom: 11px
+				&:nth-child(2n+1)
+					background-color: #f1f1f1
+				&:last-child
+					padding-top: 19px
+					padding-bottom: 19px
+
+.most-price
+	background-color: $dark-accent
+	position: relative
+	.head
+		background-color: tint($dark-accent, 15%)
+		.name-wrap
+			background-color: transparent
+			h2
+				font-size: 17px
+				font-weight: 400
+				color: $white
+				position: relative
+				top: 20px
+			&:after
+				display: none
+		.price-wrap
+			padding-top: 15px
+			padding-bottom: 15px
+			p
+				color: $white
+			.per-mn
+				color: #bdbdbd
+
+	.body
+		ul
+			li
+				color: #fafafa
+				background-color: tint($dark-accent, 15%)
+				&:nth-child(2n+1)
+					background-color: $dark-accent
+				&:last-child
+	&:before
+		content: 'Most popular plan'
+		display: block
+		background: $accent-color
+		position: absolute
+		width: 100%
+		left: 0
+		top: -31px
+		text-align: center
+		color: $white
+		text-transform: uppercase
+		letter-spacing: 2px
+		font-size: rem(12px)
+		padding: 8px 5px
+
+/*==========   Start .faq-section ==========*/
+.faq-section
+	h2	
+		margin-bottom: 20px
+	.accordion
+		margin-bottom: 50px
+		&:last-child
+			margin-bottom: 0
+
+/*==========   Start .chooce-us-acc  ==========*/
+.chooce-us-acc
+	.heading-title								
+		margin-bottom: 0

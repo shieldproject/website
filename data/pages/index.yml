@@ -1,0 +1,83 @@
+url: /index.html
+template: main.tt
+
+copy:
+  getstarted: |
+    SHIELD provides a centralized solution and interface designed to make it
+    easier for operations to protect their critical infrastructure. SHIELD
+    excels at managing core Cloud Foundry backups, BOSH deployed services,
+    and more. The SHIELD daemon is lightweight and low-impact, and it
+    enables you to quickly have a fully-functional disaster recovery plan.
+
+  enterprise: |
+    Stark & Wayne is the leading cloud technology consulting firm, offering
+    design, implementation, and operations services, enabling enterprises to
+    operate highly available and extensible platforms on their
+    infrastructure.
+
+cards:
+  - title: Multi-Tenancy
+    icon:  cloud-upload
+    blurb: |
+      Set up multiple tenants, each with their own private configurations.
+  - title: Data Security
+    icon:  door-lock
+    blurb: |
+      All of your sensitive data is encrypted, both in-flight, and at-rest.
+  - title: Ease-of-Use
+    icon:  like
+    blurb: |
+      A modern web user interface, optimized for operator efficiency.
+
+systems:
+  - title: PostgreSQL
+    image: /img/postgres.svg
+    link:  "#postgres"
+    blurb: |
+      The world's most advanced open source database.
+  - title: Redis
+    image: /img/redis.svg
+    link:  "#redis"
+    blurb: |
+      Open source, in-memory data structure store.
+  - title: MySQL
+    image: /img/mysql.svg
+    link:  "#mysql"
+    blurb: |
+      One of the most popular database servers in the world.
+  - title: Consul
+    image: /img/consul.svg
+    link:  "#consul"
+    blurb: |
+      Service discovery and configuration made easy.
+  - title: MongoDB
+    image: /img/mongodb.png
+    link:  "#mongodb"
+    blurb: |
+      The original, NoSQL, web-scale, document database.
+
+platforms:
+  - title: BOSH
+    image: /img/bosh.svg
+    link:  "#bosh"
+    blurb: |
+      Everyone's favorite infrastructure deployment tool.
+  - title: Cloud Foundry
+    image: /img/cf.svg
+    link:  "#cf"
+    blurb: |
+      The premier application runtime for your cloud-native workloads.
+  - title: Pivotal Cloud Foundry
+    image: /img/pcf.svg
+    link:  "#pcf"
+    blurb: |
+      The proven solution for companies to deliver a software-led, digital
+      transformation.
+  - title: Docker
+    image: /img/docker.svg
+    link:  "#docker"
+    blurb: |
+      The world's most ubiquitous container runtime.
+
+
+--- |-

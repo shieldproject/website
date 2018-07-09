@@ -1,0 +1,430 @@
+@import "bourbon"
+
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1300px)
+	.toggle-top
+		position: relative
+		left: 40px
+
+@media only screen and (max-width : 1160px)
+	/*START Left menu style normal*/
+	//.content-wrap-lfm
+	.content-wrap-lfm
+		margin-left: 0
+		.sidenav
+			.container
+				width: 970px
+
+	.header-type-1
+		position: relative
+		left: auto
+		background-color: #1d1d1d
+		background-image: none!important
+		top: auto
+		z-index: 6
+		height: 65px
+		width: 100%
+		&:after
+			display: none
+		ul.social-links
+			display: none
+		.logo
+			float: left
+			display: inline-block
+			width: auto
+			padding-top: 12px
+			padding-bottom: 0
+			margin-top: 0
+			margin-left: 20px
+			.logo-dark
+				display: none
+			.logo-white
+				display: block
+		.dark-logo
+			.logo-dark
+				display: block
+			.logo-white
+				display: none
+		.top-menu
+			display: none
+		.toggle-mnu
+			display: block
+			top: 23px
+			right: 41px
+	/*END Left menu style normal*/
+@media only screen and (max-width : 1200px)
+	.fullscreen-topnav
+		.items
+			.link
+				&:nth-of-type(2)
+					background-color: rgba(#555, 0.9)
+	.section-how-we-work 
+		.icon-container
+			&:after
+				width: 33px
+				right: -17px
+	.avatar-80
+		width: 50px
+		height: 50px
+	
+	.col-md-9
+		padding-left: 65px
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px)
+	/**/
+	header
+		.sf-menu
+			display: none
+		.logo
+			padding: 12px 0 9px 0
+			img
+				height: 43px
+		.toggle-mnu 
+			display: block
+			top: 23px
+			right: 41px
+		.toggle-top
+			top: 23px
+			padding-left: 14px
+			margin-left: 0
+			border-left: 1px solid #ccc
+	.background-image
+		background-position: 50% 50%
+	/**/
+	.heading-title-big
+		font-size: 52px
+	.slide-title
+		font-size: 22px
+	.description-slide
+		font-size: 13px
+		font-weight: 400
+		line-height: 24px
+	.btn
+		padding: 12px 25px 12px 25px
+		font-size: 13px
+		line-height: 13px
+
+	/*Sections style*/
+	.about-us
+		padding-bottom: 55px
+		.item-about
+			margin-bottom: 30px
+
+	/*Tabs services*/
+	.data-systems-section
+		ul.list
+			margin-top: 30px
+	/*Tabs services*/
+	.data-systems-tabs
+		padding: 0
+		.slick-list
+			overflow: hidden
+		.ui-tabs-nav
+			.ui-tabs-active
+				.ui-tabs-anchor
+					background-color: #1b1b1b
+					transform: scale(1)
+		.ui-tabs-panel
+			margin-top: 30px
+	/*How we work*/
+	.section-how-we-work
+		padding-bottom: 35px
+		.icon-container
+			&:after
+				display: none
+		.item-icon
+			margin-bottom: 50px
+	/*section-work-progress*/
+	.section-work-progress
+		padding-bottom: 45px
+		.heading-title
+			margin-bottom: 30px
+		.icon-progress
+			margin-bottom: 40px
+	/*Section We are in numbers*/
+	.section-we-are-numbers
+		div
+			>
+				div
+					&:nth-child(2n)
+						.item-number
+							.num
+								background-color: tint($dark-accent, 10%)
+								
+							.name
+								background-color: rgba($dark-accent, 0.5)
+	/*Team section*/
+	.section-team
+		padding-bottom: 35px
+		.item-team
+			padding-bottom: 50px
+
+	/*section-testimonials*/
+	.section-testimonials
+		.prev-next-block-rotate
+			display: none
+
+	/*section-choose-us*/
+	.section-choose-us
+		padding-bottom: 20px
+		.item-about 
+			margin-bottom: 65px
+			.icon
+				line-height: 73px 
+				.bg-icon
+					top: 0
+					i
+						font-size: 130px
+	/*contact form*/
+	.contact-wrap
+		text-align: center
+		margin-bottom: 50px
+
+	/*footer*/
+	footer
+		>
+			div
+				padding-bottom: 30px
+		text-align: center
+		.social-links
+			margin-bottom: 50px
+		.links
+			padding-bottom: 30px
+		ul.footer-menu
+			display: none
+		.down-footer
+			p
+				float: inherit
+				display: block
+				text-align: center
+	.contact-2
+		padding-bottom: 30px
+	section
+		.accordion
+			margin-top: 30px
+
+	.services-list
+		margin-bottom: 30px
+	.service-single
+		ul.list
+			margin-top: 20px
+	.service-about,.item-about
+		padding-bottom: 40px
+		&:last-child
+			padding-bottom: 0
+		.icon
+			i
+				width: 70px
+			.bg-icon
+				top: -20px
+				left: 70px
+				i
+					font-size: 100px
+
+	.item-price
+		.head
+			.name-wrap
+				&:after
+					background-size: 100% 100%
+					height: 30px
+	.most-price
+		&:before
+			position: relative
+			top: 0
+
+	.item-price-two
+		&:last-child
+			margin-bottom: 40px
+	.blog-classic
+		.post-content-classic
+			margin-top: 20px
+		.post.sticky
+			&:after
+				right: 15px
+			&:before
+				right: 8px
+				margin-right: 15px
+	/*Blog*/
+	.comment-list
+		.children
+			.children
+				li
+					padding-left: 50px
+
+	#sidebar
+		&:before
+			display: none
+	/////////////////////////
+	
+	.content-project
+		margin-top: 30px
+
+	#TableOfContents
+		display: none
+
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px)
+	header
+		.toggle-mnu
+			right: 55px
+		.toggle-top
+			left: 27px
+	.description-slide
+		font-size: 12px
+	.full-slider .slide .small-text .heading-title-big, .wrap-header .slide .small-text .heading-title-big
+		font-size: 40px
+
+	.fullscreen-topnav
+		.items
+ 			.text-item
+ 				height: auto
+ 				padding-top: 40px
+ 				padding-bottom: 40px
+	.prev-next-block-rotate
+		display: none
+	/*Section We are in numbers*/
+	.section-we-are-numbers
+		padding-bottom: 0
+
+	/*section-testimonials*/
+	.section-testimonials 
+		.dots-control-carousel
+			margin-top: 30px
+	.display-page 
+		h1
+			font-size: 30px
+		p
+			font-size: 13px
+	.right-full .center-all
+		width: 100%
+		transform: translateX(0)
+	#sidebar
+		padding-bottom: 30px
+	.profile-img
+		.dark-hex
+			img
+				margin-bottom: 30px
+	
+
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px)
+	/**/
+	.heading-title-big
+		font-size: 40px
+	.full-slider
+		.embed-responsive-item
+			display: none
+		img
+			display: none
+	.heading-title 
+		h2
+			font-size: 30px
+			margin-bottom: 10px
+	.full-slider .slide .small-text .heading-title-big, .wrap-header .slide .small-text .heading-title-big
+		font-size: 30px
+	.small-head 
+		h2
+			font-size: 16px
+	.small-heading 
+		h2
+			font-size: 25px
+	.heading-title 
+		p
+			font-size: 13px
+	.slide-title
+		font-size: 18px
+	.description-slide
+		font-size: 12px
+	/*Team*/
+	.item-team
+		h2
+			font-size: 15px
+		span
+			font-size: 13px
+		p
+			font-size: 13px
+		ul.social-links
+			li
+				margin-left: 2px
+				font-size: 13px
+				line-height: 13px
+				a
+					width: 29px
+					height: 29px
+					line-height: 29px
+					transform: rotate(0deg) translate(0px, 0px)
+					i
+						transform: rotate(0deg) translate(0px, 0px)
+	.post
+		.post-data
+			p
+				font-size: 13px
+		.content
+			h3
+				font-size: 18px
+
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px)
+	/**/
+	.buttons-section
+		.btn
+			margin-right: 0!important
+			margin-bottom: 15px
+			&:last-child
+				margin-bottom: 0
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 350px)
+	.buttons-section
+		.large-btn:first-child
+			margin-right: 15px!important
+	.btn
+		font-size: 12px
+	.heading-title-big
+		font-size: 30px
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px)
+	/**/
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px)
+	/**/
+
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px)
+	/**/
+
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px)
+	.toc ul > li > ul 
+		display: block
+	/**/
+
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px)
+	/**/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-height : 860px)
+	/**/
+	.active-fullscreen-topnav
+		.height-half-60
+			.items
+				.height-full
+					height: 530px
+					padding-top: 50px
+					padding-bottom: 50px
