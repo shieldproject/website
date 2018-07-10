@@ -22,8 +22,6 @@ jobs:
       - aggregate:
         - get: git
           trigger: true
-        - get: code
-          trigger: true
         - get: releases
           trigger: true
         - get: blog
@@ -38,7 +36,6 @@ jobs:
               tag:        latest
           inputs:
             - name: git
-            - name: code
             - name: releases
             - name: blog
           outputs:
@@ -167,12 +164,6 @@ resources:
     uri:         (( grab meta.github.website.uri ))
     branch:      (( grab meta.github.website.branch ))
     private_key: (( grab meta.github.website.private_key ))
-
-- name: code
-  type: git
-  source:
-    uri: https://github.com/starkandwayne/shield
-    branch: website-ci
 
 - name: releases
   type: github-release

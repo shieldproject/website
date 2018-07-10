@@ -1,3 +1,3 @@
 #!/bin/bash
 
-fly -t lab set-pipeline -p shieldproject.io -c <(spruce merge ci/pipeline.yml)
+fly -t pipes set-pipeline -p shieldproject.io -c <(spruce merge ci/pipeline.yml)
