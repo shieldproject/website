@@ -737,13 +737,16 @@
       var type = e.nodeName,
           text = $(e).text();
 
-      var anchor = text.toLowerCase()
-                       .replace(/['"+()[]]+/g,  '')
-                       .replace(/[^a-z0-9-]+/g, '-')
-                       .replace(/^-/g, '')
-                       .replace(/-$/g, '')
+      var anchor = $(e).attr('id');
+      if (typeof(anchor) === 'undefined' || anchor == '') {
+        anchor = text.toLowerCase()
+                     .replace(/['"+()[]]+/g,  '')
+                     .replace(/[^a-z0-9-]+/g, '-')
+                     .replace(/^-/g, '')
+                     .replace(/-$/g, '')
 
-      $(e).attr('id', anchor);
+        $(e).attr('id', anchor);
+      }
 
       li = $('<li><a href="#'+anchor+'">'+text+'</a></li>');
       if (type == 'H1') {
