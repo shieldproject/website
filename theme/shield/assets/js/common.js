@@ -7,7 +7,14 @@
 		$('#status').fadeOut();
 		$('#preloader').delay(1000).fadeOut('slow');
 		$('body.dark-load').removeClass('dark-load');
+
 		$('[href^=http]').attr('target', '_blank');
+
+		$.each($('code'), function (_, c) {
+			$(c).html(c.textContent
+			           .replace(/:::((.|\n)*?):::/mg,
+			                    '<span class="hi">$1</span>'));
+		});
 	})
 
 	/*-------------------------------------

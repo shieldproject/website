@@ -195,8 +195,8 @@ Save that file locally, as `shield.yml`, and then run:
 
     $ bosh -e my-bosh deploy \
         -d shield \
-        -v static_ip=192.0.2.5 \
-        -v domain=shield.example.com \
+        -v static_ip=:::192.0.2.5::: \
+        -v domain=:::shield.example.com::: \
         shield.yml
 
 Replace `domain` with the FQDN of your SHIELD management console, and
@@ -231,8 +231,8 @@ this:
       - name: some-database
         jobs:
           # ... other jobs ....
-          - name:    shield-agent
-            release: shield
+          :::- name:    shield-agent
+            release: shield:::
 
         # ... rest of configuration ...
 
@@ -252,8 +252,8 @@ Here's a working runtime config:
     addons:
       - name: shield
         jobs:
-          - name:    shield-agent
-            release: shield
+          :::- name:    shield-agent
+            release: shield:::
 
 To use this, update your existing runtime-config:
 
