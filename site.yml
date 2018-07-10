@@ -16,7 +16,7 @@ site:
   subtitle: Data Protection For A Modern Cloud
   canon:    https://shieldproject.io
   theme:    shield
-  buster:   1
+  buster:   2
 
   # Here you can tell Verse about your Social Media identities;
   # Verse will use this information when generating page metadata

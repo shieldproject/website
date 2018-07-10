@@ -6,6 +6,10 @@ build:
 	rm -rf htdocs
 	./bin/verse build
 
+theme:
+	cd template && gulp
+	make build
+
 demo: build
 	./bin/verse run
 
@@ -20,3 +24,5 @@ staging:
 	cf push -f cf/manifest-stage.yml
 prod:
 	cf push -f cf/manifest.yml
+
+.PHONY: buidl theme demo local check staging prod
