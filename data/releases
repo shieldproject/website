@@ -39,7 +39,17 @@
       "notes": "# Improvements\n\n- Global Storage Systems are available for selection during the\n  backup configuration wizard in the web UI.\n\n- Storage systems now properly report their health to all\n  front-end views, fixing a few fixmes along the way.\n\n- Agents can now be resynchronized, in an ad hoc fashion, via the\n  admin backend on the web UI.\n\n- Jobs will have their 'next run' time re-calculated when their\n  schedule is changed.  Previously, the existing schedule was in\n  force until the first run after a schedule change, at which\n  point the new schedule kicked in.  This was weird, so we changed\n  it.\n\n- New Cloud Storage Solutions (global or tenant-based) are\n  considered healthy until proven broken.\n\n- `shield-agent` now has better logging to help troubleshoot\n  registration problems.\n\n# Bug Fixes\n\n- Fix an egregious bug in the scheduling logic that was only\n  considering jobs scheduled in the future to be \"overdue\".\n  Since all jobs start out with a next_run of 0, this caused NO\n  JOBS to ever be scheduled.  Thankfully, 8.x is still beta.\n\n- Fix a segfault when dereferencing a nil Task during a broadcast.\n  Now, we log that we got a nil task, to assist in tracking down\n  why / where its occurring, rather than just crashing on panic.\n\n- The `shield restore-archive` command now prints out the UUID of\n  the task scheduled to run the restore, rather than the cryptic\n  (and oh-so-unhelpful) string \"%s!:bool=true\"\n\n- Neither `shield create-job`, nor `shield update-job` will allow\n  you to create (or modify) jobs to have invalid, unparseable\n  schedules.  This will keep the CLI from accidentally creating\n  schedules that the web UI can't process.\n\n- When restoring through the new wizard, the web UI only shows\n  archives for the selected target system, instead of all of the\n  archives every made for the tenant.  Turns out this was less\n  than useful.\n\n- Fix up some edge cases where we weren't checking for the\n  existence of a tenant in tenant-scope API calls, just the rights\n  to that tenant -- since system users can affect all tenants, we\n  found that we could create child objects on non-existent\n  tenants.\n\n# Developer Stuff\n\n- `bin/testdev` now runs a WebDAV service on the nginx reverse\n  proxy (on `$PORT+1`), since we can no longer use the `fs` plugin\n  for storage operations.\n\n  On MacOS, with homebrew, you'll want to reinstall nginx with\n  WebDAV support: `brew reinstall --with-webdav nginx`\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.8",
       "version": "8.0.8"
+    },
+    {
+      "notes": "# Improvements\n\n- New `vault` plugin for backing up Safe or Vault installations.\n  You can optionally restrict the subtree that gets backed up and\n  restored, in case you share the Vault with others.\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.12",
+      "version": "8.0.12"
+    },
+    {
+      "notes": "# Improvements\n\n- New `vault` plugin for backing up Safe or Vault installations.\n  You can optionally restrict the subtree that gets backed up and\n  restored, in case you share the Vault with others.\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.12",
+      "version": "8.0.12"
     }
   ],
-  "latest": "8.0.8"
+  "latest": "8.0.12"
 }

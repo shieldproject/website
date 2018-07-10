@@ -12,31 +12,27 @@ header() {
 	echo
 }
 
-header "Installing Spruce"
-curl -Lo /usr/bin/spruce https://github.com/geofffranks/spruce/releases/download/v1.18.0/spruce-linux-amd64
-chmod 0755 /usr/bin/spruce
-
 VERSION=$(cat releases/version)
-CURRENT_VERSION=$(spruce json git/data/releases | jq -r .latest)
+CURRENT_VERSION=$(spruce json $REPO_ROOT/data/releases | jq -r .latest)
 RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag)"
 
 if [[ "$CURRENT_VERSION" != "$VERSION" ]]; then
 	header "Getting New Release Notes for SHIELD v$VERSION"
 	cat releases/body
 	(
-		spruce json git/data/releases | jq -r '{"all":.all}' | spruce merge -
+		spruce json $REPO_ROOT/data/releases | jq -r '{"all":.all}' | spruce merge -
 		echo "- notes: |"
 		cat releases/body | sed -e 's/^/    /'
 		echo
 		echo "  url:     $RELEASE"
 		echo "  version: $VERSION"
 		echo "latest:  $VERSION"
-	) | spruce json | jq -r . > git/data/releases.tmp
-	mv git/data/releases.tmp git/data/releases
+	) | spruce json | jq -r . > $REPO_ROOT/data/releases.tmp
+	mv $REPO_ROOT/data/releases.tmp $REPO_ROOT/data/releases
 fi
 
 header "Re-building Website Static Assets"
-pushd git
+pushd $REPO_ROOT
 	make
 popd
 
@@ -50,11 +46,14 @@ if [[ -n "$(cd ${REPO_ROOT}; git status --porcelain)" ]]; then
 		git config --global user.name "CI Bot"
 	fi
 
-	(
 	git merge --no-edit ${BRANCH}
 	git add -A
 	git status
-	git commit -m "Updated download page for latest SHIELD release")
+	if [[ "$CURRENT_VERSION" != "$VERSION" ]]; then
+		git commit -m "[ci] Integrate release notes from SHIELD v$VERSION"
+	else
+		git commit -m "[ci] Rebuilt static assets via pipeline"
+	fi
 	popd
 fi
 cp -a ${REPO_ROOT} ${REPO_OUT}
