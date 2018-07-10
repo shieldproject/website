@@ -12,23 +12,27 @@ header() {
 	echo
 }
 
+header "Installing Spruce"
+curl -Lo /usr/bin/spruce https://github.com/geofffranks/spruce/releases/download/v1.18.0/spruce-linux-amd64
+chmod 0755 /usr/bin/spruce
+
 VERSION=$(cat releases/version)
-CURRENT_VERSION=$(cat git/data/releases.json | jq -r .latest)
+CURRENT_VERSION=$(spruce json git/data/releases | jq -r .latest)
 RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag)"
 
 if [[ "$CURRENT_VERSION" != "$VERSION" ]]; then
 	header "Getting New Release Notes for SHIELD v$VERSION"
 	cat releases/body
 	(
-		cat git/data/releases.json | jq -r '{"all":.all}' | spruce merge -
+		spruce json git/data/releases | jq -r '{"all":.all}' | spruce merge -
 		echo "- notes: |"
 		cat releases/body | sed -e 's/^/    /'
 		echo
 		echo "  url:     $RELEASE"
 		echo "  version: $VERSION"
 		echo "latest:  $VERSION"
-	) | spruce json | jq -r . > git/data/releases.json.tmp
-	mv git/data/releases.json.tmp git/data/releases.json
+	) | spruce json | jq -r . > git/data/releases.tmp
+	mv git/data/releases.tmp git/data/releases
 fi
 
 header "Re-building Website Static Assets"
