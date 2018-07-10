@@ -7,6 +7,7 @@
 		$('#status').fadeOut();
 		$('#preloader').delay(1000).fadeOut('slow');
 		$('body.dark-load').removeClass('dark-load');
+		$('[href^=http]').attr('target', '_blank');
 	})
 
 	/*-------------------------------------
