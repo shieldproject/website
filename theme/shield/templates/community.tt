@@ -65,16 +65,15 @@
 <section class="community community-involved">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="left heading-title">
           <h2>Join <span>Our Call</span></h2>
         </div>
         <p>We're always happy for people to get involved with SHIELD and help out.
-        Whether you want to sling code, squash bugs, or write docs, we'd love to hear
-        from you.  We hold a <a href="/community/call">monthly SHIELD Roadmap Call</a>
+        We hold a <a href="/community/call">monthly SHIELD Roadmap Call</a>
         where you can get progress updates and participate in the conversation!</p>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-7">
         <img src="/community/zoom.png">
       </div>
     </div>
