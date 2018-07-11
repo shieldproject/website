@@ -74,7 +74,7 @@
         where you can get progress updates and participate in the conversation!</p>
       </div>
       <div class="col-md-7">
-        <img src="/community/zoom.png">
+        <img src="/community/zoom.png?[% site.buster %]">
       </div>
     </div>
   </div>
