@@ -10,7 +10,7 @@
 </section>
 
 
-<section class="community community-slack">
+<section class="community community-slack" id="slack">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -33,7 +33,7 @@
   </div>
 </section>
 
-<section class="community community-github bg-dark-section">
+<section class="community community-github bg-dark-section" id="github">
   <div class="container">
     <div class="row">
       <div class="col-md-9">
@@ -62,7 +62,7 @@
   </div>
 </section>
 
-<section class="community community-involved">
+<section class="community community-involved" id="call">
   <div class="container">
     <div class="row">
       <div class="col-md-5">
@@ -80,7 +80,7 @@
   </div>
 </section>
 
-<section class="community community-trello">
+<section class="community community-trello" id="trello">
   <div class="container">
     <div class="row">
       <div class="col-md-3 community-icon">
