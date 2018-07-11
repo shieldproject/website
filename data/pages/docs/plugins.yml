@@ -1,0 +1,52 @@
+---
+# vim:ft=markdown:tw=76
+title:  Plugins Reference
+url:    /docs/plugins/index.html
+format: markdown
+toplinks: yes
+--- |-
+# Target Plugins
+
+## Databases
+
+### `mongo` - MongoDB NoSQL Database
+
+### `mysql` - MySQL / MariaDB Relational Database
+
+### `postgres` - PostgreSQL Relational Database
+
+### `xtrabackup` - MySQL Backups via `xtrabackup` CLI
+
+## Key-Value Stores
+
+### `consul` - Consul Key-Value Store
+
+### `consul-snapshot` - Consul Key-Value Store (via snapshotting)
+
+## CF Service Brokers
+
+### `docker-postgres` - Dockerized PostgreSQL CF Service Broker
+
+### `rabbitmq-broker` - RabbitMQ CF Service Broker
+
+### `redis-broker` - Redis CF Service Broker
+
+## BOSH Backup / Restore
+
+### `bbr-deployment` - BOSH Backup / Restore (for deployments)
+
+### `bbr-director` - BOSH Backup / Restore (for directors)
+
+# Storage Plugins
+
+## Microsoft Azure
+
+## Local Filesystem
+
+## Google Cloud Storage
+
+## Amazon S3
+
+## Scality S3 Work-Alike
+
+## OpenStack Swift
