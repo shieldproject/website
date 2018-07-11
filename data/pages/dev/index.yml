@@ -1,4 +1,5 @@
 ---
+# vim:ft=markdown:tw=76
 title: SHIELD Developer Documentation
 url:   /dev/index.html
 format: markdown
@@ -6,3 +7,8 @@ format: markdown
 Welcome to the SHIELD Developer Documentation. If you are looking for
 configuration, best practices, or operator documentation, check out the
 information [here](/docs "SHIELD Documentation").
+
+# API Reference
+
+[The SHIELD API Reference](/dev/api) documents all of the public calls you
+can make against a SHIELD core.

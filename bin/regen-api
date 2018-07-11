@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+(
+cat <<EOF
+---
+# vim:ft=markdown:tw=76
+title:  SHIELD API Reference
+url:    /dev/api/index.html
+format: markdown
+toplinks: yes
+--- |-
+EOF
+
+cat ${1:-~/code/go/shield/src/github.com/starkandwayne/shield/docs/API.md} |\
+  sed -e 's/^# .*/# SHIELD API Reference/'
+
+) > data/pages/dev/api.yml
