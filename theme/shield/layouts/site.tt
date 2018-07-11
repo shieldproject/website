@@ -43,7 +43,7 @@ h2 > span { padding-left: 0.5ex; }
 <body class="dark-load">
 	<header id="top-nav" class="top-nav page-header">
 		<div class="container">
-			<a class="logo smooth-scroll" href="https://starkandwayne.com/">
+			<a class="logo smooth-scroll" href="/">
 				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?[% site.buster %]" />
 			</a>
 			<nav class="top-menu">
