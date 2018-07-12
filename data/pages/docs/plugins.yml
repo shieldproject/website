@@ -11,42 +11,346 @@ toplinks: yes
 
 ### `mongo` - MongoDB NoSQL Database
 
+The `mongo` plugin lets you back up and restore your MongoDB databases.
+It relies on the `mongodump` and `mongorestore` utilities, installed on the
+agent host.
+
+#### Configuration Options
+
+- `mongo_host` - The IP address or host name of the MongoDB installation to
+  target.  This defaults to `127.0.0.1`, but can be changed to allow for
+  remote backup/restore, from a network-attached SHIELD agent.
+
+- `mongo_port` - The TCP port to connect to, which the `mongod` process
+  should be listening to.  Defaults to `27017`, the standard MongoDB port.
+
+- `mongo_user` - The name of the user account to authenticate to MongoDB as,
+  for performing both backup and restore tasks.  If not specified, no
+  authentication is performed.
+
+- `mongo_password` - The password to use when authenticating with
+  the `mongo_user` account.
+
+- `mongo_database` - The name of a specific database to back up.
+  By default, all databases will be included in the backup archive.
+
+  **Note:** This setting has _no effect_ on restore -- whatever is included
+  in the backup archive will be restored.
+
+- `mongo_bindir` - The path to the directory which contains the dump and
+  restore binaries.
+  Defaults to `/var/vcap/packages/shield-mongo/bin`, which works well with
+  the [SHIELD MongoDB Addon][shield-mongo].
+//If not specified, the plugin will attempt to find both `mongodump` and `mongorestore` via the agent's plugin paths setting.
+
+- `mongo_options` - A set of arbitrary command-line flags to pass to the
+  dump and restore tools.  For example, `--ssl` will enable SSL/TLS when
+  communicating with MongoDB.  Refer to the MongoDB documentation for more
+  details.
+
+
+#### Co-locating the SHIELD MongoDB Addon
+
+If you are running the SHIELD agent on a different machine than your MongoDB
+database server, you will need to install the [SHIELD MongoDB Addon][shield-mongo]
+to get the mongodump and monogrestore tools.
+
+Add the release to the top-level `releases:` section in your agent
+deployment manifest:
+
+    releases:
+      - name:    shield-addon-mongodb
+        version: latest   # or a specific version
+
+Then add the job that corresponds to the version of MongoDB you want to
+backup:
+
+    instance_groups:
+      - name: your-shield-agent
+        jobs:
+          - release: shield-addon-mongodb
+            name:    shield-addon-mongo-tools-3.4
+
+Check the [addon's README][shield-mongo] for full details of available
+versions.
+
+
 ### `mysql` - MySQL / MariaDB Relational Database
+
+The `mysql` plugin lets you back up and restore MySQL / MariaDB databases,
+using the pure-SQL `mysqldump` utility.  For very large database, the time
+spent serializing database records into SQL commands may be prohibitive, and
+you may want to investigate use of the `xtrabackup` plugin instead.
+
+Restores are handled by feeding the SQL backup through the standard `mysql`
+utility.  Connected clients will remain connected during restore.
+
+#### Configuration Options
+
+- `mysql_host` - The IP address or host name of the MySQL database server to
+  target.  This defaults to `127.0.0.1`, but can be changed to allow for
+  remote backup/restore, from a network-attached SHIELD agent.
+
+- `mysql_port` - The TCP port to connect to, which the database process
+  should be listening to.  Defaults to `3306`, the standard MySQL port.
+
+- `mysql_user` **(required)** - The username to authenticate with.
+
+- `mysql_password` **(required)** - The password for the `mysql_user`.
+
+- `mysql_read_replica` - The IP address or host name of a read replica
+  database server.  If specified, back up operations will be carried out
+  against this host, instead of `mysql_host`.
+
+- `mysql_database` - The name of a single database to back up.
+  By default, all databases will be included in the backup archive.
+
+  **Note:** this setting has _no effect_ on restore -- whatever is included
+  in the backup archive will be restored.
+
+- `mysql_bindir` - The path to the directory which contains the `mysql` and
+  `mysqldump` utilties.
+  Defaults to `/var/vcap/packages/shield-mysql/bin`, which works well with
+  the [SHIELD MariaDB Addon][shield-mysql].
+//If not specified, the plugin will attempt to find both `mysqldump` and `mysql` via the agent's plugin paths setting.
+
+- `mysql_options` - A set of `mysqldump` command-line flags.
+  Refer to the MySQL documentation to see what you can set.
+
+#### Co-locating the SHIELD MariaDB Addon
+
+If you are running the SHIELD agent on a different machine than your MySQL
+database server, you will need to install the [SHIELD MariaDB Addon][shield-mysql]
+to get the mysqldump and mysql tools.
+
+Add the release to the top-level `releases:` section in your agent
+deployment manifest:
+
+    releases:
+      - name:    shield-addon-mysql
+        version: latest   # or a specific version
+
+Then add the job that corresponds to the version of MySQL or MariaDB you
+want to backup:
+
+    instance_groups:
+      - name: your-shield-agent
+        jobs:
+          - release: shield-addon-mysql
+            name:    shield-addon-mariadb-10.2
+            # or, if you are running mysql
+            #name:   shield-addon-mysql-5.7
+
+Check the [addon's README][shield-mysql] for full details of available
+versions.
+
 
 ### `postgres` - PostgreSQL Relational Database
 
+The `postgres` plugin lets you back up and restore PostgreSQL databases.
+It uses standard PostgreSQL tooling for backups: `pg_dump` and `pg_dumpall`
+for backups, and `psql` to restore.
+
+During restore, connected clients will be forcibly disconnected so that the
+databases they were using can be dropped and recreated.  This happens
+transparently, but does require that client software be able to gracefully
+reconnect as needed.
+
+#### Configuration Options
+
+- `pg_host` - The IP address or host name of the PostgreSQL database server
+  to target.  If this is not set, the plugin will connect _locally_, using
+  the UNIX domain socket (usually somewhere in `/var`).
+
+  **Note:** If you explicitly want to connect over loopback via TCP, you
+  have to explicitly set `pg_host` to 127.0.0.1.
+
+- `pg_port` - The port that the PostgreSQL database software is listening to
+  for client connections.  Defaults to `5432`, the standard PostgreSQL port.
+
+- `pg_user` - The username to authenticate as.  If you leave this blank, the
+  UID of the SHIELD agent process will be used.  For BOSH deployments, this
+  is usually `vcap`, which is generally what you want for local agents.
+
+- `pg_password` - The password to authenticate as.  For local agents
+  (connecting over loopback TCP, or via the UNIX domain socket) you can
+  often leave this blank, especially in most BOSH deployments.
+
+- `pg_database` - The name of a single database to back up.
+  By default, all databases will be included in the backup archive.
+
+- `pg_read_replica_host` - The IP address or host name of a read replica
+  database server.  If specified, back up operations will be carried out
+  against this host, insteadf of `pg_host`.
+
+- `pg_read_replica_port` - The TCP port that the read replica is listening
+  on.  This has no effect if `pg_read_replica_host` is not set.  It defaults
+  to the value of `pg_port`.
+
+- `pg_bindir` - The path to the directory which contains the PostgreSQL dump
+  utilities, and psql.  Defaults to `/var/vcap/packages/postgres-9.4/bin`.
+//If not specified, the plugin will attempt to find `pgdump`, `pg_dumpall`, and `psql` via the agent's plugin paths setting.
+
+#### Co-locating the SHIELD PostgreSQL Addon
+
+If you are running the SHIELD agent on a different machine than your PostgreSQL
+database server, you will need to install the [SHIELD PostgreSQL Addon][shield-postgres]
+to get the pg\_dump, pg\_dumpall and psql tools.
+
+Add the release to the top-level `releases:` section in your agent
+deployment manifest:
+
+    releases:
+      - name:    shield-addon-postgres
+        version: latest   # or a specific version
+
+Then add the job that corresponds to the version of PostgreSQL you want to
+backup:
+
+    instance_groups:
+      - name: your-shield-agent
+        jobs:
+          - release: shield-addon-postgres
+            name:    shield-addon-postgres-10.1
+
+Check the [addon's README][shield-postgres] for full details of available
+versions.
+
+
 ### `xtrabackup` - MySQL Backups via `xtrabackup` CLI
+
+The `xtrabackup` plugin lets you back up and restore your MySQL / MariaDB
+databases using a filesystem-based approach leveraging the `xtrabackup`
+utility.  This method is often faster, if less portable, than the pure SQL
+approach taken by the `mysql` plugin.
+
+**Note:** Since xtrabackup requires access to the MySQL / MariaDB data
+directory, it can only be run from the database host itself.
+
+### Configuration Options
+
+- `mysql_user` **(required)** - The username to authenticate with.
+
+- `mysql_password` **(required)** - The password for the `mysql_user`.
+
+- `mysql_socket` - The path to the MySQL UNIX domain socket.
+  Defaults to `/var/vcap/sys/run/mysql/mysqld.sock`.
+
+- `mysql_databases` - A comma-separated list of databases to back up.
+  By default, all databases are included in the backup archive.
+
+  **Note:** this setting has _no effect_ on restore -- whatever is included
+  in the backup archive will be restored.
+
+- `mysql_datadir` - The path to the directory which contains the MySQL data
+  files.  The SHIELD agent (effective) user needs read access to this
+  directory for backups, and write access for restores.
+
+  Defaults to `/var/lib/mysql`
+
+- `mysql_temp_targetdir` - The path to a temporary filesystem workspace for
+  the xtrabackup tool to work.  This directory must be empty, and the
+  underlying filesystem must be at least as large as the complete MySQL
+  database(s) being backed up.
+
+  Defaults to `/tmp/backups`.
+
+- `mysql_xtrabackup` - The path to the `xtrabackup` binary.
+  Defaults to `/var/vcap/packages/shield-mysql/bin/xtrabackup`, which works
+  well with the [SHIELD MariaDB Addon][shield-mysql].
+//If not specified, the plugin will attempt to find `xtrabackup` via the agent's plugin paths setting.
+
+- `mysql_tar` - The path to the `tar` binary.
+  If not specified, the plugin will attempt to find `tar` via the agent's
+  plugin paths setting.
+
+
+#### Co-locating the SHIELD MariaDB Addon
+
+If your MySQL installation does not include xtrabackup, you will need to
+install the [SHIELD MariaDB Addon][shield-mysql].
+
+Add the release to the top-level `releases:` section in your agent
+deployment manifest:
+
+    releases:
+      - name:    shield-addon-mysql
+        version: latest   # or a specific version
+
+Then add the job that corresponds to the version of MySQL or MariaDB you
+want to backup:
+
+    instance_groups:
+      - name: your-shield-agent
+        jobs:
+          - release: shield-addon-mysql
+            #name:   shield-addon-xtrabackup-2.4
+
+Check the [addon's README][shield-mysql] for full details of available
+versions.
+
 
 ## Key-Value Stores
 
 ### `consul` - Consul Key-Value Store
 
+TBD
+
 ### `consul-snapshot` - Consul Key-Value Store (via snapshotting)
+
+TBD
 
 ## CF Service Brokers
 
 ### `docker-postgres` - Dockerized PostgreSQL CF Service Broker
 
+TBD
+
 ### `rabbitmq-broker` - RabbitMQ CF Service Broker
 
+TBD
+
 ### `redis-broker` - Redis CF Service Broker
+
+TBD
 
 ## BOSH Backup / Restore
 
 ### `bbr-deployment` - BOSH Backup / Restore (for deployments)
 
+TBD
+
 ### `bbr-director` - BOSH Backup / Restore (for directors)
+
+TBD
 
 # Storage Plugins
 
 ## Microsoft Azure
 
+TBD
+
 ## Local Filesystem
+
+TBD
 
 ## Google Cloud Storage
 
+TBD
+
 ## Amazon S3
+
+TBD
 
 ## Scality S3 Work-Alike
 
+TBD
+
 ## OpenStack Swift
+
+TBD
+
+
+[shield-mongo]:    https://github.com/shieldproject/shield-addon-mongodb-boshrelease
+[shield-mysql]:    https://github.com/shieldproject/shield-addon-mysql-boshrelease
+[shield-postgres]: https://github.com/shieldproject/shield-addon-postgres-boshrelease
