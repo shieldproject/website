@@ -368,19 +368,137 @@ versions.</p>
 
 <h1>Storage Plugins</h1>
 
-<h2>Microsoft Azure</h2>
+<h2>Amazon S3</h2>
 
-<p>TBD</p>
+<p>The <code>s3</code> plugin lets you store backup archives in an Amazon AWS Simple
+Storage Service bucket.  In theory, this plugin should also work with other
+implementations, not from Amazon, which we term <em>S3 work-alikes</em>.</p>
 
-<h2>Local Filesystem</h2>
+<p>Backup archives will be stored in a filename / path that encodes the date
+and time of the backup operation, to make it easier to track down a specific
+archive later:</p>
 
-<p>TBD</p>
+<pre><code>&lt;prefix&gt;/&lt;YYYY&gt;/&lt;MM&gt;/&lt;DD&gt;/&lt;YYYY&gt;-&lt;MM&gt;-&lt;DD&gt;-&lt;HHmmSS&gt;-&lt;UUID&gt;
+</code></pre>
+
+<p>for example, given a <code>prefix</code> of "prod/backups", a backup might be stored
+at:</p>
+
+<pre><code>prod/backups/2018/07/12/2018-07-12-134255-f3b564f2-ef62-4e38-9d94-ba17c37abf09
+</code></pre>
+
+<h3>Configuration Options</h3>
+
+<ul>
+<li><p><code>access_key_id</code> <strong>(required)</strong> - The AWS Access Key ID to use for
+authenticating to S3.  For Amazon, this usually starts with "AKI".</p></li>
+<li><p><code>secret_access_key</code> <strong>(required)</strong> - The secret key that corresponds to
+the access key ID.</p></li>
+<li><p><code>bucket</code> <strong>(required)</strong> - The name of the S3 bucket to store backup
+archives in.</p></li>
+<li><p><code>prefix</code> - An optional prefix for backup archive paths.  This can be
+useful if you are sharing a bucket between multiple teams, or across
+two or more different environments, and want to be able to keep them
+separate for out-of-band retrieval.</p>
+
+<p>By default, no prefix will be used.</p></li>
+<li><p><code>s3_host</code> - Override the Amazon S3 backend endpoint.  This is <em>required</em>
+if you wish to use an S3 work-alike.
+Defaults to <code>s3.amazonaws.com</code>.</p></li>
+<li><p><code>s3_port</code> - Override the TCP port of the S3 work-alike backend.
+Defaults to <code>443</code>.</p></li>
+<li><p><code>skip_ssl_validation</code> - Whether or not to verify the X.509 certificate of
+the S3 backend endpoint, or not.  If your local S3 work-alike is using an
+untrusted, expired, or self-signed certificate, you can set this option to
+true to bypass verification failure.  <strong><em>This is not recommended</em></strong> for
+production use.</p></li>
+<li><p><code>part_size</code> - The multipart upload size.  Amazon S3 proper uses variable
+multipart sizes, but some work-alikes require this to be set to specific
+values.</p></li>
+<li><p><code>signature_version</code> - All S3 protocol requrests include a header signature
+to validate and verify each request.  The protocol supports two different
+methods of signature generation, version 2 and version 4.</p>
+
+<p>For Amazon S3 proper, version 4 should be used.  Some work-alikes,
+however, only support version 2.</p>
+
+<p>Defaults to version 4.</p></li>
+<li><p><code>socks5_proxy</code> - A SOCKS5 proxy endpoint URL to use for tunneling all
+traffic to and from the S3 backend.  By default, no proxy is used.</p></li>
+</ul>
 
 <h2>Google Cloud Storage</h2>
 
-<p>TBD</p>
+<p>The <code>google</code> plugin lets you store backup archives in Google Cloud's
+blobstore storage system, which conceptually behaves a lot like Amazon's S3.</p>
 
-<h2>Amazon S3</h2>
+<p>Backup archives will be stored in a filename / path that encodes the date
+and time of the backup operation, to make it easier to track down a specific
+archive later:</p>
+
+<pre><code>&lt;prefix&gt;/&lt;YYYY&gt;/&lt;MM&gt;/&lt;DD&gt;/&lt;YYYY&gt;-&lt;MM&gt;-&lt;DD&gt;-&lt;HHmmSS&gt;-&lt;UUID&gt;
+</code></pre>
+
+<p>for example, given a <code>prefix</code> of "prod/backups", a backup might be stored
+at:</p>
+
+<pre><code>prod/backups/2018/07/12/2018-07-12-134255-f3b564f2-ef62-4e38-9d94-ba17c37abf09
+</code></pre>
+
+<h3>Configuration Options</h3>
+
+<ul>
+<li><p><code>bucket</code> <strong>(required)</strong> - The name of the GCS bucket to store backup
+archives in.</p></li>
+<li><p><code>json_key</code> - The full GCE service account key (a JSON string form, for
+authenticating to Google Cloud.  This is <em>required</em> if the SHIELD agent
+is not running from a Google Compute Engine VM, or if you want to use
+different GCE IAM credentials for storage than you do for VM deployment.</p></li>
+<li><p><code>prefix</code> - An optional prefix for backup archive paths.  This can be
+useful if you are sharing a bucket between multiple teams, or across
+two or more different environments, and want to be able to keep them
+separate for out-of-band retrieval.</p>
+
+<p>By default, no prefix will be used.</p></li>
+</ul>
+
+<h2>Microsoft Azure</h2>
+
+<p>The <code>azure</code> plugin lets you store backup archives in Microsoft Azure's
+Blobstore, in a storage container.</p>
+
+<p>Backup archives will be stored in a filename / path that encodes the date
+and time of the backup operation, to make it easier to track down a specific
+archive later:</p>
+
+<pre><code>&lt;prefix&gt;/&lt;YYYY&gt;-&lt;MM&gt;-&lt;DD&gt;-&lt;HHmmSS&gt;-&lt;UUID&gt;
+</code></pre>
+
+<p>for example, given a <code>prefix</code> of "prod/backups", a backup might be stored
+at:</p>
+
+<pre><code>prod/backups/2018-07-12-134255-f3b564f2-ef62-4e38-9d94-ba17c37abf09
+</code></pre>
+
+<h3>Configuration Options</h3>
+
+<ul>
+<li><p><code>storage_account</code> <strong>(required)</strong> - The name of the Azure Storage Account
+to use when accessing Azure for read / write operations.</p></li>
+<li><p><code>storage_account_key</code> <strong>(required)</strong> - The secret key that corresponds to
+the configured <code>storage_account</code>.</p></li>
+<li><p><code>storage_container</code> <strong>(required)</strong> - The name of the storage container in
+which to store the backup archives.  This is essentially the analog to S3
+or GCS <em>buckets</em>.</p></li>
+<li><p><code>prefix</code> - An optional prefix for backup archive paths.  This can be
+useful if you are sharing a bucket between multiple teams, or across
+two or more different environments, and want to be able to keep them
+separate for out-of-band retrieval.</p>
+
+<p>By default, no prefix will be used.</p></li>
+</ul>
+
+<h2>OpenStack Swift</h2>
 
 <p>TBD</p>
 
@@ -388,7 +506,7 @@ versions.</p>
 
 <p>TBD</p>
 
-<h2>OpenStack Swift</h2>
+<h2>WebDAV Filesystem</h2>
 
 <p>TBD</p>
       </div>

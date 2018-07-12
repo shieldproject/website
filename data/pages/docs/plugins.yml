@@ -326,19 +326,144 @@ TBD
 
 # Storage Plugins
 
-## Microsoft Azure
+## Amazon S3
 
-TBD
+The `s3` plugin lets you store backup archives in an Amazon AWS Simple
+Storage Service bucket.  In theory, this plugin should also work with other
+implementations, not from Amazon, which we term _S3 work-alikes_.
 
-## Local Filesystem
+Backup archives will be stored in a filename / path that encodes the date
+and time of the backup operation, to make it easier to track down a specific
+archive later:
 
-TBD
+    <prefix>/<YYYY>/<MM>/<DD>/<YYYY>-<MM>-<DD>-<HHmmSS>-<UUID>
+
+for example, given a `prefix` of "prod/backups", a backup might be stored
+at:
+
+    prod/backups/2018/07/12/2018-07-12-134255-f3b564f2-ef62-4e38-9d94-ba17c37abf09
+
+
+### Configuration Options
+
+- `access_key_id` **(required)** - The AWS Access Key ID to use for
+  authenticating to S3.  For Amazon, this usually starts with "AKI".
+
+- `secret_access_key` **(required)** - The secret key that corresponds to
+  the access key ID.
+
+- `bucket` **(required)** - The name of the S3 bucket to store backup
+  archives in.
+
+- `prefix` - An optional prefix for backup archive paths.  This can be
+  useful if you are sharing a bucket between multiple teams, or across
+  two or more different environments, and want to be able to keep them
+  separate for out-of-band retrieval.
+
+  By default, no prefix will be used.
+
+- `s3_host` - Override the Amazon S3 backend endpoint.  This is _required_
+  if you wish to use an S3 work-alike.
+  Defaults to `s3.amazonaws.com`.
+
+- `s3_port` - Override the TCP port of the S3 work-alike backend.
+  Defaults to `443`.
+
+- `skip_ssl_validation` - Whether or not to verify the X.509 certificate of
+  the S3 backend endpoint, or not.  If your local S3 work-alike is using an
+  untrusted, expired, or self-signed certificate, you can set this option to
+  true to bypass verification failure.  **_This is not recommended_** for
+  production use.
+
+- `part_size` - The multipart upload size.  Amazon S3 proper uses variable
+  multipart sizes, but some work-alikes require this to be set to specific
+  values.
+
+- `signature_version` - All S3 protocol requrests include a header signature
+  to validate and verify each request.  The protocol supports two different
+  methods of signature generation, version 2 and version 4.
+
+  For Amazon S3 proper, version 4 should be used.  Some work-alikes,
+  however, only support version 2.
+
+  Defaults to version 4.
+
+- `socks5_proxy` - A SOCKS5 proxy endpoint URL to use for tunneling all
+  traffic to and from the S3 backend.  By default, no proxy is used.
 
 ## Google Cloud Storage
 
-TBD
+The `google` plugin lets you store backup archives in Google Cloud's
+blobstore storage system, which conceptually behaves a lot like Amazon's S3.
 
-## Amazon S3
+Backup archives will be stored in a filename / path that encodes the date
+and time of the backup operation, to make it easier to track down a specific
+archive later:
+
+    <prefix>/<YYYY>/<MM>/<DD>/<YYYY>-<MM>-<DD>-<HHmmSS>-<UUID>
+
+for example, given a `prefix` of "prod/backups", a backup might be stored
+at:
+
+    prod/backups/2018/07/12/2018-07-12-134255-f3b564f2-ef62-4e38-9d94-ba17c37abf09
+
+
+### Configuration Options
+
+- `bucket` **(required)** - The name of the GCS bucket to store backup
+  archives in.
+
+- `json_key` - The full GCE service account key (a JSON string form, for
+  authenticating to Google Cloud.  This is _required_ if the SHIELD agent
+  is not running from a Google Compute Engine VM, or if you want to use
+  different GCE IAM credentials for storage than you do for VM deployment.
+
+- `prefix` - An optional prefix for backup archive paths.  This can be
+  useful if you are sharing a bucket between multiple teams, or across
+  two or more different environments, and want to be able to keep them
+  separate for out-of-band retrieval.
+
+  By default, no prefix will be used.
+
+
+## Microsoft Azure
+
+The `azure` plugin lets you store backup archives in Microsoft Azure's
+Blobstore, in a storage container.
+
+Backup archives will be stored in a filename / path that encodes the date
+and time of the backup operation, to make it easier to track down a specific
+archive later:
+
+    <prefix>/<YYYY>-<MM>-<DD>-<HHmmSS>-<UUID>
+
+for example, given a `prefix` of "prod/backups", a backup might be stored
+at:
+
+    prod/backups/2018-07-12-134255-f3b564f2-ef62-4e38-9d94-ba17c37abf09
+
+
+### Configuration Options
+
+- `storage_account` **(required)** - The name of the Azure Storage Account
+  to use when accessing Azure for read / write operations.
+
+- `storage_account_key` **(required)** - The secret key that corresponds to
+  the configured `storage_account`.
+
+- `storage_container` **(required)** - The name of the storage container in
+  which to store the backup archives.  This is essentially the analog to S3
+  or GCS _buckets_.
+
+- `prefix` - An optional prefix for backup archive paths.  This can be
+  useful if you are sharing a bucket between multiple teams, or across
+  two or more different environments, and want to be able to keep them
+  separate for out-of-band retrieval.
+
+  By default, no prefix will be used.
+
+
+## OpenStack Swift
 
 TBD
 
@@ -346,7 +471,7 @@ TBD
 
 TBD
 
-## OpenStack Swift
+## WebDAV Filesystem
 
 TBD
 
