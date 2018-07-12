@@ -87,26 +87,116 @@ development progress, and future direction.</p>
 
 <p>Calls are not recorded.</p>
 
-<h1>Agenda for July 12th</h1>
+<h1>Agenda for August 9th, 2018</h1>
 
 <ol>
 <li><p>Introductions</p></li>
-<li><p>Announcements</p>
-
-<ol>
-<li>We (Almost) Have a Website! (<a href="https://shieldproject.io">https://shieldproject.io</a>)</li>
-<li>New Trello Board (and how it interacts with Github)
-(<a href="https://trello.com/b/qLZCvexK/shield">https://trello.com/b/qLZCvexK/shield</a>)</li>
-</ol></li>
+<li><p>Announcements
+(...)</p></li>
 <li><p>Development Progress Update</p>
 
 <ul>
 <li><a href="https://trello.com/b/qLZCvexK/shield">Trello Board</a> Review</li>
-<li>Priority: Bugs, then Gaps, then New Features</li>
 <li>Dev Team Status Report</li>
 </ul></li>
 <li><p>Open Forum</p></li>
 </ol>
+
+<h1>Previous Calls</h1>
+
+<p><a id="20180712"></a></p>
+
+<h2>July 12th, 2018</h2>
+
+<p>These are the notes for our first ever community call, held at 11:00am EDT
+on Thursday, July 12th, 2018.</p>
+
+<ol>
+<li><p><strong>The Website</strong></p>
+
+<p>We have a website at <a href="https://shieldproject.io">https://shieldproject.io</a>.</p>
+
+<p>We are putting all of our documentation, guides, and manuals there</p>
+
+<p>Work is underway on fleshing out the
+<a href="/docs/manual">SHIELD Operator's Manual</a>, and the
+<a href="/docs/plugins">Plugin Reference</a>.</p>
+
+<p>We're also hoping to build out recipe-based docs like
+<em>How do I backup Cloud Foundry?</em></p></li>
+<li><p><strong>The Trello Board</strong></p>
+
+<p>We have started using a <a href="https://trello.com/b/qLZCvexK/shield">Trello Board</a> for coordinating developer
+activity.  If you want to get involved in hacking on SHIELD, ask in
+the #help channel on <a href="/community#slack">Slack</a>.</p>
+
+<p>Github Issues will still be the place to report bugs and ask for feature
+requests.  Trello is more for things that require multiple different
+states, prioritization, backlog management, etc.</p>
+
+<p>Every month we will be highlighting delivered features and fixed bugs
+that we feel are important enough to announce (big, operator-visible
+stuff), and discussing our focus for the next month.</p></li>
+<li><p><strong>Current Future Direction</strong></p>
+
+<p>We've got a lot of minor bugs in the Trello backlog; we're focusing on
+those first, to get them fixed and get the fixes shipped.</p>
+
+<p>We've also conducted an internal review, which we're calling <em>Gap
+Analysis</em>.  Put simply, it's all the things we haven't finished, and all
+the features we know we need but haven't implemented.  This includes
+things like being able to edit systems from the web interface, viewing
+tasks, rescheduling backup jobs, etc.</p>
+
+<p>Once we've got the bug backlog tamed, we'll be moving onto the gap
+tickets.</p></li>
+<li><p><strong>Release Cadence</strong></p>
+
+<p>We're hoping to hit a weekly release schedule with SHIELD, the SHIELD
+BOSH release, and the SHIELD Genesis Kit.  Our current plan is to cut new
+point releases on Friday afternoons.</p></li>
+<li><p><strong>Open Forum</strong></p>
+
+<p>Jordan asked a bunch of questions.  Thanks, mate!</p>
+
+<ul>
+<li><p><strong>CLI Help Documentation</strong> - Curious whether or not we were going to
+provide more documentation for CLI usage, either via the website, or
+inline via <code>--help</code> flags.</p>
+
+<p>Short answer: yes.</p>
+
+<p>Long answer: definitely yes, via both methods.  We'll review the state
+of SHIELD help inside the CLI, and see if there are logical places to
+flesh out what we've got, cover more abstract topics, etc.</p></li>
+<li><p><strong>Can SHIELD itself be recovered via the CLI only?</strong></p>
+
+<p>Currently, no.  The SHIELD recovery mechanism (with the fixed key
+backup) relies on visual elements that are part of the Web UI.
+However, it's a good feature (one we're missing, so it's a "gap"),
+and we'll be looking into support for that particular workflow.</p></li>
+<li><p><strong>Manual Archive Management</strong> - Having deleted archives manually from
+backing cloud storage, Jordan noticed that the SHIELD Web UI didn't
+update its storage usage counts.</p>
+
+<p>This is normal, and we'll address it specifically in the documentation,
+since SHIELD expects to have full and complete control over cloud
+storage.  We did talk through a UI view (CLI and Web) for browsing cloud
+storage archives, and deleting them there, with an eye towards reclaiming
+space.</p></li>
+<li><p><strong>Monitoring and Notifications</strong> - Is it possible to notify about storage
+usage limits being reached, failing storage, failing jobs, etc.?</p>
+
+<p>Short answer: yes, via the <code>/v2/health</code> endpoint, in an external
+monitoring system.</p>
+
+<p>Long answer: we have plans for a separate project / product, for handling
+notifications more globally, with business logic and dispatch rules built
+into <em>that</em> system, which SHIELD would then integrate with.</p></li>
+</ul></li>
+</ol>
+
+<p>Thanks all for joining!  See you next month!</p>
       </div>
     </div>
   </div>

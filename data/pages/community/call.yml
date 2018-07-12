@@ -24,18 +24,117 @@ You can also call in (the Meeting ID is **716 555 1212**):
 
 Calls are not recorded.
 
-# Agenda for July 12th
+# Agenda for August 9th, 2018
 
 1. Introductions
 
 2. Announcements
-   1. We (Almost) Have a Website! (<https://shieldproject.io>)
-   2. New Trello Board (and how it interacts with Github)
-      (<https://trello.com/b/qLZCvexK/shield>)
+   (...)
 
 3. Development Progress Update
-   - [Trello Board](https://trello.com/b/qLZCvexK/shield) Review
-   - Priority: Bugs, then Gaps, then New Features
+   - [Trello Board][trello] Review
    - Dev Team Status Report
 
 4. Open Forum
+
+# Previous Calls
+
+<a id="20180712"></a>
+
+## July 12th, 2018
+
+These are the notes for our first ever community call, held at 11:00am EDT
+on Thursday, July 12th, 2018.
+
+1. **The Website**
+
+   We have a website at <https://shieldproject.io>.
+
+   We are putting all of our documentation, guides, and manuals there
+
+   Work is underway on fleshing out the
+   [SHIELD Operator's Manual](/docs/manual), and the
+   [Plugin Reference](/docs/plugins).
+
+   We're also hoping to build out recipe-based docs like
+   _How do I backup Cloud Foundry?_
+
+2. **The Trello Board**
+
+   We have started using a [Trello Board][trello] for coordinating developer
+   activity.  If you want to get involved in hacking on SHIELD, ask in
+   the #help channel on [Slack][slack].
+
+   Github Issues will still be the place to report bugs and ask for feature
+   requests.  Trello is more for things that require multiple different
+   states, prioritization, backlog management, etc.
+
+   Every month we will be highlighting delivered features and fixed bugs
+   that we feel are important enough to announce (big, operator-visible
+   stuff), and discussing our focus for the next month.
+
+3. **Current Future Direction**
+
+   We've got a lot of minor bugs in the Trello backlog; we're focusing on
+   those first, to get them fixed and get the fixes shipped.
+
+   We've also conducted an internal review, which we're calling _Gap
+   Analysis_.  Put simply, it's all the things we haven't finished, and all
+   the features we know we need but haven't implemented.  This includes
+   things like being able to edit systems from the web interface, viewing
+   tasks, rescheduling backup jobs, etc.
+
+   Once we've got the bug backlog tamed, we'll be moving onto the gap
+   tickets.
+
+4. **Release Cadence**
+
+   We're hoping to hit a weekly release schedule with SHIELD, the SHIELD
+   BOSH release, and the SHIELD Genesis Kit.  Our current plan is to cut new
+   point releases on Friday afternoons.
+
+5. **Open Forum**
+
+   Jordan asked a bunch of questions.  Thanks, mate!
+
+   - **CLI Help Documentation** - Curious whether or not we were going to
+     provide more documentation for CLI usage, either via the website, or
+     inline via `--help` flags.
+
+     Short answer: yes.
+
+     Long answer: definitely yes, via both methods.  We'll review the state
+     of SHIELD help inside the CLI, and see if there are logical places to
+     flesh out what we've got, cover more abstract topics, etc.
+
+   - **Can SHIELD itself be recovered via the CLI only?**
+
+     Currently, no.  The SHIELD recovery mechanism (with the fixed key
+     backup) relies on visual elements that are part of the Web UI.
+     However, it's a good feature (one we're missing, so it's a "gap"),
+     and we'll be looking into support for that particular workflow.
+
+   - **Manual Archive Management** - Having deleted archives manually from
+     backing cloud storage, Jordan noticed that the SHIELD Web UI didn't
+     update its storage usage counts.
+
+     This is normal, and we'll address it specifically in the documentation,
+     since SHIELD expects to have full and complete control over cloud
+     storage.  We did talk through a UI view (CLI and Web) for browsing cloud
+     storage archives, and deleting them there, with an eye towards reclaiming
+     space.
+
+   - **Monitoring and Notifications** - Is it possible to notify about storage
+     usage limits being reached, failing storage, failing jobs, etc.?
+
+     Short answer: yes, via the `/v2/health` endpoint, in an external
+     monitoring system.
+
+     Long answer: we have plans for a separate project / product, for handling
+     notifications more globally, with business logic and dispatch rules built
+     into _that_ system, which SHIELD would then integrate with.
+
+Thanks all for joining!  See you next month!
+
+[trello]: https://trello.com/b/qLZCvexK/shield
+[slack]:  /community#slack
