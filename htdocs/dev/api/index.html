@@ -170,6 +170,9 @@ This endpoint takes no query string parameters.
 <pre><code>{
   "version" : "6.7.2",
   "env"     : "PRODUCTION",
+  "color"   : "yellow",
+  "motd"    : "Welcome to S.H.I.E.L.D.",
+  "ip"      : "10.0.0.5",
   "api"     : 2
 }
 </code></pre>
@@ -179,6 +182,15 @@ context of an authenticated session.</p>
 
 <p>The <code>env</code> key is configurable by the SHIELD site administrator,
 at deployment / boot time.</p>
+
+<p>Similar to env, the <code>color</code> key is configurable by the SHIELD site
+administrator, used to visually differentiate various SHIELD
+deployments in the WebUI.</p>
+
+<p>The <code>motd</code> is what is displayed upon login, and can be changed by
+the SHIELD site administrator.</p>
+
+<p>The <code>ip</code> key is the ip of the SHIELD core.</p>
 
 <p>The <code>api</code> key is a single integer that identifies which version
 of the SHIELD API this core implements.  Currently, there are
@@ -218,14 +230,6 @@ of <code>application/json</code>, and something similar to the following JSON
 payload in the response body:</p>
 
 <pre><code>{
-  "shield": {
-    "version" : "6.7.2",
-    "ip"      : "10.0.0.5",
-    "fqdn"    : "shield.example.com",
-    "env"     : "PRODUCTION",
-    "color"   : "",
-    "motd"    : "Welcome to S.H.I.E.L.D."
-  },
   "health": {
     "core"       : "unsealed",
     "storage_ok" : true,
@@ -260,16 +264,20 @@ payload in the response body:</p>
 
 <p><strong>Access Control</strong></p>
 
-<p>This endpoint requires no authentication or authorization.</p>
+<p>You must be authenticated to access this API endpoint.</p>
 
 <p><strong>Errors</strong></p>
 
 <p>The following error messages can be returned:</p>
 
 <ul>
-<li><strong>Unable to check SHIELD health</strong>:
+<li><p><strong>Unable to check SHIELD health</strong>:
 an internal error occurred and should be investigated by the
-site administrators</li>
+site administrators</p></li>
+<li><p><strong>Authorization required</strong>:
+The request was made without an authenticated session or auth token.
+See <strong>Authentication</strong> for more details.  The request may be retried
+after authentication.</p></li>
 </ul>
 
 <h3>GET /v2/tenants/:tenant/health</h3>
@@ -294,14 +302,6 @@ of <code>application/json</code>, and something similar to the following JSON
 payload in the response body:</p>
 
 <pre><code>{
-  "shield": {
-    "version" : "6.7.2",
-    "ip"      : "10.0.0.5",
-    "fqdn"    : "shield.example.com",
-    "env"     : "PRODUCTION",
-    "color"   : "",
-    "motd"    : "Welcome to S.H.I.E.L.D."
-  },
   "health": {
     "core"       : "unsealed",
     "storage_ok" : true,
@@ -336,16 +336,26 @@ payload in the response body:</p>
 
 <p><strong>Access Control</strong></p>
 
-<p>This endpoint requires no authentication or authorization.</p>
+<p>You must be authenticated to access this API endpoint.</p>
+
+<p>You must also have the <code>operator</code> role on the tenant.</p>
 
 <p><strong>Errors</strong></p>
 
 <p>The following error messages can be returned:</p>
 
 <ul>
-<li><strong>Unable to check SHIELD health</strong>:
+<li><p><strong>Unable to check SHIELD health</strong>:
 an internal error occurred and should be investigated by the
-site administrators</li>
+site administrators</p></li>
+<li><p><strong>Authorization required</strong>:
+The request was made without an authenticated session or auth token.
+See <strong>Authentication</strong> for more details.  The request may be retried
+after authentication.</p></li>
+<li><p><strong>Access denied</strong>:
+The requester lacks sufficient tenant or system role assignment.
+Refer to the <strong>Access Control</strong> subsection, above.
+The request should not be retried.</p></li>
 </ul>
 
 <h2>SHIELD Authentication</h2>
