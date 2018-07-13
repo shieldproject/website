@@ -70,146 +70,118 @@
         <div class="content">
         <h1>Target Plugins</h1>
 
-<h2>Databases</h2>
+<p>Target plugins are used to perform backup and restore operations against
+actual data systems like PostgreSQL, MySQL, and Consul.</p>
 
-<h3><code>mongo</code> - MongoDB NoSQL Database</h3>
+<h2>Local Filesystem</h2>
 
-<p>The <code>mongo</code> plugin lets you back up and restore your MongoDB databases.
-It relies on the <code>mongodump</code> and <code>mongorestore</code> utilities, installed on the
-agent host.</p>
+<p>The <code>fs</code> plugin lets you back up and restore files and directories on
+locally attached (or locally-accessible) disks.  It performs backups by
+creating a POSIX <em>tar</em> archive of the selected file set, which it unpacks on
+restore.  No compression is used directly by the plugin.</p>
 
-<h4>Configuration Options</h4>
+<p><strong>Note:</strong> In previous versions of SHIELD (notably 7.x and below), the <code>fs</code>
+plugin could also be used as a storage plugin.  This caused large amounts of
+confusion, and often lead to data loss.  As of SHIELD 8.x, this behavior has
+been removed outright.</p>
 
-<ul>
-<li><p><code>mongo_host</code> - The IP address or host name of the MongoDB installation to
-target.  This defaults to <code>127.0.0.1</code>, but can be changed to allow for
-remote backup/restore, from a network-attached SHIELD agent.</p></li>
-<li><p><code>mongo_port</code> - The TCP port to connect to, which the <code>mongod</code> process
-should be listening to.  Defaults to <code>27017</code>, the standard MongoDB port.</p></li>
-<li><p><code>mongo_user</code> - The name of the user account to authenticate to MongoDB as,
-for performing both backup and restore tasks.  If not specified, no
-authentication is performed.</p></li>
-<li><p><code>mongo_password</code> - The password to use when authenticating with
-the <code>mongo_user</code> account.</p></li>
-<li><p><code>mongo_database</code> - The name of a specific database to back up.
-By default, all databases will be included in the backup archive.</p>
-
-<p><strong>Note:</strong> This setting has <em>no effect</em> on restore -- whatever is included
-in the backup archive will be restored.</p></li>
-<li><p><code>mongo_bindir</code> - The path to the directory which contains the dump and
-restore binaries.
-Defaults to <code>/var/vcap/packages/shield-mongo/bin</code>, which works well with
-the <a href="https://github.com/shieldproject/shield-addon-mongodb-boshrelease">SHIELD MongoDB Addon</a>.</p></li>
-<li><p><code>mongo_options</code> - A set of arbitrary command-line flags to pass to the
-dump and restore tools.  For example, <code>--ssl</code> will enable SSL/TLS when
-communicating with MongoDB.  Refer to the MongoDB documentation for more
-details.</p></li>
-</ul>
-
-<h4>Co-locating the SHIELD MongoDB Addon</h4>
-
-<p>If you are running the SHIELD agent on a different machine than your MongoDB
-database server, you will need to install the <a href="https://github.com/shieldproject/shield-addon-mongodb-boshrelease">SHIELD MongoDB Addon</a>
-to get the mongodump and monogrestore tools.</p>
-
-<p>Add the release to the top-level <code>releases:</code> section in your agent
-deployment manifest:</p>
-
-<pre><code>releases:
-  - name:    shield-addon-mongodb
-    version: latest   # or a specific version
-</code></pre>
-
-<p>Then add the job that corresponds to the version of MongoDB you want to
-backup:</p>
-
-<pre><code>instance_groups:
-  - name: your-shield-agent
-    jobs:
-      - release: shield-addon-mongodb
-        name:    shield-addon-mongo-tools-3.4
-</code></pre>
-
-<p>Check the <a href="https://github.com/shieldproject/shield-addon-mongodb-boshrelease">addon's README</a> for full details of available
-versions.</p>
-
-<h3><code>mysql</code> - MySQL / MariaDB Relational Database</h3>
-
-<p>The <code>mysql</code> plugin lets you back up and restore MySQL / MariaDB databases,
-using the pure-SQL <code>mysqldump</code> utility.  For very large database, the time
-spent serializing database records into SQL commands may be prohibitive, and
-you may want to investigate use of the <code>xtrabackup</code> plugin instead.</p>
-
-<p>Restores are handled by feeding the SQL backup through the standard <code>mysql</code>
-utility.  Connected clients will remain connected during restore.</p>
-
-<h4>Configuration Options</h4>
+<h3>Configuration Options</h3>
 
 <ul>
-<li><p><code>mysql_host</code> - The IP address or host name of the MySQL database server to
-target.  This defaults to <code>127.0.0.1</code>, but can be changed to allow for
-remote backup/restore, from a network-attached SHIELD agent.</p></li>
-<li><p><code>mysql_port</code> - The TCP port to connect to, which the database process
-should be listening to.  Defaults to <code>3306</code>, the standard MySQL port.</p></li>
-<li><p><code>mysql_user</code> <strong>(required)</strong> - The username to authenticate with.</p></li>
-<li><p><code>mysql_password</code> <strong>(required)</strong> - The password for the <code>mysql_user</code>.</p></li>
-<li><p><code>mysql_read_replica</code> - The IP address or host name of a read replica
-database server.  If specified, back up operations will be carried out
-against this host, instead of <code>mysql_host</code>.</p></li>
-<li><p><code>mysql_database</code> - The name of a single database to back up.
-By default, all databases will be included in the backup archive.</p>
+<li><p><code>base_dir</code> <strong>(required)</strong> - The base directory to back up.  All files and
+directories underneath this directory will be included in the backup
+archive.  During restore, the files in the backup archive will be unpacked
+to this directory (which might be different from where they were
+originally  backed up).</p>
 
-<p><strong>Note:</strong> this setting has <em>no effect</em> on restore -- whatever is included
-in the backup archive will be restored.</p></li>
-<li><p><code>mysql_bindir</code> - The path to the directory which contains the <code>mysql</code> and
-<code>mysqldump</code> utilties.
-Defaults to <code>/var/vcap/packages/shield-mysql/bin</code>, which works well with
-the <a href="https://github.com/shieldproject/shield-addon-mysql-boshrelease">SHIELD MariaDB Addon</a>.</p></li>
-<li><p><code>mysql_options</code> - A set of <code>mysqldump</code> command-line flags.
-Refer to the MySQL documentation to see what you can set.</p></li>
+<p>This option must be present, and must be an <em>absolute</em> path.</p></li>
+<li><p><code>include</code> - A pattern for determining what files to include in the backup
+archive.  Anything not matching this pattern will be left out.
+This has no effect during restore; all files in the backup archive will be
+extracted.</p>
+
+<p>By default, all files are included (pursuant to <code>exclude</code>).</p></li>
+<li><p><code>exclude</code> - A pattern for determining what files <em>not</em> to include in the
+backup archive.  Anything matching this pattern will be left out.
+This has no effect during restore; all files in the backup archive will be
+extracted.</p></li>
 </ul>
 
-<h4>Co-locating the SHIELD MariaDB Addon</h4>
+<h3>Matching Files for <code>include</code> and <code>exclude</code></h3>
 
-<p>If you are running the SHIELD agent on a different machine than your MySQL
-database server, you will need to install the <a href="https://github.com/shieldproject/shield-addon-mysql-boshrelease">SHIELD MariaDB Addon</a>
-to get the mysqldump and mysql tools.</p>
+<p>The <code>include</code> and <code>exclude</code> options let you selectively include and exclude
+files from the backup archive.  These options each take a single <em>shell
+glob</em> which will be matched against each file name.</p>
 
-<p>Add the release to the top-level <code>releases:</code> section in your agent
-deployment manifest:</p>
+<p>Shell globs have the following syntax:</p>
 
-<pre><code>releases:
-  - name:    shield-addon-mysql
-    version: latest   # or a specific version
-</code></pre>
+<p><code>
+*      Match zero or more characters.
+?      Match zero or one character.
+[a-z]  Match a range of characters, in this example,
+       lowercase alphabetic characters.
+[^a-z] Match anything that doesn't match [a-z]
+[xaby] Match either 'x', 'a', 'b', or 'y'
+\*     Match a literal asterisk.
+       Also works for '?', '[', and ']'
+</code></p>
 
-<p>Then add the job that corresponds to the version of MySQL or MariaDB you
-want to backup:</p>
+<p>For example, the file name <code>/var/data/index/foo.db</code> would match all of the
+following globs:</p>
 
-<pre><code>instance_groups:
-  - name: your-shield-agent
-    jobs:
-      - release: shield-addon-mysql
-        name:    shield-addon-mariadb-10.2
-        # or, if you are running mysql
-        #name:   shield-addon-mysql-5.7
-</code></pre>
+<ol>
+<li><code>foo.*</code></li>
+<li><code>*</code> (but everything matches this so...)</li>
+<li><code>*.db</code></li>
+<li><code>foo?.[a-f]*</code></li>
+</ol>
 
-<p>Check the <a href="https://github.com/shieldproject/shield-addon-mysql-boshrelease">addon's README</a> for full details of available
-versions.</p>
+<p>It does not match the following globs:</p>
 
-<h3><code>postgres</code> - PostgreSQL Relational Database</h3>
+<ol>
+<li><code>FOO.*</code> - globs are case sensitive.</li>
+<li><code>*/index/*</code> - matching is not applied to the path.</li>
+<li><code>(foo|bar).*</code> - globs are not regular expressions.</li>
+</ol>
 
-<p>The <code>postgres</code> plugin lets you back up and restore PostgreSQL databases.
-It uses standard PostgreSQL tooling for backups: <code>pg_dump</code> and <code>pg_dumpall</code>
-for backups, and <code>psql</code> to restore.</p>
+<p>The <code>fs</code> plugin evaluates exclusions and then inclusions.  This makes it
+easy to handle the 80% case of <em>back up everything except the *.tmp files</em>.
+By default, nothing is excluded and everything is included, so if you know
+specifically what you want to back up, you can specify just the <code>include</code>
+pattern.</p>
+
+<p>Here's a few illustrative examples (<code>base_dir</code> assumed present, but not
+shown):</p>
+
+<ul>
+<li><p>Only back up the PDF documents</p>
+
+<pre><code>{ "include": "*.pdf" }
+</code></pre></li>
+<li><p>Don't bother backing up the binary files</p>
+
+<pre><code>{ "exclude": "*.bin" }
+</code></pre></li>
+<li><p>Back up all the text files, unless they start with underscores
+(a primitive form of file hiding)</p>
+
+<pre><code>{ "include": "*.txt",
+  "exclude": "_*" }
+</code></pre></li>
+</ul>
+
+<h2>PostgreSQL Database</h2>
+
+<p>The <code>postgres</code> plugin lets you back up and restore <a href="https://www.postgresql.org/">PostgreSQL</a>
+databases.  It uses standard PostgreSQL tooling for backups: <code>pg_dump</code> and
+<code>pg_dumpall</code> for backups, and <code>psql</code> to restore.</p>
 
 <p>During restore, connected clients will be forcibly disconnected so that the
 databases they were using can be dropped and recreated.  This happens
 transparently, but does require that client software be able to gracefully
 reconnect as needed.</p>
 
-<h4>Configuration Options</h4>
+<h3>Configuration Options</h3>
 
 <ul>
 <li><p><code>pg_host</code> - The IP address or host name of the PostgreSQL database server
@@ -230,7 +202,7 @@ often leave this blank, especially in most BOSH deployments.</p></li>
 By default, all databases will be included in the backup archive.</p></li>
 <li><p><code>pg_read_replica_host</code> - The IP address or host name of a read replica
 database server.  If specified, back up operations will be carried out
-against this host, insteadf of <code>pg_host</code>.</p></li>
+against this host, instead of <code>pg_host</code>.</p></li>
 <li><p><code>pg_read_replica_port</code> - The TCP port that the read replica is listening
 on.  This has no effect if <code>pg_read_replica_host</code> is not set.  It defaults
 to the value of <code>pg_port</code>.</p></li>
@@ -238,7 +210,7 @@ to the value of <code>pg_port</code>.</p></li>
 utilities, and psql.  Defaults to <code>/var/vcap/packages/postgres-9.4/bin</code>.</p></li>
 </ul>
 
-<h4>Co-locating the SHIELD PostgreSQL Addon</h4>
+<h3>Co-locating the SHIELD PostgreSQL Addon</h3>
 
 <p>If you are running the SHIELD agent on a different machine than your PostgreSQL
 database server, you will need to install the <a href="https://github.com/shieldproject/shield-addon-postgres-boshrelease">SHIELD PostgreSQL Addon</a>
@@ -262,20 +234,59 @@ backup:</p>
         name:    shield-addon-postgres-10.1
 </code></pre>
 
-<p>Check the <a href="https://github.com/shieldproject/shield-addon-postgres-boshrelease">addon's README</a> for full details of available
+<p>Check the <a href="https://github.com/shieldproject/shield-addon-postgres-boshrelease">add-on's README</a> for full details of available
 versions.</p>
 
-<h3><code>xtrabackup</code> - MySQL Backups via <code>xtrabackup</code> CLI</h3>
+<h2>MySQL / MariaDB</h2>
 
-<p>The <code>xtrabackup</code> plugin lets you back up and restore your MySQL / MariaDB
-databases using a filesystem-based approach leveraging the <code>xtrabackup</code>
-utility.  This method is often faster, if less portable, than the pure SQL
-approach taken by the <code>mysql</code> plugin.</p>
+<h3>Backing Up Via <code>mysqldump</code></h3>
+
+<p>The <code>mysql</code> plugin lets you back up and restore <a href="https://www.mysql.com/">MySQL</a> /
+<a href="https://mariadb.org/">MariaDB</a> databases, using the pure-SQL <code>mysqldump</code> utility.  For
+very large database, the time spent serializing database records into SQL
+commands may be prohibitive, and you may want to investigate use of the
+<code>xtrabackup</code> plugin instead.</p>
+
+<p>Restores are handled by feeding the SQL backup through the standard <code>mysql</code>
+utility.  Connected clients will remain connected during restore.</p>
+
+<h4>Configuration Options</h4>
+
+<ul>
+<li><p><code>mysql_host</code> - The IP address or host name of the MySQL database server to
+target.  This defaults to <code>127.0.0.1</code>, but can be changed to allow for
+remote backup/restore, from a network-attached SHIELD agent.</p></li>
+<li><p><code>mysql_port</code> - The TCP port to connect to, which the database process
+should be listening to.  Defaults to <code>3306</code>, the standard MySQL port.</p></li>
+<li><p><code>mysql_user</code> <strong>(required)</strong> - The username to authenticate with.</p></li>
+<li><p><code>mysql_password</code> <strong>(required)</strong> - The password for the <code>mysql_user</code>.</p></li>
+<li><p><code>mysql_read_replica</code> - The IP address or host name of a read replica
+database server.  If specified, back up operations will be carried out
+against this host, instead of <code>mysql_host</code>.</p></li>
+<li><p><code>mysql_database</code> - The name of a single database to back up.
+By default, all databases will be included in the backup archive.</p>
+
+<p><strong>Note:</strong> this setting has <em>no effect</em> on restore -- whatever is included
+in the backup archive will be restored.</p></li>
+<li><p><code>mysql_bindir</code> - The path to the directory which contains the <code>mysql</code> and
+<code>mysqldump</code> utilities.
+Defaults to <code>/var/vcap/packages/shield-mysql/bin</code>, which works well with
+the <a href="https://github.com/shieldproject/shield-addon-mysql-boshrelease">SHIELD MariaDB Addon</a>.</p></li>
+<li><p><code>mysql_options</code> - A set of <code>mysqldump</code> command-line flags.
+Refer to the MySQL documentation to see what you can set.</p></li>
+</ul>
+
+<h3>Backing Up Via <code>xtrabackup</code></h3>
+
+<p>The <code>xtrabackup</code> plugin lets you back up and restore your <a href="https://www.mysql.com/">MySQL</a> /
+<a href="https://mariadb.org/">MariaDB</a> databases using a filesystem-based approach leveraging
+<a href="https://www.percona.com/software/mysql-database/percona-xtrabackup">Percona's XtraBackup</a> utility.  This method is often faster, if
+less portable, than the pure SQL approach taken by the <code>mysql</code> plugin.</p>
 
 <p><strong>Note:</strong> Since xtrabackup requires access to the MySQL / MariaDB data
 directory, it can only be run from the database host itself.</p>
 
-<h3>Configuration Options</h3>
+<h4>Configuration Options</h4>
 
 <ul>
 <li><p><code>mysql_user</code> <strong>(required)</strong> - The username to authenticate with.</p></li>
@@ -292,7 +303,7 @@ files.  The SHIELD agent (effective) user needs read access to this
 directory for backups, and write access for restores.</p>
 
 <p>Defaults to <code>/var/lib/mysql</code></p></li>
-<li><p><code>mysql_temp_targetdir</code> - The path to a temporary filesystem workspace for
+<li><p><code>mysql_temp_targetdir</code> - The path to a temporary filesystem work space for
 the xtrabackup tool to work.  This directory must be empty, and the
 underlying filesystem must be at least as large as the complete MySQL
 database(s) being backed up.</p>
@@ -306,7 +317,7 @@ If not specified, the plugin will attempt to find <code>tar</code> via the agent
 plugin paths setting.</p></li>
 </ul>
 
-<h4>Co-locating the SHIELD MariaDB Addon</h4>
+<h3>Co-locating the SHIELD MariaDB Addon</h3>
 
 <p>If your MySQL installation does not include xtrabackup, you will need to
 install the <a href="https://github.com/shieldproject/shield-addon-mysql-boshrelease">SHIELD MariaDB Addon</a>.</p>
@@ -329,56 +340,308 @@ want to backup:</p>
         #name:   shield-addon-xtrabackup-2.4
 </code></pre>
 
-<p>Check the <a href="https://github.com/shieldproject/shield-addon-mysql-boshrelease">addon's README</a> for full details of available
+<p>Check the <a href="https://github.com/shieldproject/shield-addon-mysql-boshrelease">add-on's README</a> for full details of available
 versions.</p>
 
-<h2>Key-Value Stores</h2>
+<h2>MongoDB NoSQL</h2>
 
-<h3><code>consul</code> - Consul Key-Value Store</h3>
+<p>The <code>mongo</code> plugin lets you back up and restore your <a href="https://www.mongodb.com/">MongoDB</a>
+databases.  It relies on the <code>mongodump</code> and <code>mongorestore</code> utilities,
+installed on the agent host.</p>
 
-<p>TBD</p>
+<h3>Configuration Options</h3>
 
-<h3><code>consul-snapshot</code> - Consul Key-Value Store (via snapshotting)</h3>
+<ul>
+<li><p><code>mongo_host</code> - The IP address or host name of the MongoDB installation to
+target.  This defaults to <code>127.0.0.1</code>, but can be changed to allow for
+remote backup/restore, from a network-attached SHIELD agent.</p></li>
+<li><p><code>mongo_port</code> - The TCP port to connect to, which the <code>mongod</code> process
+should be listening to.  Defaults to <code>27017</code>, the standard MongoDB port.</p></li>
+<li><p><code>mongo_user</code> - The name of the user account to authenticate to MongoDB as,
+for performing both backup and restore tasks.  If not specified, no
+authentication is performed.</p></li>
+<li><p><code>mongo_password</code> - The password to use when authenticating with
+the <code>mongo_user</code> account.</p></li>
+<li><p><code>mongo_database</code> - The name of a specific database to back up.
+By default, all databases will be included in the backup archive.</p>
 
-<p>TBD</p>
+<p><strong>Note:</strong> This setting has <em>no effect</em> on restore -- whatever is included
+in the backup archive will be restored.</p></li>
+<li><p><code>mongo_bindir</code> - The path to the directory which contains the dump and
+restore binaries.
+Defaults to <code>/var/vcap/packages/shield-mongo/bin</code>, which works well with
+the <a href="https://github.com/shieldproject/shield-addon-mongodb-boshrelease">SHIELD MongoDB Add-on</a>.</p></li>
+<li><p><code>mongo_options</code> - A set of arbitrary command-line flags to pass to the
+dump and restore tools.  For example, <code>--ssl</code> will enable SSL/TLS when
+communicating with MongoDB.  Refer to the MongoDB documentation for more
+details.</p></li>
+</ul>
+
+<h3>Co-locating the SHIELD MongoDB Add-on</h3>
+
+<p>If you are running the SHIELD agent on a different machine than your MongoDB
+database server, you will need to install the <a href="https://github.com/shieldproject/shield-addon-mongodb-boshrelease">SHIELD MongoDB Add-on</a>
+to get the mongodump and monogrestore tools.</p>
+
+<p>Add the release to the top-level <code>releases:</code> section in your agent
+deployment manifest:</p>
+
+<pre><code>releases:
+  - name:    shield-addon-mongodb
+    version: latest   # or a specific version
+</code></pre>
+
+<p>Then add the job that corresponds to the version of MongoDB you want to
+backup:</p>
+
+<pre><code>instance_groups:
+  - name: your-shield-agent
+    jobs:
+      - release: shield-addon-mongodb
+        name:    shield-addon-mongo-tools-3.4
+</code></pre>
+
+<p>Check the <a href="https://github.com/shieldproject/shield-addon-mongodb-boshrelease">add-on's README</a> for full details of available
+versions.</p>
+
+<h2>Consul Key-Value Store</h2>
+
+<p>The <code>consul</code> plugin lets you back up a <a href="https://www.consul.io/">Consul</a> key-value store.
+It works by walking the entire store and capturing the value of every key
+in the hierarchy.</p>
+
+<p>On restore, keys from the backup archive will be put back into the running
+key-value store, but existing keys will <em>not</em> be removed.</p>
+
+<h3>Configuration Options</h3>
+
+<ul>
+<li><p><code>host</code> - The full HTTP(S) URL of the Consul to back up.
+Defaults to <code>http://127.0.0.1:8500</code>.</p></li>
+<li><p><code>username</code> - The username to authenticate to Consul (via HTTP Basic
+Authentication).  By default, no authentication is performed.</p></li>
+<li><p><code>password</code> - The password for the given <code>username</code>.</p></li>
+<li><p><code>skip_ssl_validation</code> - Whether to verify the X.509 certificate of the
+Consul API, or not.  If your Consul host is using an untrusted, expired,
+or self-signed certificate, you can set this option to true to bypass
+verification failure.  <strong><em>This is not recommended</em></strong> for production use.</p></li>
+</ul>
 
 <h2>CF Service Brokers</h2>
 
-<h3><code>docker-postgres</code> - Dockerized PostgreSQL CF Service Broker</h3>
+<h3>Dockerized PostgreSQL CF Service Broker</h3>
 
-<p>TBD</p>
+<p>The <code>docker-postgres</code> plugin lets you back up data in a Dockerized
+PostgreSQL service broker that uses the cf-containers-broker provided by the
+docker-boshrelease
+(<a href="https://github.com/cloudfoundry-incubator/docker-boshrelease">https://github.com/cloudfoundry-incubator/docker-boshrelease</a>).</p>
 
-<h3><code>rabbitmq-broker</code> - RabbitMQ CF Service Broker</h3>
+<p>This is a highly specific configuration, and this plugin does not work with
+other PostgreSQL + Docker combinations.</p>
 
-<p>TBD</p>
+<p><strong>Note</strong>: This plugin must be executed on the system that runs the container
+broker, which requires a co-located SHIELD agent in almost all cases.</p>
 
-<h3><code>redis-broker</code> - Redis CF Service Broker</h3>
+<h4>Configuration Options</h4>
 
-<p>TBD</p>
+<p><em>This plugin has no configuration options.</em></p>
+
+<h4>How It Works (Implementation Details)</h4>
+
+<p>Backups are performed by connecting to the local Docker daemon, and finding
+all the running containers.  It then iterates over that list, compiles some
+metadata about port mappings (from Docker), and executes a <code>pg_dump</code> backup
+on the running PostgreSQL instance.  All of this information is then stored
+in a POSIX <em>tar</em> archive.</p>
+
+<p>Restore operations work through the tar archive, bringing up a new Docker
+container for each entry, remapping ports, and restoring the database.
+This is a service-affecting operation, since any existing container images
+will be destroyed, and any connected clients will be disconnected.</p>
+
+<h3>Cloud Foundry RabbitMQ Service Broker</h3>
+
+<p>The <code>rabbitmq-broker</code> plugin lets you back up the configuration of the Cloud
+Foundry RabbitMQ Service Broker
+(<a href="https://github.com/pivotal-cf/cf-rabbitmq-release">https://github.com/pivotal-cf/cf-rabbitmq-release</a>).  However, given that
+it only uses stock RabbitMQ API calls, it may work with other
+configurations.</p>
+
+<p><strong>Note</strong>: RabbitMQ is usually used as a non-durable message queue and
+dispatch / routing system.  As such, this plugin only backs up the
+<em>metadata</em> of a RabbitMQ brokered installation, not the actual messages.</p>
+
+<p>This plugin uses the RabbitMQ Management API, which requires that the
+<code>rabbitmq_management</code> plugin be loaded into your RabbitMQ installation.</p>
+
+<h4>Configuration Options</h4>
+
+<ul>
+<li><p><code>rmq_url</code> <strong>(required)</strong> - The HTTP(S) URL of the RabbitMQ Management API,
+which usually runs on port 15672.</p></li>
+<li><p><code>rmq_username</code> <strong>(required)</strong> - The username to authenticate to the
+management API as.</p></li>
+<li><p><code>rmq_password</code> <strong>(required)</strong> - The password for the <code>rmq_username</code>
+account.</p></li>
+<li><p><code>skip_ssl_validation</code> - Whether or not to bypass the validation of the
+X.509 certificate presented by the management API.  This is <strong>not
+recommended for production use!</strong></p></li>
+</ul>
+
+<h3>Cloud Foundry Redis Service Broker</h3>
+
+<p>The <code>redis-broker</code> plugin lets you back up the configuration of the Cloud
+Foundry Redis Service Broker
+(<a href="https://github.com/pivotal-cf/cf-redis-release">https://github.com/pivotal-cf/cf-redis-release</a>).  It is <em>not</em> a
+general-purpose Redis backup plugin, and will not work with stock Redis
+installations.</p>
+
+<p><strong>Note</strong>: Since Redis does not allow backups across the network, any target
+using this plugin must execute on a co-located SHIELD agent, on the Redis VM.</p>
+
+<h4>Configuration Options</h4>
+
+<ul>
+<li><code>redis_type</code> <strong>(required)</strong> - The type of Redis VM being targeted.  Must
+be one of either <code>dedicated</code> or <code>shared</code>.</li>
+</ul>
+
+<h4>How It Works (Implementation Details)</h4>
+
+<p>A Redis Service Broker deployment features two types of VMs: shared and
+dedicated.  A shared VM runs multiple Redis processes, each bound on their
+own port, with their own append-only (AOF) file.  A dedicated VM runs a
+single Redis process (usually on the standard port).</p>
+
+<p>The plugin backs up all data in <code>/var/vcap/store</code>, which works regardless of
+the type of Redis VM being targeted.</p>
+
+<p>How the plugin restores data depends on the type of Redis VM.</p>
+
+<p>For shared VMs, a restore will stop the service broker process, terminate
+all Redis instances, and extract the backup archive back into
+<code>/var/vcap/store</code>.  Then, it validates the AOF and resolves any corruption
+issues that may have occurred during backup (like a mid-write snapshot).
+Finally, it restarts the service broker process, which will then re-launch
+all of the configured Redis instances.</p>
+
+<p>For dedicated VMs, a restore will stop the service broker's agent process,
+and the Redis instance itself, and extract the backup archive back into
+<code>/var/vcap/store</code>.  Then it validates the AOF and resolves any corruption
+issues that may have occurred during backup (like a mid-write snapshot).
+Finally, it restarts the agent and Redis process.</p>
+
+<p>Restore operations are service-impacting, as the Redis instances are
+shut down for the duration of the restore. Additionally, the service broker
+apparatus is disabled, to prevent creation of new service instances during
+the restoration.</p>
 
 <h2>BOSH Backup / Restore</h2>
 
-<h3><code>bbr-deployment</code> - BOSH Backup / Restore (for deployments)</h3>
+<h3>BOSH Backup / Restore (for deployments)</h3>
 
-<p>TBD</p>
+<p>The <code>bbr-deployment</code> plugin lets you back up a BOSH deployment using
+<a href="https://github.com/cloudfoundry-incubator/bosh-backup-and-restore">BBR</a>.</p>
 
-<h3><code>bbr-director</code> - BOSH Backup / Restore (for directors)</h3>
+<h4>Configuration Options</h4>
 
-<p>TBD</p>
+<ul>
+<li><p><code>bbr_target</code> <strong>(required)</strong> - The IP address or host name of your BOSH
+director.</p></li>
+<li><p><code>bbr_deployment</code> <strong>(required)</strong> - The name of the deployment to protect.</p></li>
+<li><p><code>bbr_username</code> <strong>(required)</strong> - The username to use when authenticating to
+the BOSH director.</p></li>
+<li><p><code>bbr_password</code> <strong>(required)</strong> - The password for <code>bbr_username</code>.</p></li>
+<li><p><code>bbr_cacert</code> <strong>(required)</strong> - The X.509 certificate of the Certificate
+Authority that signed the BOSH director's certificate.</p></li>
+<li><p><code>bbr_bindir</code> - The path to the directory which contains the <code>bbr</code>
+executable.
+Defaults to <code>/var/vcap/packages/bbr/bin</code>, which works well with the
+<a href="https://github.com/shieldproject/shield-addon-bbr-boshrelease">SHIELD BBR Addon</a>.</p></li>
+</ul>
+
+<h4>Co-locating the SHIELD BBR Addon</h4>
+
+<p>If you are running the SHIELD agent on a machine that does not provide the
+<code>bbr</code> executable, you will need to install the
+<a href="https://github.com/shieldproject/shield-addon-mongodb-boshrelease">SHIELD BBR Addon</a>.</p>
+
+<p>Add the release to the top-level <code>releases:</code> section in your agent
+deployment manifest:</p>
+
+<pre><code>releases:
+  - name:    shield-addon-bbr
+    version: latest   # or a specific version
+</code></pre>
+
+<p>Then add the job to install <code>bbr</code>:</p>
+
+<pre><code>instance_groups:
+  - name: your-shield-agent
+    jobs:
+      - release: shield-addon-bbr
+        name:    bbr
+</code></pre>
+
+<p>Check the <a href="https://github.com/shieldproject/shield-addon-bbr-boshrelease">add-on's README</a> for more information.</p>
+
+<h3>BOSH Backup / Restore (for directors)</h3>
+
+<p>The <code>bbr-director</code> plugin lets you back up a BOSH director using <a href="https://github.com/cloudfoundry-incubator/bosh-backup-and-restore">BBR</a>.</p>
+
+<h4>Configuration Options</h4>
+
+<ul>
+<li><p><code>bbr_host</code> <strong>(required)</strong> - The IP address or host name of your BOSH
+director.</p></li>
+<li><p><code>bbr_sshusername</code> <strong>(required)</strong> - The username to use when SSHing into
+the BOSH director VM to execute the BBR backup / restore operation.</p></li>
+<li><p><code>bbr_privatekey</code> <strong>(required)</strong> - The SSH private key that has been
+authorized for use by <code>bbr_sshusername</code>.</p></li>
+<li><p><code>bbr_bindir</code> - The path to the directory which contains the <code>bbr</code>
+executable.
+Defaults to <code>/var/vcap/packages/bbr/bin</code>, which works well with the
+<a href="https://github.com/shieldproject/shield-addon-bbr-boshrelease">SHIELD BBR Addon</a>.</p></li>
+</ul>
+
+<h4>Co-locating the SHIELD BBR Addon</h4>
+
+<p>If you are running the SHIELD agent on a machine that does not provide the
+<code>bbr</code> executable, you will need to install the
+<a href="https://github.com/shieldproject/shield-addon-mongodb-boshrelease">SHIELD BBR Addon</a>.</p>
+
+<p>Add the release to the top-level <code>releases:</code> section in your agent
+deployment manifest:</p>
+
+<pre><code>releases:
+  - name:    shield-addon-bbr
+    version: latest   # or a specific version
+</code></pre>
+
+<p>Then add the job to install <code>bbr</code>:</p>
+
+<pre><code>instance_groups:
+  - name: your-shield-agent
+    jobs:
+      - release: shield-addon-bbr
+        name:    bbr
+</code></pre>
+
+<p>Check the <a href="https://github.com/shieldproject/shield-addon-bbr-boshrelease">add-on's README</a> for more information.</p>
 
 <h1>Storage Plugins</h1>
 
 <h2>Amazon S3</h2>
 
-<p>The <code>s3</code> plugin lets you store backup archives in an Amazon AWS Simple
-Storage Service bucket.  In theory, this plugin should also work with other
-implementations, not from Amazon, which we term <em>S3 work-alikes</em>.</p>
+<p>The <code>s3</code> plugin lets you store backup archives in an <a href="https://aws.amazon.com/s3/">Amazon AWS Simple
+Storage Service</a> bucket.  In theory, this plugin should also work with
+other implementations, not from Amazon, which we term <em>S3 work-alikes</em>.</p>
 
-<p>Backup archives will be stored in a filename / path that encodes the date
+<p>Backup archives will be stored in a file name / path that encodes the date
 and time of the backup operation, to make it easier to track down a specific
 archive later:</p>
 
-<pre><code>&lt;prefix&gt;/&lt;YYYY&gt;/&lt;MM&gt;/&lt;DD&gt;/&lt;YYYY&gt;-&lt;MM&gt;-&lt;DD&gt;-&lt;HHmmSS&gt;-&lt;UUID&gt;
+<pre><code>$prefix/YYYY/MM/DD/YYYY-MM-DD-HHmmSS-$uuid
 </code></pre>
 
 <p>for example, given a <code>prefix</code> of "prod/backups", a backup might be stored
@@ -407,15 +670,15 @@ if you wish to use an S3 work-alike.
 Defaults to <code>s3.amazonaws.com</code>.</p></li>
 <li><p><code>s3_port</code> - Override the TCP port of the S3 work-alike backend.
 Defaults to <code>443</code>.</p></li>
-<li><p><code>skip_ssl_validation</code> - Whether or not to verify the X.509 certificate of
-the S3 backend endpoint, or not.  If your local S3 work-alike is using an
+<li><p><code>skip_ssl_validation</code> - Whether to verify the X.509 certificate of the S3
+backend endpoint, or not.  If your local S3 work-alike is using an
 untrusted, expired, or self-signed certificate, you can set this option to
 true to bypass verification failure.  <strong><em>This is not recommended</em></strong> for
 production use.</p></li>
 <li><p><code>part_size</code> - The multipart upload size.  Amazon S3 proper uses variable
 multipart sizes, but some work-alikes require this to be set to specific
 values.</p></li>
-<li><p><code>signature_version</code> - All S3 protocol requrests include a header signature
+<li><p><code>signature_version</code> - All S3 protocol requests include a header signature
 to validate and verify each request.  The protocol supports two different
 methods of signature generation, version 2 and version 4.</p>
 
@@ -429,14 +692,15 @@ traffic to and from the S3 backend.  By default, no proxy is used.</p></li>
 
 <h2>Google Cloud Storage</h2>
 
-<p>The <code>google</code> plugin lets you store backup archives in Google Cloud's
-blobstore storage system, which conceptually behaves a lot like Amazon's S3.</p>
+<p>The <code>google</code> plugin lets you store backup archives in <a href="https://cloud.google.com/storage/">Google Cloud's
+blobstore storage system</a>, which conceptually behaves a lot like
+Amazon's S3.</p>
 
-<p>Backup archives will be stored in a filename / path that encodes the date
+<p>Backup archives will be stored in a file name / path that encodes the date
 and time of the backup operation, to make it easier to track down a specific
 archive later:</p>
 
-<pre><code>&lt;prefix&gt;/&lt;YYYY&gt;/&lt;MM&gt;/&lt;DD&gt;/&lt;YYYY&gt;-&lt;MM&gt;-&lt;DD&gt;-&lt;HHmmSS&gt;-&lt;UUID&gt;
+<pre><code>$prefix/YYYY/MM/DD/YYYY-MM-DD-HHmmSS-$uuid
 </code></pre>
 
 <p>for example, given a <code>prefix</code> of "prod/backups", a backup might be stored
@@ -464,14 +728,14 @@ separate for out-of-band retrieval.</p>
 
 <h2>Microsoft Azure</h2>
 
-<p>The <code>azure</code> plugin lets you store backup archives in Microsoft Azure's
-Blobstore, in a storage container.</p>
+<p>The <code>azure</code> plugin lets you store backup archives in <a href="https://azure.microsoft.com/en-us/services/storage/blobs/">Microsoft Azure's
+Blobstore</a>, in a storage container.</p>
 
-<p>Backup archives will be stored in a filename / path that encodes the date
+<p>Backup archives will be stored in a file name / path that encodes the date
 and time of the backup operation, to make it easier to track down a specific
 archive later:</p>
 
-<pre><code>&lt;prefix&gt;/&lt;YYYY&gt;-&lt;MM&gt;-&lt;DD&gt;-&lt;HHmmSS&gt;-&lt;UUID&gt;
+<pre><code>$prefix/YYYY-MM-DD-HHmmSS-$uuid
 </code></pre>
 
 <p>for example, given a <code>prefix</code> of "prod/backups", a backup might be stored
@@ -500,15 +764,65 @@ separate for out-of-band retrieval.</p>
 
 <h2>OpenStack Swift</h2>
 
-<p>TBD</p>
+<p>The <code>swift</code> plugin lets you store backup archives in an <a href="https://docs.openstack.org/swift/latest/">OpenStack Swift
+Blobstore</a>.</p>
 
-<h2>Scality S3 Work-Alike</h2>
+<p>Backup archives will be stored in a file name / path that encodes the date
+and time of the backup operation, to make it easier to track down a specific
+archive later:</p>
 
-<p>TBD</p>
+<pre><code>$prefix/YYYY/MM/DD/HHmmSS-$uuid
+</code></pre>
+
+<p>for example, given a <code>prefix</code> of "prod/backups", a backup might be stored
+at:</p>
+
+<pre><code>prod/backups/2018/07/12/134255-f3b564f2-ef62-4e38-9d94-ba17c37abf09
+</code></pre>
+
+<h3>Configuration Options</h3>
+
+<ul>
+<li><p><code>auth_url</code> <strong>(required)</strong> - The URL of the OpenStack authentication API.
+For example: <code>https://identity.api.rackspacecloud.com/v2.0</code>.</p></li>
+<li><p><code>project_name</code> <strong>(required)</strong> - The name of the OpenStack project that
+will own the blobstore data.</p></li>
+<li><p><code>username</code> <strong>(required)</strong> - The username to authenticate to OpenStack.</p></li>
+<li><p><code>password</code> <strong>(required)</strong> - The password for the given <code>username</code>.</p></li>
+<li><p><code>container</code> <strong>(required)</strong> - The name of the blobstore container in which
+to store backup archives.  This is loosely analogous to an S3 bucket.</p></li>
+<li><p><code>prefix</code> - An optional prefix for backup archive paths.  This can be
+useful if you are sharing a bucket between multiple teams, or across
+two or more different environments, and want to be able to keep them
+separate for out-of-band retrieval.</p>
+
+<p>By default, no prefix will be used.</p></li>
+<li><p><code>debug</code> - (boolean) Whether or not to enable debugging output.
+By default, debug messages are not printed.</p></li>
+</ul>
 
 <h2>WebDAV Filesystem</h2>
 
-<p>TBD</p>
+<p>The <code>webdav</code> plugin lets you store backup archives in any WebDAV server that
+complies with <a href="https://tools.ietf.org/rfc/rfc2518.txt">RFC 2518</a>.  This
+includes <a href="https://httpd.apache.org/docs/2.4/mod/mod_dav.html">Apache</a> and <a href="http://nginx.org/en/docs/http/ngx_http_dav_module.html">Nginx</a>.</p>
+
+<h3>Configuration Options</h3>
+
+<ul>
+<li><p><code>url</code> <strong>(required)</strong> - The full HTTP(S) URL of the WebDAV server.  This
+might include a path if you aren't storing files in the top of the server
+filesystem hierarchy.</p></li>
+<li><p><code>username</code> - A username to use for HTTP Basic Authentication against the
+WebDAV server.  If not specified, no authentication is performed (which
+may not work).</p></li>
+<li><p><code>password</code> - The password for the given <code>username</code>.</p></li>
+<li><p><code>skip_ssl_validation</code> - Whether to verify the X.509 certificate of the
+WebDAV server, or not.  If your WebDAV host is using an untrusted,
+expired, or self-signed certificate, you can set this option to true to
+bypass verification failure.  <strong><em>This is not recommended</em></strong> for production
+use.</p></li>
+</ul>
       </div>
     </div>
   </div>
