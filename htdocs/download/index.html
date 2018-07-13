@@ -61,10 +61,12 @@
     <div class="row">
       <div class="col-md-3 toc">
         <ul>
-          <li><a href="#latest">Latest Release (8.0.12)</a></li>
+          <li><a href="#latest">Latest Release (8.0.13)</a></li>
           <li><a href="#source">Build From Source</a></li>
           <li><a href="#older">Older Releases</a>
             <ul>
+              
+              <li><a href="#v8.0.12">8.0.12</a></li>
               
               <li><a href="#v8.0.8">8.0.8</a></li>
               
@@ -88,17 +90,40 @@
       </div>
       <div class="col-md-8 col-md-push-1">
         <div class="content">
-          <span id="v8.0.12"></span>
-          <h1 id="latest">SHIELD v8.0.12</h1>
+          <span id="v8.0.13"></span>
+          <h1 id="latest">SHIELD v8.0.13</h1>
           
             <h3>Improvements</h3>
 
 <ul>
-<li>New <code>vault</code> plugin for backing up Safe or Vault installations.
-You can optionally restrict the subtree that gets backed up and
-restored, in case you share the Vault with others.</li>
+<li><p>Move the <code>vault.crypt</code> file out from under the <code>vault/</code> data
+directory sub-directory; that sub-directory is dedicated to the
+Vault instance, and we shouldn't be putting other things in there.</p></li>
+<li><p>Threshold for storage now indicates the use of units in the form field, to
+prevent the accidental specification of 50 bytes when you meant 50 gigabytes.</p></li>
+<li><p>Improved results of the /v2/info and /v2/heath API endpoints to match its
+documented behaviour.</p></li>
 </ul>
-            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.12" target="_blank">Download v8.0.12 from Github</a>
+
+<h3>Deprecations</h3>
+
+<ul>
+<li>Removed FQDN from /v2/info as it was populated using DNS reverse lookups
+that were less than useful.</li>
+</ul>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li><p>Storage health correctly stated during creation of ad-hoc runs.</p></li>
+<li><p>Scheduled jobs in timeline are not longer incorrectly as "Ad-hoc"</p></li>
+<li><p>Admin/Sessions page no longer shows all IP Addresses as <code>localhost</code> and
+shows the session creation time in human-readable format.</p></li>
+<li><p>Notes for targets are now displayed on the page for a given system.</p></li>
+<li><p>Errors encountered when unlocking the vault now notify the user.</p></li>
+<li><p>Release version correctly displayed on header instead of <code>(development)</code></p></li>
+</ul>
+            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.13" target="_blank">Download v8.0.13 from Github</a>
           
 
           <h1>Build From Source</h1>
@@ -106,6 +131,16 @@ restored, in case you share the Vault with others.</li>
           <p>... we're still working on this one ... <!-- FIXME --></p>
 
           <h1 id="older">Older SHIELD Releases</h1>
+          
+          <h2 id="v8.0.12">SHIELD v8.0.12</h2>
+          <h3>Improvements</h3>
+
+<ul>
+<li>New <code>vault</code> plugin for backing up Safe or Vault installations.
+You can optionally restrict the subtree that gets backed up and
+restored, in case you share the Vault with others.</li>
+</ul>
+          <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.12" target="_blank">Download v8.0.12 from Github</a>
           
           <h2 id="v8.0.8">SHIELD v8.0.8</h2>
           <h3>Improvements</h3>
