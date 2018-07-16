@@ -160,10 +160,9 @@ with different versions of SHIELD Core and clients.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/info
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -218,10 +217,9 @@ storage accounts, and general metrics, at a global scope.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/health
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -290,10 +288,9 @@ visible to a single tenant.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/health
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -424,10 +421,9 @@ user doesn't exist, or the password was wrong.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/logout
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -464,10 +460,9 @@ authenticated, a suitable response will be returned.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/id
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -535,10 +530,9 @@ against 3rd party systems like Github and Cloud Foundry UAA.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/providers
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -574,10 +568,9 @@ properties including things like client secrets.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/providers/:identifier
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -633,10 +626,9 @@ authentication token is not returned.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/tokens
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -711,7 +703,7 @@ to the parent user account.</p>
 authentication token; it cannot be used as an authentication token,
 as it is not the session ID.</p>
 
-<p>The <code>session</code> key should be used </p>
+<p>The <code>session</code> key should be used</p>
 
 <p><strong>Access Control</strong></p>
 
@@ -749,10 +741,9 @@ revoked).</p>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/auth/tokens/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -791,41 +782,30 @@ after authentication.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/sessions
-
-
-- **?exact=(t|f)**
-When filtering sessions, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?is_token=(t|f)**
-When filtering sessions, include those associated with tokens (default - false)
-
-
-- **?uuid=**
-Only show the session that matches the given UUID.
-This is a FIXME - we probably need to remove this.
-
-
-- **?user_uuid=**
-Only show sessions that matches the given user UUID.
-
-
-- **?name=...**
-Only show sessions whose associated token name match the given value.  
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?ip_addr=...**
-Only show sessions who are associated with the given IP address.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
+When filtering sessions, perform either exact field / value
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?is_token=(t|f)</strong>
+When filtering sessions, include those associated with tokens (default - false)</p></li>
+<li><p><strong>?uuid=</strong>
+Only show the session that matches the given UUID.
+This is a FIXME - we probably need to remove this.</p></li>
+<li><p><strong>?user_uuid=</strong>
+Only show sessions that matches the given user UUID.</p></li>
+<li><p><strong>?name=...</strong>
+Only show sessions whose associated token name match the given value.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?ip_addr=...</strong>
+Only show sessions who are associated with the given IP address.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -850,7 +830,7 @@ default) denotes an unlimited search.
 <li><p><strong>user_uuid</strong> - The internal UUID corresponding to the user associated with the session.</p></li>
 <li><p><strong>created_at</strong> - When the user created the session (upon login via WebUI or CLI).
 Date is formatted YYYY-MM-DD HH:MM:SS, in 24-hour notation.</p></li>
-<li><p><strong>last_seen_at</strong> - When the user last made contact with the 
+<li><p><strong>last_seen_at</strong> - When the user last made contact with the
 SHIELD Core via an authenticated endpoint.
 Date is formatted YYYY-MM-DD HH:MM:SS, in 24-hour notation.</p></li>
 <li><p><strong>token_uuid</strong> - The uuid of the SHIELD Token associated with the session (if applicable).</p></li>
@@ -899,10 +879,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/sessions/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -924,7 +903,7 @@ This endpoint takes no query string parameters.
 <li><p><strong>user_uuid</strong> - The internal UUID corresponding to the user associated with the session.</p></li>
 <li><p><strong>created_at</strong> - When the user created the session (upon login via WebUI or CLI).
 Date is formatted YYYY-MM-DD HH:MM:SS, in 24-hour notation.</p></li>
-<li><p><strong>last_seen_at</strong> - When the user last made contact with the 
+<li><p><strong>last_seen_at</strong> - When the user last made contact with the
 SHIELD Core via an authenticated endpoint.
 Date is formatted YYYY-MM-DD HH:MM:SS, in 24-hour notation.</p></li>
 <li><p><strong>token_uuid</strong> - The uuid of the SHIELD Token associated with the session (if applicable).</p></li>
@@ -972,10 +951,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/auth/sessions/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1026,10 +1004,9 @@ The request should not be retried.</p></li>
 {
   "default_tenant": "2a03d67b-6146-4716-b10a-42ec073cfb78"
 }'
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1074,35 +1051,28 @@ of the latter.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/local/users
-
-
-- **?exact=(t|f)**
-When filtering users, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?uuid=**
-Only show the local user that matches the given UUID.
-This is a FIXME - we probably need to remove this.
-
-
-- **?account=...**
-Only show local users whose account names (usernames)
-match the given value.  Subject to the `exact=(t|f)` query
-string parameter.
-
-
-- **?sysrole=...**
-Only show local users who have been assigned the given
-system role.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
+When filtering users, perform either exact field / value
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?uuid=</strong>
+Only show the local user that matches the given UUID.
+This is a FIXME - we probably need to remove this.</p></li>
+<li><p><strong>?account=...</strong>
+Only show local users whose account names (usernames)
+match the given value.  Subject to the <code>exact=(t|f)</code> query
+string parameter.</p></li>
+<li><p><strong>?sysrole=...</strong>
+Only show local users who have been assigned the given
+system role.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -1158,10 +1128,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/auth/local/users/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1340,10 +1309,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/auth/local/users/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1507,10 +1475,9 @@ keys are held).</p>
   "current" : "your CURRENT master password",
   "new"     : "what you want to change it to"
 }'
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1548,10 +1515,9 @@ site administrators</li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/agents
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1716,10 +1682,9 @@ require, etc.)</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/agents/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1815,10 +1780,9 @@ available for configuration.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X POST https://shield.host/v2/agents/:uuid/show \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1868,10 +1832,9 @@ configuration.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X POST https://shield.host/v2/agents/:uuid/hide \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1921,10 +1884,9 @@ slow loop scheduling.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X POST https://shield.host/v2/agents/:uuid/resync \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -1969,10 +1931,9 @@ viewable by a given tenant.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/agents
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -2047,10 +2008,9 @@ but only to SHIELD administrators).</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/agents/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -2149,29 +2109,24 @@ their assigned roles.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants
-
-
-- **?exact=(t|f)**
-When filtering tenants, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?uuid=**
-Only show the tenant that matches the given UUID.
-This is a FIXME - we probably need to remove this.
-
-
-- **?name=...**
-Only show tenant whose name matches the given value.  
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
+When filtering tenants, perform either exact field / value
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?uuid=</strong>
+Only show the tenant that matches the given UUID.
+This is a FIXME - we probably need to remove this.</p></li>
+<li><p><strong>?name=...</strong>
+Only show tenant whose name matches the given value.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -2347,10 +2302,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -2570,10 +2524,9 @@ The request should not be retried.</p></li>
     }
   ]
 }'
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -2636,10 +2589,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/tenants/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -2690,33 +2642,26 @@ restore operations against as course of normal function.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/targets
-
-
-- **?exact=(t|f)**
-When filtering targets, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?unused=(t|f)**
-When filtering targets, skip those that are unused (true) or used (false)
-
-
-- **?name=...**
-Only show targets whose name matches the given value.  
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?plugin=...**
-Only show targets who are associated with the given plugin.
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
+When filtering targets, perform either exact field / value
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?unused=(t|f)</strong>
+When filtering targets, skip those that are unused (true) or used (false)</p></li>
+<li><p><strong>?name=...</strong>
+Only show targets whose name matches the given value.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?plugin=...</strong>
+Only show targets who are associated with the given plugin.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -2788,12 +2733,13 @@ JSON, inline, for both readability and sanity's sake.</p>
 
 <p>The following query string parameters are honored:</p>
 
-<pre><code>- **?test=(t|f)**
+<ul>
+<li><strong>?test=(t|f)</strong>
 Perform all validation and preparatory steps, but don't
 actually create the target in the database.  This is useful
-for validating that a target _could_ be created, without
-creating it (i.e. for defering creation until later).
-</code></pre>
+for validating that a target <em>could</em> be created, without
+creating it (i.e. for defering creation until later).</li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -2856,10 +2802,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/targets/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -2981,10 +2926,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/tenants/:tenant/targets/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -3047,33 +2991,26 @@ for managing global storage solutions, see the section titled
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/stores
-
-
-- **?exact=(t|f)**
-When filtering stores, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?unused=(t|f)**
-When filtering stores, skip those that are unused (true) or used (false)
-
-
-- **?name=...**
-Only show stores whose name matches the given value.  
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?plugin=...**
-Only show stores who are associated with the given plugin.
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
+When filtering stores, perform either exact field / value
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?unused=(t|f)</strong>
+When filtering stores, skip those that are unused (true) or used (false)</p></li>
+<li><p><strong>?name=...</strong>
+Only show stores whose name matches the given value.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?plugin=...</strong>
+Only show stores who are associated with the given plugin.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -3150,12 +3087,13 @@ until the storage system is used in a job.</p>
 
 <p>The following query string parameters are honored:</p>
 
-<pre><code>- **?test=(t|f)**
+<ul>
+<li><strong>?test=(t|f)</strong>
 Perform all validation and preparatory steps, but don't
 actually create the store in the database.  This is useful
-for validating that a store _could_ be created, without
-creating it (i.e. for defering creation until later).
-</code></pre>
+for validating that a store <em>could</em> be created, without
+creating it (i.e. for defering creation until later).</li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -3206,10 +3144,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/stores/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -3342,10 +3279,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/tenants/:tenant/stores/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -3402,28 +3338,23 @@ inexorably.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/policies
-
-
-- **?exact=(t|f)**
-When filtering policies, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?unused=(t|f)**
-When filtering policies, skip those that are unused (true) or used (false)
-
-
-- **?name=...**
-Only show policies whose name matches the given value.  
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
+When filtering policies, perform either exact field / value
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?unused=(t|f)</strong>
+When filtering policies, skip those that are unused (true) or used (false)</p></li>
+<li><p><strong>?name=...</strong>
+Only show policies whose name matches the given value.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -3487,12 +3418,13 @@ must be at least 86,400 (1 day) and be a multiple of
 
 <p>The following query string parameters are honored:</p>
 
-<pre><code>- **?test=(t|f)**
+<ul>
+<li><strong>?test=(t|f)</strong>
 Perform all validation and preparatory steps, but don't
 actually create the policy in the database.  This is useful
-for validating that a policy _could_ be created, without
-creating it (i.e. for defering creation until later).
-</code></pre>
+for validating that a policy <em>could</em> be created, without
+creating it (i.e. for defering creation until later).</li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -3543,10 +3475,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/policies/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -3660,10 +3591,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/tenants/:tenant/policies/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -3726,37 +3656,28 @@ policies.  Without Jobs, SHIELD cannot actually back anything up.</p>
 filter down to a subset of that by the following query string
 parameters:</p>
 
-<pre><code>- **?exact=(t|f)**
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
 When filtering jobs, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?paused=(t|f)**
-Show only paused (`paused=t`) or unpaused (`paused=f`) jobs.
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?paused=(t|f)</strong>
+Show only paused (<code>paused=t</code>) or unpaused (<code>paused=f</code>) jobs.
 If omitted, all jobs are shown, regardless of their
-pausedness.
-
-
-- **?name=...**
+pausedness.</p></li>
+<li><p><strong>?name=...</strong>
 Show only jobs whose names match the given value.
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?target=...**
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?target=...</strong>
 Show only jobs whose target UUIDs match the given value.
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?store=...**
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?store=...</strong>
 Show only jobs whose store UUIDs match the given value.
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?policy=...**
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?policy=...</strong>
 Show only jobs whose retention policy UUIDs match the given
-value.  Subject to the `exact=(t|f)` query string parameter.
-</code></pre>
+value.  Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -3921,10 +3842,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/jobs/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4066,10 +3986,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/tenants/:tenant/jobs/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4119,10 +4038,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X POST https://shield.host/v2/tenants/:tenant/jobs/:uuid/run \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4170,10 +4088,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X POST https://shield.host/v2/tenants/:tenant/jobs/:uuid/pause \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4220,10 +4137,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X POST https://shield.host/v2/tenants/:tenant/jobs/:uuid/unpause \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4281,25 +4197,20 @@ existence and move through its lifecycle.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/tasks
-
-
-- **?active=(t|f)**
-When filtering tasks, show those that are active (true) or inactive (false)
-
-
-- **?status=...**
-Only show tasks whose status matches the given value.  
-
-
-- **?target=**
-Only show tasks associated with a given target...
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?active=(t|f)</strong>
+When filtering tasks, show those that are active (true) or inactive (false)</p></li>
+<li><p><strong>?status=...</strong>
+Only show tasks whose status matches the given value.</p></li>
+<li><p><strong>?target=</strong>
+Only show tasks associated with a given target...</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -4356,10 +4267,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/tasks/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4413,10 +4323,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/tenants/:tenant/tasks/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4472,33 +4381,24 @@ succeed.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/archives
-
-
-- **?target=**
-Only show the archives that beloing to the the given target UUID.
-
-
-- **?store=**
-Only show the archives that beloing to the the given store UUID.
-
-
-- **?before=**
-Only show the archives created before the given time.
-
-
-- **?after=**
-Only show the archives created after the given time.
-
-
-- **?status=...**
-Only show the archives with the given status.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?target=</strong>
+Only show the archives that beloing to the the given target UUID.</p></li>
+<li><p><strong>?store=</strong>
+Only show the archives that beloing to the the given store UUID.</p></li>
+<li><p><strong>?before=</strong>
+Only show the archives created before the given time.</p></li>
+<li><p><strong>?after=</strong>
+Only show the archives created after the given time.</p></li>
+<li><p><strong>?status=...</strong>
+Only show the archives with the given status.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -4563,10 +4463,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/tenants/:tenant/archives/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4633,10 +4532,9 @@ The request should not be retried.</p></li>
 {
   "notes": "Notes for this specific archive"
 }'
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4779,10 +4677,9 @@ data from the backing storage system.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/tenants/:tenant/archives/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -4838,33 +4735,26 @@ storage system definitions).</p>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/global/stores
-
-
-- **?exact=(t|f)**
-When filtering stores, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?unused=(t|f)**
-When filtering stores, skip those that are unused (true) or used (false)
-
-
-- **?name=...**
-Only show stores whose name matches the given value.  
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?plugin=...**
-Only show stores who are associated with the given plugin.
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
+When filtering stores, perform either exact field / value
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?unused=(t|f)</strong>
+When filtering stores, skip those that are unused (true) or used (false)</p></li>
+<li><p><strong>?name=...</strong>
+Only show stores whose name matches the given value.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?plugin=...</strong>
+Only show stores who are associated with the given plugin.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -4980,10 +4870,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/global/stores/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -5107,10 +4996,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/global/stores/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -5158,28 +5046,23 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/global/policies
-
-
-- **?exact=(t|f)**
-When filtering policies, perform either exact field / value
-matching (`exact=t`), or fuzzy search (`exact=f`, the
-default)
-
-
-- **?unused=(t|f)**
-When filtering policies, skip those that are unused (true) or used (false)
-
-
-- **?name=...**
-Only show policies whose name matches the given value.  
-Subject to the `exact=(t|f)` query string parameter.
-
-
-- **?limit=N**
-Limit the returned result set to the first _limit_ users
-that match the other filtering rules.  A limit of `0` (the
-default) denotes an unlimited search.
 </code></pre>
+
+<ul>
+<li><p><strong>?exact=(t|f)</strong>
+When filtering policies, perform either exact field / value
+matching (<code>exact=t</code>), or fuzzy search (<code>exact=f</code>, the
+default)</p></li>
+<li><p><strong>?unused=(t|f)</strong>
+When filtering policies, skip those that are unused (true) or used (false)</p></li>
+<li><p><strong>?name=...</strong>
+Only show policies whose name matches the given value.
+Subject to the <code>exact=(t|f)</code> query string parameter.</p></li>
+<li><p><strong>?limit=N</strong>
+Limit the returned result set to the first <em>limit</em> users
+that match the other filtering rules.  A limit of <code>0</code> (the
+default) denotes an unlimited search.</p></li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -5283,10 +5166,9 @@ The request should not be retried.</p></li>
 
 <pre><code>curl -H 'Accept: application/json' \
         https://shield.host/v2/global/policies/:uuid
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
@@ -5399,10 +5281,9 @@ copied into any future tenants.</p>
 
 <pre><code>curl -H 'Accept: application/json' \
      -X DELETE https://shield.host/v2/global/policies/:uuid \
-
-
-This endpoint takes no query string parameters.
 </code></pre>
+
+<p>This endpoint takes no query string parameters.</p>
 
 <p><strong>Response</strong></p>
 
