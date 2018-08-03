@@ -61,10 +61,12 @@
     <div class="row">
       <div class="col-md-3 toc">
         <ul>
-          <li><a href="#latest">Latest Release (8.0.13)</a></li>
+          <li><a href="#latest">Latest Release (8.0.14)</a></li>
           <li><a href="#source">Build From Source</a></li>
           <li><a href="#older">Older Releases</a>
             <ul>
+              
+              <li><a href="#v8.0.13">8.0.13</a></li>
               
               <li><a href="#v8.0.12">8.0.12</a></li>
               
@@ -90,10 +92,51 @@
       </div>
       <div class="col-md-8 col-md-push-1">
         <div class="content">
-          <span id="v8.0.13"></span>
-          <h1 id="latest">SHIELD v8.0.13</h1>
+          <span id="v8.0.14"></span>
+          <h1 id="latest">SHIELD v8.0.14</h1>
           
-            <h3>Improvements</h3>
+            <h3>New Features</h3>
+
+<ul>
+<li><p>Compression of archives is now optional, on a per-target basis.
+If you have really big databases and don't want to bother compressing
+them, you can now turn that off and get done with your data protection
+tasks sooner!</p></li>
+<li><p>The Tasks API now has new time boundary range parameters, for retrieving
+tasks based on when they started and/or stopped.</p></li>
+</ul>
+
+<h3>Improvements</h3>
+
+<ul>
+<li><p>The Systems and Storage views now have the ability to toggle between a
+card-based layout (the default), and a table layout.</p></li>
+<li><p>Tags in the Systems View Timeline are now only shown for non-backup tasks,
+and only for successfully completed tasks.  In practice, this means that
+restore operations get tags and no one else does.</p></li>
+<li><p>The Retention Policy API / UI / CLI is better.  Namely, the API matches
+the documation (it's a PATCH not a PUT), and we have proper bounds
+checking on expiry days and policy name lengths.</p></li>
+</ul>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>When restoring archives with the CLI, and targeting a different data
+system than the archive originally came from, everything works as
+expected.</li>
+</ul>
+            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.14" target="_blank">Download v8.0.14 from Github</a>
+          
+
+          <h1>Build From Source</h1>
+
+          <p>... we're still working on this one ... <!-- FIXME --></p>
+
+          <h1 id="older">Older SHIELD Releases</h1>
+          
+          <h2 id="v8.0.13">SHIELD v8.0.13</h2>
+          <h3>Improvements</h3>
 
 <ul>
 <li><p>Move the <code>vault.crypt</code> file out from under the <code>vault/</code> data
@@ -123,14 +166,7 @@ shows the session creation time in human-readable format.</p></li>
 <li><p>Errors encountered when unlocking the vault now notify the user.</p></li>
 <li><p>Release version correctly displayed on header instead of <code>(development)</code></p></li>
 </ul>
-            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.13" target="_blank">Download v8.0.13 from Github</a>
-          
-
-          <h1>Build From Source</h1>
-
-          <p>... we're still working on this one ... <!-- FIXME --></p>
-
-          <h1 id="older">Older SHIELD Releases</h1>
+          <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.13" target="_blank">Download v8.0.13 from Github</a>
           
           <h2 id="v8.0.12">SHIELD v8.0.12</h2>
           <h3>Improvements</h3>

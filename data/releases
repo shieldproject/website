@@ -49,7 +49,12 @@
       "notes": "# Improvements\n\n- Move the `vault.crypt` file out from under the `vault/` data\n  directory sub-directory; that sub-directory is dedicated to the\n  Vault instance, and we shouldn't be putting other things in there.\n\n- Threshold for storage now indicates the use of units in the form field, to\n\tprevent the accidental specification of 50 bytes when you meant 50 gigabytes.\n\n- Improved results of the /v2/info and /v2/heath API endpoints to match its\n  documented behaviour.\n\n# Deprecations\n\n- Removed FQDN from /v2/info as it was populated using DNS reverse lookups\n\tthat were less than useful.\n\n# Bug Fixes\n\n- Storage health correctly stated during creation of ad-hoc runs.\n\n- Scheduled jobs in timeline are not longer incorrectly as \"Ad-hoc\"\n\n- Admin/Sessions page no longer shows all IP Addresses as `localhost` and\n\tshows the session creation time in human-readable format.\n\n- Notes for targets are now displayed on the page for a given system.\n\n- Errors encountered when unlocking the vault now notify the user.\n\n- Release version correctly displayed on header instead of `(development)`\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.13",
       "version": "8.0.13"
+    },
+    {
+      "notes": "# New Features\n\n- Compression of archives is now optional, on a per-target basis.\n  If you have really big databases and don't want to bother compressing\n  them, you can now turn that off and get done with your data protection\n  tasks sooner!\n\n- The Tasks API now has new time boundary range parameters, for retrieving\n  tasks based on when they started and/or stopped.\n\n# Improvements\n\n- The Systems and Storage views now have the ability to toggle between a\n  card-based layout (the default), and a table layout.\n\n- Tags in the Systems View Timeline are now only shown for non-backup tasks,\n  and only for successfully completed tasks.  In practice, this means that\n  restore operations get tags and no one else does.\n\n- The Retention Policy API / UI / CLI is better.  Namely, the API matches\n  the documation (it's a PATCH not a PUT), and we have proper bounds\n  checking on expiry days and policy name lengths.\n\n# Bug Fixes\n\n- When restoring archives with the CLI, and targeting a different data\n  system than the archive originally came from, everything works as\n  expected.\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.14",
+      "version": "8.0.14"
     }
   ],
-  "latest": "8.0.13"
+  "latest": "8.0.14"
 }
