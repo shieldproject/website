@@ -29,7 +29,9 @@ Calls are not recorded.
 1. Introductions
 
 2. Announcements
-   (...)
+   - New Lean Table View!
+   - Compression (bzip2) is optional, and modular
+   - Plugin Reference <https://http://shieldproject.io/docs/plugins/>
 
 3. Development Progress Update
    - [Trello Board][trello] Review
