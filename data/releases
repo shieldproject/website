@@ -54,7 +54,12 @@
       "notes": "# New Features\n\n- Compression of archives is now optional, on a per-target basis.\n  If you have really big databases and don't want to bother compressing\n  them, you can now turn that off and get done with your data protection\n  tasks sooner!\n\n- The Tasks API now has new time boundary range parameters, for retrieving\n  tasks based on when they started and/or stopped.\n\n# Improvements\n\n- The Systems and Storage views now have the ability to toggle between a\n  card-based layout (the default), and a table layout.\n\n- Tags in the Systems View Timeline are now only shown for non-backup tasks,\n  and only for successfully completed tasks.  In practice, this means that\n  restore operations get tags and no one else does.\n\n- The Retention Policy API / UI / CLI is better.  Namely, the API matches\n  the documation (it's a PATCH not a PUT), and we have proper bounds\n  checking on expiry days and policy name lengths.\n\n# Bug Fixes\n\n- When restoring archives with the CLI, and targeting a different data\n  system than the archive originally came from, everything works as\n  expected.\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.14",
       "version": "8.0.14"
+    },
+    {
+      "notes": "# Improvements\n\n* Credentials in task log output are now displayed as a blurred white block,\n  revealed on hover to those with sufficiently high rights.\n\n* The task log is now closed by clicking the [X] button in the log pane\n  instead of clicking the 'full task log' link again.\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.15",
+      "version": "8.0.15"
     }
   ],
-  "latest": "8.0.14"
+  "latest": "8.0.15"
 }
