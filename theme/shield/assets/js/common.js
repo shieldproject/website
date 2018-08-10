@@ -757,12 +757,13 @@
       if (type == 'H2') {
         stack = [anchor];
       } else if (type == 'H3') {
+        stack = stack.slice(0,1); /* h2 only */
         stack.push(anchor);
         anchor = stack.join(':');
       } else if (type == 'H4') {
+        stack = stack.slice(0,2); /* h2 + h3 */
         stack.push(anchor);
         anchor = stack.join(':');
-        stack.pop();
       }
       $(e).attr('id', anchor);
 
