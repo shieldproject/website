@@ -287,7 +287,7 @@ the SHIELD core, and SHIELD agents.
 
 ### SHIELD Core Configuration File Reference
 
-The SHIELD core configuration file is a YAML file, read at started by the
+The SHIELD core configuration file is a YAML file, read at startup by the
 `shieldd` binary.
 
 - **listen\_addr** - The IP address and TCP port that the SHIELD core daemon
@@ -372,17 +372,68 @@ The SHIELD core configuration file is a YAML file, read at started by the
   taken, to allow operators to change this value without rendering previous
   backup archives unusable.
 
-- **session\_timeout**
+- **session\_timeout** - How long (in hours) before idle authenticated
+  sessions are invalidated.  Defaults to 720 (about a month).
 
-- **failsafe**
+- **failsafe** - When the SHIELD core starts up, it checks the local users
+  table.  If it is empty (there are no local users), it creates a _failsafe_
+  account, using these parameters.  This is designed to assist in a safe and
+  secure bootstrap.
 
-  - **username**
-  - **password**
+  - **username** - The username of the failsafe account.
+  - **password** - The (cleartext) password of the failsafe account.
 
 
 ### SHIELD Agent Configuration File Reference
 
-TDB
+The SHIELD agent configuration file is a YAML file, read at startup by the
+`shield-agent` binary.
+
+- **name** (required) - The name of this agent, for registration with the
+  SHIELD core.  This name will appear in web and CLI interfaces, to people
+  configuring backup jobs, and should describe the role this agent
+  installation plays in the overall topology.
+
+- **authorized\_keys\_file** (required) - The path to an SSH _authorized
+  keys_ file, which should contain the public component of the agent private
+  key that the SHIELD core will use to authenticate to the agent for remote
+  orchestration.
+
+- **listen\_address** - The IP address and TCP port that the SHIELD agent
+  should bind to and listen on for incoming orchestration (via SSH).
+  Defaults to `*:5444`.  `*` is interpreted to mean _all interfaces_.
+
+- **plugin\_paths** (required) - A YAML list of paths that the agent will
+  use when attempting to resolve plugin names to binaries.  This is kind of
+  like the canonical UNIX `$PATH` environment variable, except it does not
+  apply to any programs that the plugins themselves attempt to execute.
+
+  You should list all of your plugin binary directories here.
+
+- **registration** - This subsection governs how this agent will register
+  with its SHIELD core.  While technically optional, registration is highly
+  recommended, from an ease-of-use standpoint.
+
+  The following keys exist underneath `registration:`:
+
+  - **url** - The HTTP(S) URL of the upstream SHIELD core.  This will
+    normally be something like `https://$ip_or_hostname/`.
+
+  - **interval** - How often (in seconds) should the agent ping the SHIELD
+    core and provide reigstration details.  The SHIELD core determines when
+    it _validates_ agent registrations and extracts metadata information, so
+    this setting cannot be used to increase the frequency of such updates.
+
+  - **shield\_ca\_cert** - Path to a file containing the PEM-encoded CA
+    certificate that issued the SHIELD core's X.509 TLS certificate.  This
+    allows operators to validate self-signed certificates, or custom,
+    in-house CA-issued certificates.
+
+    This has no effect of `skip_verify` is set to true.
+
+  - **skip\_verify** - Whether or not to disable verification of the SHIELD
+    core X.509 TLS certificate.  This defaults to _false_, since certificate
+    verification is generally A Good Thing &trade;
 
 
 # Using SHIELD

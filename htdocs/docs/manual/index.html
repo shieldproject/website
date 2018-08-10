@@ -312,7 +312,7 @@ the SHIELD core, and SHIELD agents.</p>
 
 <h3>SHIELD Core Configuration File Reference</h3>
 
-<p>The SHIELD core configuration file is a YAML file, read at started by the
+<p>The SHIELD core configuration file is a YAML file, read at startup by the
 <code>shieldd</code> binary.</p>
 
 <ul>
@@ -389,18 +389,69 @@ for encrypting backup archives.  Supported values are:</p>
 <p>Each backup archive tracks which encryption type was in force when it was
 taken, to allow operators to change this value without rendering previous
 backup archives unusable.</p></li>
-<li><p><strong>session_timeout</strong></p></li>
-<li><p><strong>failsafe</strong></p>
+<li><p><strong>session_timeout</strong> - How long (in hours) before idle authenticated
+sessions are invalidated.  Defaults to 720 (about a month).</p></li>
+<li><p><strong>failsafe</strong> - When the SHIELD core starts up, it checks the local users
+table.  If it is empty (there are no local users), it creates a <em>failsafe</em>
+account, using these parameters.  This is designed to assist in a safe and
+secure bootstrap.</p>
 
 <ul>
-<li><strong>username</strong></li>
-<li><strong>password</strong></li>
+<li><strong>username</strong> - The username of the failsafe account.</li>
+<li><strong>password</strong> - The (cleartext) password of the failsafe account.</li>
 </ul></li>
 </ul>
 
 <h3>SHIELD Agent Configuration File Reference</h3>
 
-<p>TDB</p>
+<p>The SHIELD agent configuration file is a YAML file, read at startup by the
+<code>shield-agent</code> binary.</p>
+
+<ul>
+<li><p><strong>name</strong> (required) - The name of this agent, for registration with the
+SHIELD core.  This name will appear in web and CLI interfaces, to people
+configuring backup jobs, and should describe the role this agent
+installation plays in the overall topology.</p></li>
+<li><p><strong>authorized_keys_file</strong> (required) - The path to an SSH <em>authorized
+keys</em> file, which should contain the public component of the agent private
+key that the SHIELD core will use to authenticate to the agent for remote
+orchestration.</p></li>
+<li><p><strong>listen_address</strong> - The IP address and TCP port that the SHIELD agent
+should bind to and listen on for incoming orchestration (via SSH).
+Defaults to <code>*:5444</code>.  <code>*</code> is interpreted to mean <em>all interfaces</em>.</p></li>
+<li><p><strong>plugin_paths</strong> (required) - A YAML list of paths that the agent will
+use when attempting to resolve plugin names to binaries.  This is kind of
+like the canonical UNIX <code>$PATH</code> environment variable, except it does not
+apply to any programs that the plugins themselves attempt to execute.</p>
+
+<p>You should list all of your plugin binary directories here.</p></li>
+<li><p><strong>registration</strong> - This subsection governs how this agent will register
+with its SHIELD core.  While technically optional, registration is highly
+recommended, from an ease-of-use standpoint.</p>
+
+<p>The following keys exist underneath <code>registration:</code>:</p>
+
+<ul>
+<li><p><strong>url</strong> - The HTTP(S) URL of the upstream SHIELD core.  This will
+normally be something like <code>https://$ip_or_hostname/</code>.</p></li>
+<li><p><strong>interval</strong> - How often (in seconds) should the agent ping the SHIELD
+core and provide reigstration details.  The SHIELD core determines when
+it <em>validates</em> agent registrations and extracts metadata information, so
+this setting cannot be used to increase the frequency of such updates.</p></li>
+<li><p><strong>shield_ca_cert</strong> - Path to a file containing the PEM-encoded CA
+certificate that issued the SHIELD core's X.509 TLS certificate.  This
+allows operators to validate self-signed certificates, or custom,
+in-house CA-issued certificates.</p></li>
+</ul>
+
+<p>This has no effect of <code>skip_verify</code> is set to true.</p>
+
+<ul>
+<li><strong>skip_verify</strong> - Whether or not to disable verification of the SHIELD
+core X.509 TLS certificate.  This defaults to <em>false</em>, since certificate
+verification is generally A Good Thing &trade;</li>
+</ul></li>
+</ul>
 
 <h1>Using SHIELD</h1>
 
