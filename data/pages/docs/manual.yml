@@ -381,6 +381,7 @@ The SHIELD core configuration file is a YAML file, read at startup by the
   secure bootstrap.
 
   - **username** - The username of the failsafe account.
+
   - **password** - The (cleartext) password of the failsafe account.
 
 
