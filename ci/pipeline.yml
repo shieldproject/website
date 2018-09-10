@@ -1,20 +1,33 @@
 ---
 meta:
+  name:   shieldproject.io
+  target: shield@pipes
+  url:    https://pipes.starkandwayne.com
+
   github:
     website:
       uri: git@github.com:shieldproject/website
       branch: master
-      private_key:  (( vault "secret/pipelines/shared/shield-bot/github:private" ))
-      access_token: (( vault "secret/pipelines/shared/shield-bot/github:access_token" ))
+      private_key:  (( vault "secret/pipelines/github/starkandwayne/shield-bot:private" ))
+      access_token: (( vault "secret/pipelines/github/starkandwayne/shield-bot:access_token" ))
 
     starkandwayne:
-      access_token: (( vault "secret/pipelines/shared/shield-bot/github:access_token" ))
+      access_token: (( vault "secret/pipelines/github/starkandwayne/shield-bot:access_token" ))
 
-  slack:
-    webhook: (( vault "secret/slack/botspam:webhook" ))
-    channel: '#botspam'
-    username:      starkandwayne-ci
-    icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
+  shout:
+    topic:    (( grab meta.name ))
+    url:      http://10.200.131.1:7109
+    username: ops
+    password: (( vault "secret/buffalo/lab/concourse/shout/ops:password" ))
+
+    metadata:
+      build-team-name:     $BUILD_TEAM_NAME
+      build-job-name:      $BUILD_JOB_NAME
+      build-pipeline-name: $BUILD_PIPELINE_NAME
+
+    links:
+      pipeline: (( concat meta.url "/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME" ))
+      build:    (( concat meta.shout.links.pipeline "/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME" ))
 
 jobs:
   - name: build
@@ -49,13 +62,20 @@ jobs:
             REPO_ROOT:   changes
             REPO_OUT:    pushme
             BRANCH:      (( grab meta.github.website.branch ))
+        on_success:
+          put: notify
+          params:
+            topic:   (( concat meta.shout.topic "-$BUILD_JOB_NAME" ))
+            message: website build job '$BUILD_JOB_NAME' succeeded.
+            ok:      yes
+            link:    (( grab meta.shout.links.build ))
         on_failure:
           put: notify
           params:
-            channel:  (( grab meta.slack.channel ))
-            username: (( grab meta.slack.username ))
-            icon_url: (( grab meta.slack.icon ))
-            text:     'Failed to build shieldproject.io. <https://pipes.starkandwayne.com/teams/main/pipelines/shieldproject.io|(view details)>'
+            topic:   (( concat meta.shout.topic "-$BUILD_JOB_NAME" ))
+            message: website build job '$BUILD_JOB_NAME' failed.
+            ok:      no
+            link:    (( grab meta.shout.links.build ))
       - put: code
         params:
           rebase: true
@@ -87,20 +107,27 @@ jobs:
             CF_SPACE:    shieldproject
             MANIFEST:    manifest-stage.yml
             REPO_ROOT:   code
-        on_failure:
-          put: notify
-          params:
-            channel:  (( grab meta.slack.channel ))
-            username: (( grab meta.slack.username ))
-            icon_url: (( grab meta.slack.icon ))
-            text:     'Failed to deploy the shieldproject.io website to staging. <https://pipes.starkandwayne.com/teams/main/pipelines/shieldproject.io|(view details)>'
         on_success:
           put: notify
           params:
-            channel:  (( grab meta.slack.channel ))
-            username: (( grab meta.slack.username ))
-            icon_url: (( grab meta.slack.icon ))
-            text:     'Staged changes at <http://staging.shieldproject.io>.  After review, you can <https://pipes.starkandwayne.com/teams/main/pipelines/shieldproject.io|publish them (to production).>'
+            topic:   (( concat meta.shout.topic "-$BUILD_JOB_NAME" ))
+            message: staging job '$BUILD_JOB_NAME' succeeded.
+            ok:      yes
+            link:    (( grab meta.shout.links.build ))
+        on_failure:
+          put: notify
+          params:
+            topic:   (( concat meta.shout.topic "-$BUILD_JOB_NAME" ))
+            message: staging job '$BUILD_JOB_NAME' failed.
+            ok:      no
+            link:    (( grab meta.shout.links.build ))
+      - put: notify
+        params:
+          topic:   (( grab meta.shout.topic ))
+          method:  announce
+          message: Changes deployed to the staging site.  Please review them and then trigger the `prod` job in the pipeline.
+          link:    (( grab meta.shout.links.pipeline ))
+
   - name: prod
     plan:
       - aggregate:
@@ -126,60 +153,62 @@ jobs:
             CF_SPACE:    shieldproject
             MANIFEST:    manifest.yml
             REPO_ROOT:   code
-        on_failure:
-          put: notify
-          params:
-            channel:  (( grab meta.slack.channel ))
-            username: (( grab meta.slack.username ))
-            icon_url: (( grab meta.slack.icon ))
-            text:     'Failed to deploy the shieldproject.io website to production. <https://pipes.starkandwayne.com/teams/main/pipelines/shieldproject.io|(view details)>'
         on_success:
           put: notify
           params:
-            channel:  (( grab meta.slack.channel ))
-            username: (( grab meta.slack.username ))
-            icon_url: (( grab meta.slack.icon ))
-            text:     'Successfully published <http://shieldproject.io>'
-
+            topic:   (( concat meta.shout.topic "-$BUILD_JOB_NAME" ))
+            message: deployment job '$BUILD_JOB_NAME' succeeded.
+            ok:      yes
+            link:    (( grab meta.shout.links.build ))
+        on_failure:
+          put: notify
+          params:
+            topic:   (( concat meta.shout.topic "-$BUILD_JOB_NAME" ))
+            message: deployment job '$BUILD_JOB_NAME' failed.
+            ok:      no
+            link:    (( grab meta.shout.links.build ))
+      - put: notify
+        params:
+          topic:   (( grab meta.shout.topic ))
+          method:  announce
+          message: Changes deployed to production!  Good job everyone!
+          link:    https://shieldproject.io
 
 resource_types:
-- name: slack-notification
-  type: docker-image
-  source:
-    repository: cfcommunity/slack-notification-resource
-- name: rss
-  type: docker-image
-  source:
-    repository: starkandwayne/rss-resource
-
-
+  - name: shout-notification
+    type: docker-image
+    source:
+      repository: huntprod/shout-resource
 
 
 resources:
-- name: changes
-  type: git
-  source:
-    uri:         (( grab meta.github.website.uri ))
-    branch:      (( grab meta.github.website.branch ))
-    private_key: (( grab meta.github.website.private_key ))
-    ignore_paths:
-      - htdocs
+  - name: changes
+    type: git
+    source:
+      uri:         (( grab meta.github.website.uri ))
+      branch:      (( grab meta.github.website.branch ))
+      private_key: (( grab meta.github.website.private_key ))
+      ignore_paths:
+        - htdocs
 
-- name: code
-  type: git
-  source:
-    uri:         (( grab meta.github.website.uri ))
-    branch:      (( grab meta.github.website.branch ))
-    private_key: (( grab meta.github.website.private_key ))
+  - name: code
+    type: git
+    source:
+      uri:         (( grab meta.github.website.uri ))
+      branch:      (( grab meta.github.website.branch ))
+      private_key: (( grab meta.github.website.private_key ))
 
-- name: releases
-  type: github-release
-  source:
-    user:         starkandwayne
-    repository:   shield
-    access_token: (( grab meta.github.starkandwayne.access_token ))
+  - name: releases
+    type: github-release
+    source:
+      user:         starkandwayne
+      repository:   shield
+      access_token: (( grab meta.github.starkandwayne.access_token ))
 
-- name: notify
-  type: slack-notification
-  source:
-    url: (( grab meta.slack.webhook ))
+  - name: notify
+    type: shout-notification
+    source:
+      topic:    (( grab meta.shout.topic ))
+      url:      (( grab meta.shout.url ))
+      username: (( grab meta.shout.username ))
+      password: (( grab meta.shout.password ))
