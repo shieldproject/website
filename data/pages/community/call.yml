@@ -13,7 +13,7 @@ development progress, and future direction.
 
 The next SHIELD Roadmap Call is
 <br>
-**Thursday, September 13th** at **11:00am EDT**.
+**Thursday, October 11th** at **11:00am EDT**.
 
 We use zoom: <https://zoom.us/j/7165551212>
 
@@ -24,14 +24,12 @@ You can also call in (the Meeting ID is **716 555 1212**):
 
 Calls are not recorded.
 
-# Agenda for September 13th, 2018
+# Agenda for October 11th, 2018
 
 1. Introductions
 
 2. Announcements
-   - New BackBlaze Plugin
-   - Download (and re-encryption) of Backup Archives
-   - Better `shieldd` configuration validation
+   - ...
 
 3. Development Progress Update
    - [Trello Board][trello] Review
@@ -41,14 +39,108 @@ Calls are not recorded.
 
 # Previous Calls
 
+<a id="20180913"></a>
+
+## September 13th, 2018
+
+These are the notes from our third community call, held at 11:00am EDT on
+Thursday, September 13th, 2018.
+
+1. **New BackBlaze Storage Plugin**
+
+   Thanks to the efforts of Mr. Dan Molik (Stark & Wayne), the SHIELD
+   project now has support for storing backup archives in BackBlaze's B2
+   endpoint, via the new `b2` storage plugin!
+
+2. **Download (and re-encryption) of Backup Archives**
+
+   The SHIELD Team is working on building new functionality into SHIELD for
+   (securely) downloading archives from Cloud Storage, via the web interface
+   or the CLI.
+
+   This used to be a lot easier in SHIELD v6, but when we introduced
+   encryption into the mix, we lost the ability to inspect individual
+   archives.  Furthermore, SHIELD complicates the issue by randomizing the
+   keys and initialization vectors (IVs) for _each archive_, and stores them
+   in the local Vault, which operators do not have access to.  Even for
+   "fixed-key" backups, the key that the operators are given is used to
+   _derive_ the key and IV used to encrypt the archives.
+
+   To remedy this, and yet maintain the security of archives, SHIELD is
+   being extended to include a new API endpoint for downloading and
+   re-encrypting a single archive (subject to tenant rights and access
+   control).  This new endpoint will take encryption parameters from the
+   operator, and re-encrypt the archive as it is streamed from storage.
+
+
+3. **Open Forum**
+
+   Jordan and Phillip asked several very good questions.  Good on them!
+
+   - **Smoking Hole SHIELD Restores** - Do we have documentation for the
+     recovery of a SHIELD core itself?
+
+     We have a process, and it's sort of documented, but not well.  We're
+     working on fleshing out the [SHIELD Operations Manual](/docs/manual)
+     with these details.
+
+   - **Authentication Tokens** - Authentication Tokens seem to be tied to
+     individual SHIELD user accounts.  Do those persist across SHIELD
+     re-deployments?
+
+     Yes, Authentication Tokens are tied to individual accounts.  Behind the
+     scenes, those are implemented as non-expiring sessions associated with
+     the user who created them.
+
+     Because they are resident in the sessions table in the database, they
+     should persist across BOSH deploys, assuming (a) you are using
+     persistent disks and (b) you are not deleting the BOSH deployment
+     first.
+
+   - **Bootstrapping Local Users** - Can The SHIELD BOSH Release Bootstrap
+     Local Users?
+
+     No it cannot, but it should.
+
+   - **Mutual Network Visibility of SHIELD Agents** - In v6, the only
+     communication channel was unidirectional, wherein the SHIELD core
+     connected to each SHIELD agent to orchestrate a baackup.  This does not
+     seem to be the case in v8.
+
+     This isn't really a question, but we'll let that slide.
+
+     In v8, the SHIELD core still initiates an SSH session to the agent
+     involved to orchestrate it.  What's new in v8 is an HTTPS registration
+     ping from the agents to the core.  This "ping" puts the agent in the
+     SHIELD core's database, so that the core can SSH back into the agent
+     and retrieve metadata from them.
+
+     This poses a severe problem with NAT'ed installations which lack the
+     required _mutual network visibility_ to make this work.  What we (Stark
+     & Wayne) have been doing is just colocating the SHIELD core in the same
+     NAT "scope" as the systems being orchestrated.
+
+     We've designed a few alternatives to this.  One is a SHIELD-aware NAT
+     traversal proxy that would handle connections to/from the agents across
+     the NAT boundary.  This is a fair bit of engineering work, but it does
+     preserve backwards compatibility.
+
+     A far superior solution is to break backwards compatibility, and invert
+     the orchestration flows.  If the SHIELD agents SSH into the SHIELD
+     core, announce themselves, and then await orders, we can handle both
+     the metadata retrieval / agent discovery, and traverse NATs with ease.
+
+Thanks all for joining!  See you next month!
+
+
+
+
 <a id="20180809"></a>
 
 ## August 9th, 2018
 
 These are the notes from our second community call, held at 11:00am EDT on
 Thursday, August 9th, 2018.
-
-<a id="20180712"></a>
 
 1. **Lean Table View**
 
@@ -67,6 +159,11 @@ Thursday, August 9th, 2018.
    We've started documenting the [SHIELD Plugins](/docs/plugins) and their
    configuration.
 
+Thanks all for joining!  See you next month!
+
+
+
+<a id="20180712"></a>
 
 ## July 12th, 2018
 
