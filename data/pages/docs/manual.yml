@@ -530,7 +530,7 @@ including:
 
 - **Systems** - Your data systems are the things that SHIELD protects, by
   making copies of the important data contained within them, on a scheduled
-  and recurring basis.  THis page lets you review and manage those systems.
+  and recurring basis.  This page lets you review and manage those systems.
 
 - **Storage** - Cloud storage is where SHIELD keeps the backup copies of
   your data.  You can configure however many storage systems you want, in
