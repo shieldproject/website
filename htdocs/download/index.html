@@ -61,10 +61,12 @@
     <div class="row">
       <div class="col-md-3 toc">
         <ul>
-          <li><a href="#latest">Latest Release (8.0.15)</a></li>
+          <li><a href="#latest">Latest Release (8.0.16)</a></li>
           <li><a href="#source">Build From Source</a></li>
           <li><a href="#older">Older Releases</a>
             <ul>
+              
+              <li><a href="#v8.0.15">8.0.15</a></li>
               
               <li><a href="#v8.0.14">8.0.14</a></li>
               
@@ -94,18 +96,45 @@
       </div>
       <div class="col-md-8 col-md-push-1">
         <div class="content">
-          <span id="v8.0.15"></span>
-          <h1 id="latest">SHIELD v8.0.15</h1>
+          <span id="v8.0.16"></span>
+          <h1 id="latest">SHIELD v8.0.16</h1>
           
-            <h3>Improvements</h3>
+            <h3>New Features</h3>
 
 <ul>
-<li><p>Credentials in task log output are now displayed as a blurred white block,
-revealed on hover to those with sufficiently high rights.</p></li>
-<li><p>The task log is now closed by clicking the [X] button in the log pane
-instead of clicking the 'full task log' link again.</p></li>
+<li>We now have a BackBlaze B2 storage plugin!</li>
 </ul>
-            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.15" target="_blank">Download v8.0.15 from Github</a>
+
+<h3>Improvements</h3>
+
+<ul>
+<li><p>Ordinals are now optional in monthly schedule specs (via the web
+UI), allowing front-end users to type '3' or '3rd', per their
+strongly-held personal preference.</p></li>
+<li><p>The <code>token</code> field of the <code>vault</code> plugins is now marked as a
+<em>password</em>, so that autocompletion in the browser gets turned off.
+Otherwise, Chrome/FF keeps wanting to leak your Vault tokens to
+people.</p></li>
+<li><p>The data directory and web UI root configurations are now
+properly validated by the SHIELD core.  If they do not exist,
+core startup is halted.  That way, you find out sooner if you've
+misconfigured something.  Wheee.</p></li>
+<li><p><code>shield import</code> can now properly import fixed-key backup jobs.
+Just what the doctor ordered for BOSH and SHIELD backup and
+recovery.</p></li>
+</ul>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li><p>Errors with hourly schedules are now properly handled and give a
+readable error message to the front-end.</p></li>
+<li><p>The <code>mysql</code> plugin can now properly restore a single database.</p></li>
+<li><p>Some silly typos (some copy-pasta, some bad whitespace, some
+we-don't-know-what-we-were-thinking) have been fixed in SHIELD
+CLI <code>--help</code> output.</p></li>
+</ul>
+            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.16" target="_blank">Download v8.0.16 from Github</a>
           
 
           <h1>Build From Source</h1>
@@ -113,6 +142,17 @@ instead of clicking the 'full task log' link again.</p></li>
           <p>... we're still working on this one ... <!-- FIXME --></p>
 
           <h1 id="older">Older SHIELD Releases</h1>
+          
+          <h2 id="v8.0.15">SHIELD v8.0.15</h2>
+          <h3>Improvements</h3>
+
+<ul>
+<li><p>Credentials in task log output are now displayed as a blurred white block,
+revealed on hover to those with sufficiently high rights.</p></li>
+<li><p>The task log is now closed by clicking the [X] button in the log pane
+instead of clicking the 'full task log' link again.</p></li>
+</ul>
+          <a href="https://github.com/starkandwayne/shield/releases/tag/v8.0.15" target="_blank">Download v8.0.15 from Github</a>
           
           <h2 id="v8.0.14">SHIELD v8.0.14</h2>
           <h3>New Features</h3>
