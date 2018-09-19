@@ -12,6 +12,15 @@ header() {
 	echo
 }
 
+header "Installing some helpful utilities..."
+apt-get update && apt-get install -y curl
+
+curl -L -o /usr/bin/spruce https://github.com/geofffranks/spruce/releases/download/v1.18.2/spruce-linux-amd64
+chmod 0755 /usr/bin/spruce
+
+curl -L -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
+chmod 0755 /usr/bin/jq
+
 VERSION=$(cat releases/version)
 CURRENT_VERSION=$(spruce json $REPO_ROOT/data/releases | jq -r .latest)
 RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag)"

@@ -11,7 +11,15 @@ header() {
 	echo
 }
 
-header "Installing cf cli"
+header "Installing some helpful utilities..."
+apt-get update && apt-get install -y curl
+
+curl -L -o /usr/bin/spruce https://github.com/geofffranks/spruce/releases/download/v1.18.2/spruce-linux-amd64
+chmod 0755 /usr/bin/spruce
+
+curl -L -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
+chmod 0755 /usr/bin/jq
+
 curl -sL 'https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.37.0&source=github-rel' | tar -xz
 mv cf /usr/bin/cf
 chmod 0755 /usr/bin/cf
