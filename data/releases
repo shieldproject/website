@@ -69,7 +69,12 @@
       "notes": "# New Features\n\n- The SHIELD Web UI now allows you to download the SHIELD CLI\n  directly, for both MacOS (Darwin) and Linux.  From now on,\n  SHIELD releases will include the paired version of the CLI.\n\n- We now support minutely backups, but only from the CLI.\n\n- New `shield op pry` for decrypting and inspecting the contents\n  of a SHIELD Vault Crypt.\n\n- New shield cli command 'delete-tenant' which will delete a tenant and clean up it's underlying configs with a -r \n\n# Improvements\n\n- SHIELD now cleans up the Vault when archives are marked as\n  expired (for purgation).\n\n- Scheduled jobs no longer \"stack\" in the queue.  If SHIELD goes\n  to schedule a backup and an existing task is in-flight for the\n  same job, an already-cancelled task is stored in the database,\n  as a placeholder to the task that should have run.\n\n- Storage Health Check Tasks no longer stack.  SHIELD only allows\n  one in-flight task for a given Cloud Storage System, at a time.\n\n- The `shield` CLI now handles API endpoints with any number of\n  trailing forward slash (`/`) characters.\n\n- Update --help page on import to reflect correct roles\n\n# Bug Fixes\n\n- Web UI page dispatch logic now properly cancels all outstanding\n  AJAX requests, to avoid a rather annoying lag/delay UX issue\n  where pages would flip \"back\" to a previous node in the history,\n  because a delayed AJAX request was still working away in the\n  background.\n\n- Updated go-s3 to help fix connection closing issue\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.17",
       "version": "8.0.17"
+    },
+    {
+      "notes": "# Improvements\n- syncing shield release version with bosh release\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.18",
+      "version": "8.0.18"
     }
   ],
-  "latest": "8.0.17"
+  "latest": "8.0.18"
 }
