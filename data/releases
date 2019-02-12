@@ -74,7 +74,12 @@
       "notes": "# Improvements\n- syncing shield release version with bosh release\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.18",
       "version": "8.0.18"
+    },
+    {
+      "notes": "# Improvements\n- Updated postgres plugin to allow for optional flags to be supplied to pg_dump\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.0.19",
+      "version": "8.0.19"
     }
   ],
-  "latest": "8.0.18"
+  "latest": "8.0.19"
 }
