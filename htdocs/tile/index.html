@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css?9">
+<link rel="stylesheet" href="/css/main.css?9">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?9" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/community">Community</a></li>
+					<li><a href="/docs/manual">Docs</a></li>
+					<li><a href="/dev">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/docs">Documentation</a></li>
+							<li><a href="/dev">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>SHIELD Pivotal Tile</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-3 toc">
+        
+      </div>
+      <div class="col-md-8 col-md-push-1">
+        <div class="content">
+        <p>Welcome to the documentation for the SHILED Enterprise Data Protection Tile beta.</p>
+
+<h1>What is SHIELD?</h1>
+
+<p>SHIELD is a <em>data protection</em> solution. It is designed to run scheduled
+tasks to backup your important data systems to off-site cloud storage
+solutions, and facilitate the restoration of backup archives in the event of
+outages or data loss.</p>
+
+<h1>Where Can I Get SHIELD?</h1>
+
+<p>SHIELD will ultimately be available on Pivnet but for this beta phase you can
+find it <a href="#">here</a>.</p>
+
+<h1>How do I install SHIELD?</h1>
+
+<ol>
+<li><p>Once you have the tile downloaded, navigate to your Pivotal Operations Manager
+and click <code>Import Product</code> and select the tile from your personal machine.</p></li>
+<li><p>Right under <code>Import Product</code> find the versioned shield tile and click <code>+</code> to
+begin staging the tile</p></li>
+</ol>
+
+<h1>Configuring the Tile</h1>
+
+<p>The first required fields for the install are associated with the identity of SHIELD</p>
+
+<p><img src="/Tile/identity.png" alt="identity" title=""></p>
+
+<p>From here we need to specify:</p>
+
+<ul>
+<li><p><code>Environment Name</code>. This is named used to identify the SHILED itself as well
+as target your SHIELD instance with the cli.</p></li>
+<li><p><code>Domain</code>. The domain in which you will be using for shield.</p></li>
+<li><p><code>Web Interface Color</code>. A color to help better identify this shield. This is often
+useful when dealing with multiple shield across multiple environments.</p></li>
+<li><p><code>Message of the Day</code> An optional message of the day that gets displayed on the login page.
+This can be used to further describe and differentiate multiple shields.</p></li>
+</ul>
+
+<p><img src="/Tile/scheduling.png" alt="scheduling" title=""></p>
+
+<p>There are three optional properties available for adjusting how SHIELD schedules jobs.</p>
+
+<p>From here we can specify:</p>
+
+<ul>
+<li><p><code>Scheduler Threads</code>. Threads determine how many concurrent tasks shield core can perform at once.
+More threads will allow more backup/restore operations at one time, but requires more cpu and ram.</p></li>
+<li><p><code>Slow Loop Interval</code>. How often (in secconds) SHIELD performs non critical operations such as cloud storage
+viability tests, archive purgation, storage analysis calculations, etc.</p></li>
+<li><p><code>Task Execution Timeout</code>. How long (in hours) a task can run before the SHIELD core considers it stalled
+and cancels its execution.</p></li>
+</ul>
+
+<p><img src="/Tile/authentication.png" alt="authentication" title=""></p>
+
+<p>We now need to configure our authentication</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?9" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/docs/getting-started">Getting Started</a></li>
+							<li><a href="/docs">Documentation</a></li>
+							<li><a href="/community">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>Reference</h5>
+						<ul class="list">
+							<li><a href="#">SHIELD Core</a></li>
+							<li><a href="/dev/agent">SHIELD Agent</a></li>
+							<li><a href="/dev/shield-cli-architecture">SHIELD CLI</a></li>
+							<li><a href="/dev/plugins">Plugins</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2018 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- FIXME: these don't exist: -->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="/libs/html5shiv/es5-shim.min.js"></script>
+		<script type="text/javascript" src="/libs/html5shiv/html5shiv.min.js"></script>
+		<script type="text/javascript" src="/libs/html5shiv/html5shiv-printshiv.min.js"></script>
+		<script type="text/javascript" src="/libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/libs.js?9"></script>
+	<script type="text/javascript" src="/js/common.js?9"></script>
+</body>
+</html>

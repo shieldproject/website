@@ -1,0 +1,64 @@
+---
+# vim:ft=markdown:tw=76
+title: SHIELD Pivotal Tile
+url:   /Tile/index.html
+format: markdown
+--- |-
+Welcome to the documentation for the SHILED Enterprise Data Protection Tile beta.
+
+# What is SHIELD?
+
+SHIELD is a _data protection_ solution. It is designed to run scheduled
+tasks to backup your important data systems to off-site cloud storage
+solutions, and facilitate the restoration of backup archives in the event of
+outages or data loss.
+
+# Where Can I Get SHIELD?
+
+SHIELD will ultimately be available on Pivnet but for this beta phase you can
+find it [here](#).
+
+# How do I install SHIELD?
+1. Once you have the tile downloaded, navigate to your Pivotal Operations Manager
+   and click `Import Product` and select the tile from your personal machine.
+
+2. Right under `Import Product` find the versioned shield tile and click `+` to
+   begin staging the tile
+
+# Configuring the Tile
+
+The first required fields for the install are associated with the identity of SHIELD
+
+![identity](/Tile/identity.png)
+
+From here we need to specify:
+
+- `Environment Name`. This is named used to identify the SHILED itself as well
+  as target your SHIELD instance with the cli.
+
+- `Domain`. The domain in which you will be using for shield.
+
+- `Web Interface Color`. A color to help better identify this shield. This is often
+  useful when dealing with multiple shield across multiple environments.
+
+- `Message of the Day` An optional message of the day that gets displayed on the login page.
+  This can be used to further describe and differentiate multiple shields.
+
+![scheduling](/Tile/scheduling.png)
+
+There are three optional properties available for adjusting how SHIELD schedules jobs.
+
+From here we can specify:
+
+- `Scheduler Threads`. Threads determine how many concurrent tasks shield core can perform at once.
+  More threads will allow more backup/restore operations at one time, but requires more cpu and ram.
+
+- `Slow Loop Interval`. How often (in secconds) SHIELD performs non critical operations such as cloud storage
+  viability tests, archive purgation, storage analysis calculations, etc.
+
+- `Task Execution Timeout`. How long (in hours) a task can run before the SHIELD core considers it stalled
+  and cancels its execution.
+
+![authentication](/Tile/authentication.png)
+
+We now need to configure our authentication
