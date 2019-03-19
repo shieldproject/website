@@ -93,7 +93,7 @@ begin staging the tile</p></li>
 
 <p>The first required fields for the install are associated with the identity of SHIELD</p>
 
-<p><img src="/Tile/identity.png" alt="identity" title=""></p>
+<p><img src="/tile/identity.png" alt="identity" title=""></p>
 
 <p>From here we need to specify:</p>
 
@@ -107,7 +107,7 @@ useful when dealing with multiple shield across multiple environments.</p></li>
 This can be used to further describe and differentiate multiple shields.</p></li>
 </ul>
 
-<p><img src="/Tile/scheduling.png" alt="scheduling" title=""></p>
+<p><img src="/tile/scheduling.png" alt="scheduling" title=""></p>
 
 <p>There are three optional properties available for adjusting how SHIELD schedules jobs.</p>
 
@@ -122,9 +122,38 @@ viability tests, archive purgation, storage analysis calculations, etc.</p></li>
 and cancels its execution.</p></li>
 </ul>
 
-<p><img src="/Tile/authentication.png" alt="authentication" title=""></p>
+<p><img src="/tile/authentication.png" alt="authentication" title=""></p>
 
-<p>We now need to configure our authentication</p>
+<p>We now need to configure our authentication details for SHIELD.</p>
+
+<p>From here we can specify:</p>
+
+<ul>
+<li><p><code>Sesion Timeout</code>. Maximum lifetime (in hours) of an authenticated session, either web or CLI.</p></li>
+<li><p><code>Failsafe Account Username</code>. When SHIELD core starts up it checks the local users database, and if it finds
+no users it will create the failsafe account. This allows you to provide secure default credentials.</p></li>
+<li><p><code>Failsafe Account Password</code>. The required secret password for the failsafe account, you can change this after
+SHIELD deploys and your changes will persist.</p></li>
+<li><p><code>Authentication Provider JSON Config</code>. The raw SHIELD authentication provider configuration, for using GitHub
+and/or PCF UAA to authenticate SHIELD users. Examples for <a href="https://github.com/starkandwayne/shield/blob/master/docs/auth/github.md">github</a> and <a href="https://github.com/starkandwayne/shield/blob/master/docs/auth/uaa.md">uaa</a> can be found here.</p></li>
+</ul>
+
+<p><img src="/tile/storage.png" alt="storage" title=""></p>
+
+<p>We can now set system wide archive rention policies.</p>
+
+<p>From here we can specify:</p>
+
+<ul>
+<li><p><code>Minimum Retention Period</code>. The shortest allowed retention period (in days).</p></li>
+<li><p><code>Maximum Retention Period</code>. The longest allowed retention period (in days).</p></li>
+</ul>
+
+<p><img src="/tile/security.png" alt="security" title=""></p>
+
+<ul>
+<li><code>API TLS</code>. The x509 certificate used for the SHIELD API signed for your shield domain and 127.0.0.1.</li>
+</ul>
       </div>
     </div>
   </div>

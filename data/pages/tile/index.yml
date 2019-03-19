@@ -1,7 +1,7 @@
 ---
 # vim:ft=markdown:tw=76
 title: SHIELD Pivotal Tile
-url:   /Tile/index.html
+url:   /tile/index.html
 format: markdown
 --- |-
 Welcome to the documentation for the SHILED Enterprise Data Protection Tile beta.
@@ -29,7 +29,7 @@ find it [here](#).
 
 The first required fields for the install are associated with the identity of SHIELD
 
-![identity](/Tile/identity.png)
+![identity](/tile/identity.png)
 
 From here we need to specify:
 
@@ -44,7 +44,7 @@ From here we need to specify:
 - `Message of the Day` An optional message of the day that gets displayed on the login page.
   This can be used to further describe and differentiate multiple shields.
 
-![scheduling](/Tile/scheduling.png)
+![scheduling](/tile/scheduling.png)
 
 There are three optional properties available for adjusting how SHIELD schedules jobs.
 
@@ -59,6 +59,33 @@ From here we can specify:
 - `Task Execution Timeout`. How long (in hours) a task can run before the SHIELD core considers it stalled
   and cancels its execution.
 
-![authentication](/Tile/authentication.png)
+![authentication](/tile/authentication.png)
 
-We now need to configure our authentication
+We now need to configure our authentication details for SHIELD.
+
+From here we can specify:
+
+- `Sesion Timeout`. Maximum lifetime (in hours) of an authenticated session, either web or CLI.
+
+- `Failsafe Account Username`. When SHIELD core starts up it checks the local users database, and if it finds
+  no users it will create the failsafe account. This allows you to provide secure default credentials.
+
+- `Failsafe Account Password`. The required secret password for the failsafe account, you can change this after
+  SHIELD deploys and your changes will persist.
+
+- `Authentication Provider JSON Config`. The raw SHIELD authentication provider configuration, for using GitHub
+  and/or PCF UAA to authenticate SHIELD users. Examples for [github](https://github.com/starkandwayne/shield/blob/master/docs/auth/github.md) and [uaa](https://github.com/starkandwayne/shield/blob/master/docs/auth/uaa.md) can be found here.
+
+![storage](/tile/storage.png)
+
+We can now set system wide archive rention policies.
+
+From here we can specify:
+
+- `Minimum Retention Period`. The shortest allowed retention period (in days).
+
+- `Maximum Retention Period`. The longest allowed retention period (in days).
+
+![security](/tile/security.png)
+
+- `API TLS`. The x509 certificate used for the SHIELD API signed for your shield domain and 127.0.0.1.
