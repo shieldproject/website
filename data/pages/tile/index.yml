@@ -35,7 +35,7 @@ The first required fields for the install are associated with the identity of SH
 
 From here we need to specify:
 
-- `Environment Name`. This is named used to identify the SHILED itself as well
+- `Environment Name`. This is the name used to identify the SHILED itself as well
   as target your SHIELD instance with the cli.
 
 - `Domain`. The domain in which you will be using for shield.
@@ -57,7 +57,7 @@ From here we can specify:
 - `Scheduler Threads`. Threads determine how many concurrent tasks SHIELD core can perform at once.
   More threads will allow more backup/restore operations at one time, but requires more cpu and ram.
 
-- `Slow Loop Interval`. How often (in secconds) SHIELD performs non critical operations such as cloud storage
+- `Slow Loop Interval`. How often (in seconds) SHIELD performs non critical operations such as cloud storage
   viability tests, archive purgation, storage analysis calculations, etc.
 
 - `Task Execution Timeout`. How long (in hours) a task can run before the SHIELD core considers it stalled
@@ -71,7 +71,7 @@ We now need to configure our authentication details for SHIELD.
 
 From here we can specify:
 
-- `Sesion Timeout`. Maximum lifetime (in hours) of an authenticated session, either web or CLI.
+- `Session Timeout`. Maximum lifetime (in hours) of an authenticated session, either web or CLI.
 
 - `Failsafe Account Username`. When SHIELD core starts up it checks the local users database, and if it finds
   no users it will create the failsafe account. This allows you to provide secure default credentials.
@@ -86,7 +86,7 @@ From here we can specify:
 
 ![storage](/tile/storage.png)
 
-We can now set system wide archive rention policies.
+We can now set system wide archive retention policies.
 
 From here we can specify:
 
@@ -115,10 +115,10 @@ Once the SHIELD tile is configured navigate to back to your dashboard and click 
 After you deploy SHIELD your next step would be add a dns record for your domain to point at your
 new SHIELD instance. Once this is done we can now navigate to the configure domain to visit SHIELD.
 
-## First log in
+## First login
 
 Navigate to your SHIELD and you'll be greeted by your authentication page. Use your failsafe account
-to authenticate and you'll have two first time log in tasks.
+to authenticate and you'll have two first time login tasks.
 
 ## Upload your Runtime Config
 
@@ -160,7 +160,7 @@ from your runtime-config.
 
 ### Initialize SHIELD
 
-SHIELD uses an interal encrypted vault of secrets. Protecting this vault requires a master password.
+SHIELD uses an internal encrypted vault of secrets. Protecting this vault requires a master password.
 Create a master password and store it in your prefered password store.
 
 ![master-pass](/tile/master-pass.png)
@@ -175,7 +175,7 @@ can see this key so save it to a safe and secure place.
 
 # Operators Guide
 
-A quick rundown of shield concepts and operating procesdures to help get started.
+A quick rundown of shield concepts and operating procedures to help get started.
 
 ## SHIELD core
 
@@ -195,7 +195,7 @@ deliver on the promise of data protection.  They include:
 ## SHIELD Agents
 
 Without **SHIELD Agents**, nothing would get done.  These distributed bits
-of software are reponsible for executing all manner of tasks, from backups,
+of software are responsible for executing all manner of tasks, from backups,
 to restores, to archive purgation and validation testing.
 
 Each agent uses locally installed _plugins_ to interact with _targets_ and
@@ -215,8 +215,8 @@ storage backends we haven't even dreamt up yet.
 For a list of the currently implemented plugins that ship with SHIELD
 itself, see our [plugin documentation](/docs/plugins).
 
-- **Tenants**: Shield provides tenancy to allow the seperation of teams/environments by allowing tenants to be created. Under a tenant users can be assigned 
-               and given roles, stores can be created, and indivdual systems can be backed up.
+- **Tenants**: Shield provides tenancy to allow the separation of teams/environments by allowing tenants to be created. Under a tenant users can be assigned 
+               and given roles, stores can be created, and individual systems can be backed up.
 
 ## Targets
 
