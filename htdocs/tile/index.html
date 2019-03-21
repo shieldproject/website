@@ -100,7 +100,7 @@ begin staging the tile</p></li>
 <p>From here we need to specify:</p>
 
 <ul>
-<li><p><code>Environment Name</code>. This is named used to identify the SHILED itself as well
+<li><p><code>Environment Name</code>. This is the name used to identify the SHILED itself as well
 as target your SHIELD instance with the cli.</p></li>
 <li><p><code>Domain</code>. The domain in which you will be using for shield.</p></li>
 <li><p><code>Web Interface Color</code>. A color to help better identify this shield. This is often
@@ -120,7 +120,7 @@ This can be used to further describe and differentiate multiple shields.</p></li
 <ul>
 <li><p><code>Scheduler Threads</code>. Threads determine how many concurrent tasks SHIELD core can perform at once.
 More threads will allow more backup/restore operations at one time, but requires more cpu and ram.</p></li>
-<li><p><code>Slow Loop Interval</code>. How often (in secconds) SHIELD performs non critical operations such as cloud storage
+<li><p><code>Slow Loop Interval</code>. How often (in seconds) SHIELD performs non critical operations such as cloud storage
 viability tests, archive purgation, storage analysis calculations, etc.</p></li>
 <li><p><code>Task Execution Timeout</code>. How long (in hours) a task can run before the SHIELD core considers it stalled
 and cancels its execution.</p></li>
@@ -135,7 +135,7 @@ and cancels its execution.</p></li>
 <p>From here we can specify:</p>
 
 <ul>
-<li><p><code>Sesion Timeout</code>. Maximum lifetime (in hours) of an authenticated session, either web or CLI.</p></li>
+<li><p><code>Session Timeout</code>. Maximum lifetime (in hours) of an authenticated session, either web or CLI.</p></li>
 <li><p><code>Failsafe Account Username</code>. When SHIELD core starts up it checks the local users database, and if it finds
 no users it will create the failsafe account. This allows you to provide secure default credentials.</p></li>
 <li><p><code>Failsafe Account Password</code>. The required secret password for the failsafe account, you can change this after
@@ -148,7 +148,7 @@ and/or PCF UAA to authenticate SHIELD users. Examples for <a href="https://githu
 
 <p><img src="/tile/storage.png" alt="storage" title=""></p>
 
-<p>We can now set system wide archive rention policies.</p>
+<p>We can now set system wide archive retention policies.</p>
 
 <p>From here we can specify:</p>
 
@@ -180,10 +180,10 @@ and/or PCF UAA to authenticate SHIELD users. Examples for <a href="https://githu
 <p>After you deploy SHIELD your next step would be add a dns record for your domain to point at your
 new SHIELD instance. Once this is done we can now navigate to the configure domain to visit SHIELD.</p>
 
-<h2>First log in</h2>
+<h2>First login</h2>
 
 <p>Navigate to your SHIELD and you'll be greeted by your authentication page. Use your failsafe account
-to authenticate and you'll have two first time log in tasks.</p>
+to authenticate and you'll have two first time login tasks.</p>
 
 <h2>Upload your Runtime Config</h2>
 
@@ -226,7 +226,7 @@ from your runtime-config.</p>
 
 <h3>Initialize SHIELD</h3>
 
-<p>SHIELD uses an interal encrypted vault of secrets. Protecting this vault requires a master password.
+<p>SHIELD uses an internal encrypted vault of secrets. Protecting this vault requires a master password.
 Create a master password and store it in your prefered password store.</p>
 
 <p><img src="/tile/master-pass.png" alt="master-pass" title=""></p>
@@ -241,7 +241,7 @@ can see this key so save it to a safe and secure place.</p>
 
 <h1>Operators Guide</h1>
 
-<p>A quick rundown of shield concepts and operating procesdures to help get started.</p>
+<p>A quick rundown of shield concepts and operating procedures to help get started.</p>
 
 <h2>SHIELD core</h2>
 
@@ -263,7 +263,7 @@ deliver on the promise of data protection.  They include:</p>
 <h2>SHIELD Agents</h2>
 
 <p>Without <strong>SHIELD Agents</strong>, nothing would get done.  These distributed bits
-of software are reponsible for executing all manner of tasks, from backups,
+of software are responsible for executing all manner of tasks, from backups,
 to restores, to archive purgation and validation testing.</p>
 
 <p>Each agent uses locally installed <em>plugins</em> to interact with <em>targets</em> and
@@ -282,8 +282,8 @@ storage backends we haven't even dreamt up yet.</p>
 itself, see our <a href="/docs/plugins">plugin documentation</a>.</p>
 
 <ul>
-<li><strong>Tenants</strong>: Shield provides tenancy to allow the seperation of teams/environments by allowing tenants to be created. Under a tenant users can be assigned 
-           and given roles, stores can be created, and indivdual systems can be backed up.</li>
+<li><strong>Tenants</strong>: Shield provides tenancy to allow the separation of teams/environments by allowing tenants to be created. Under a tenant users can be assigned 
+           and given roles, stores can be created, and individual systems can be backed up.</li>
 </ul>
 
 <h2>Targets</h2>
