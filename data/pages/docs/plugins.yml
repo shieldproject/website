@@ -1,9 +1,10 @@
 ---
 # vim:ft=markdown:tw=76
-title:  Plugins Reference
-url:    /docs/plugins/index.html
-format: markdown
-toplinks: yes
+title:      Plugins Reference
+url:        /docs/plugins/index.html
+format:     markdown
+toplinks:   yes
+deprecated: yes
 --- |-
 
 # Target Plugins
