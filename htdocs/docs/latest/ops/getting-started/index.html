@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css?9">
+<link rel="stylesheet" href="/css/main.css?9">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?9" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/community">Community</a></li>
+					<li><a href="/docs/latest/ops">Docs</a></li>
+					<li><a href="/docs/latest/dev">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/docs/latest/ops">Documentation</a></li>
+							<li><a href="/docs/latest/dev">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 auto-title">
+        <!-- this space intentionally left blank - for art -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-3 toc">
+        
+      </div>
+      <div class="col-md-8 col-md-push-1">
+        <div class="content">
+        <h1>Getting Started</h1>
+
+<p>Hi!</p>
+
+<p>Welcome to the SHIELD Getting Started guide.  This document is for
+you if you;</p>
+
+<ol>
+<li>Care about your data systems</li>
+<li>Want to run SHIELD to protect your data</li>
+<li>Have access to Docker</li>
+</ol>
+
+<p>That's it!</p>
+
+<p>After you've run through this guide, you'll have a working SHIELD
+installation, with a configured data system, a successful backup
+job, an archive, and you'll have run through a restore.  More
+importantly, we hope you'll be comfortable working with SHIELD,
+and ready to explore more of what you can do with it.</p>
+
+<h2>Deploying SHIELD</h2>
+
+<p>We're going to use <a href="https://docs.docker.com/compose/overview/">Docker Compose</a> to spin up SHIELD and all
+of its components (there's quite a few of them).</p>
+
+<pre><code>$ mkdir ~/shield-demo
+$ cd ~/shield-demo
+$ curl -sLO https://raw.githubusercontent.com/starkandwayne/shield/v8.2.0/docker-compose.yml
+</code></pre>
+
+<p>Now that you have the compose recipe file locally, let's fire it
+up.</p>
+
+<pre><code>$ docker-compose up
+</code></pre>
+
+<p>SHIELD is now running at https://localhost:9009.  If you visit it
+in your browser of choice, you should see something like this:</p>
+
+<p><img src="/docs/8.2.0/ops/getting-started/login.png" alt="The SHIELD Login Page" /></p>
+
+<p>The default credentials for SHIELD are <code>admin</code> (username) and
+<code>shield</code> (password).  After you log in, you will be presented with
+the <em>initialization screen</em>, where you'll set your master
+password, to protect the encryption parameters of all backup
+archives.</p>
+
+<p><img src="/docs/8.2.0/ops/getting-started/init.png" alt="The SHIELD Initialization Page" /></p>
+
+<p>After you've set your master password (via the form on the right),
+SHIELD generates a <em>fixed key</em> which isn't terribly important
+right now but is very important in production.  It's used to
+encrypt the backup archives of the SHIELD metadata, for disaster
+recovery.</p>
+
+<p><img src="/docs/8.2.0/ops/getting-started/fixed-key.png" alt="The Fixed Key" /></p>
+
+<p>Copy that fixed key into your password manager for safe-keeping
+and click the "I Understand" button to continue.</p>
+
+<p>You should now be all logged into SHIELD.</p>
+
+<p><img src="/docs/8.2.0/ops/getting-started/home.png" alt="SHIELD Interface" /></p>
+
+<h2>Your First Backup Job</h2>
+
+<h2>Restoring the Data</h2>
+
+<h2>Backing up SHIELD Itself</h2>
+
+<p>In a disaster recover situations is important to get shield back up and
+running as soon as possible to facilitate the restore of the your other
+systems.</p>
+
+<pre><code>"Name": "SHIELD"
+"Notes": "SHIELD Backup"
+"Agent": "alex-lab-shield/shield@z1/0"
+"Backup Plugin": "Local Filesystem (fs)"
+"Base Directory": "/var/vcap/store/shield"
+"Files to Include": &lt;blank&gt;*
+"Files to Exclude": &lt;blank&gt;*
+"Fixed-Key Encryption?": &lt;checked&gt;
+"Strict Mode": &lt;unchecked&gt;
+</code></pre>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?9" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/docs/latest/ops/getting-started">Getting Started</a></li>
+							<li><a href="/docs/latest">Documentation</a></li>
+							<li><a href="/community">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2019 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/libs.js?9"></script>
+	<script type="text/javascript" src="/js/common.js?9"></script>
+</body>
+</html>

@@ -5,6 +5,7 @@ use strict;
 
 use Verse qw/verse/;
 use Verse::Theme;
+use Verse::Object::Page;
 use File::Find;
 use List::Util qw/max/;
 use JSON::PP qw/decode_json/;
@@ -12,6 +13,36 @@ use JSON::PP qw/decode_json/;
 dir "{site}";
 copy "{theme}/assets/*"  if exist "{theme}/assets";
 copy "{root}/content/*"  if exist "{root}/content";
+
+if (exist "{root}/docs") {
+	#render { _attrs => { body => '{{CONTENT}}' } },
+	render(Verse::Object::Page->parse("---\n--- |-\n{{CONTENT}}"),
+		using  => 'docs.tt',
+		at     => "{root}/docs.tpl");
+	copy "{root}/docs";
+
+	open my $in, "<", path("{root}/docs.tpl")
+		or die "docs.tpl: $!\n";
+	my $tpl = do { local $/; <$in>; };
+	close $in;
+	unlink path("{root}/docs.tpl");
+
+	find sub {
+		return unless m/\.html$/;
+		print "[wrap] $File::Find::name\n";
+		open my $in, "<", $_
+			or die "$File::Find::name: $!\n";
+		my $html = do { local $/; <$in>; };
+		close $in;
+
+		open my $out, ">", $_
+			or die "$File::Find::name: $!\n";
+		my $content = $tpl;
+		$content =~ s/{{CONTENT}}/$html/;
+		print $out $content;
+		close $out;
+	}, path("{site}/docs/");
+}
 
 my @blog = reverse
 	sort { ($a->{__dated} || 0) cmp ($b->{__dated} || 0) }

@@ -737,9 +737,15 @@
 
   if ($('.content').length > 0) {
     var headings = $('.content').find('h1,h2,h3,h4'),
+           title = $('.content').find('h1').first(),
            stack = [],
             main = $('<ul>'),
        outer, inner, li;
+
+    if (title && title.length > 0) {
+      $('.auto-title').html('<h1>'+title.text()+'</h1>');
+      title.hide();
+    }
 
     headings.each(function (i,e) {
       var type = e.nodeName,

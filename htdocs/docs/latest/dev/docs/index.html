@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css?9">
+<link rel="stylesheet" href="/css/main.css?9">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?9" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/community">Community</a></li>
+					<li><a href="/docs/latest/ops">Docs</a></li>
+					<li><a href="/docs/latest/dev">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/docs/latest/ops">Documentation</a></li>
+							<li><a href="/docs/latest/dev">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 auto-title">
+        <!-- this space intentionally left blank - for art -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-3 toc">
+        
+      </div>
+      <div class="col-md-8 col-md-push-1">
+        <div class="content">
+        <h1>Writing SHIELD Documentation</h1>
+
+<p>This super-meta document explains how to write and review the
+documentation in the SHIELD codebase.</p>
+
+<p>Documentation is stored in the <code>docs/</code> director.  There are two
+main sub-categories: Operator documentation in <code>docs/ops</code> and
+Developer documentation in <code>docs/dev</code>.</p>
+
+<p>Every document / guide / write-up exists as a markdown file in
+it's sub-category directory, and a directory to contain images for
+that document.  For example, assume we want to write a new
+operator document, called <em>How To Install SHIELD on a Raspberry
+Pi</em>.  We might start with the following:</p>
+
+<pre><code>$ mkdir docs/ops/install-on-raspberry-pi
+$ vim   docs/ops/install-on-raspberry-pi.md
+</code></pre>
+
+<p>For the markdown document, write it as though it is the only set
+of headers; start with an <h1>, and follow outline format from
+there.</p>
+
+<h2>The Documentum Instance</h2>
+
+<p>To ensure that screenshots of SHIELD are uniform, we supply a
+docker-compose recipe that spins up a fixed configuration of
+SHIELD.  It can be found in <code>docs/docker-compose.yml</code>, and you run
+it like this:</p>
+
+<pre><code>$ docker-compose -f docs/docker-compose up
+</code></pre>
+
+<p>Then, you can access the SHIELD instance at http://localhost:9009.
+You can log into it with the username <code>admin</code>, and the password
+<code>password</code>, and may want to import the documentation data set:</p>
+
+<pre><code>$ ./shield api http://localhost:9009 documentum
+$ ./shield -c documentum login
+$ ./shield -c documentum import docs/import.yml
+</code></pre>
+
+<h2>Hyperlink References</h2>
+
+<p>Because we intend to generate copies of the documentation, and
+store them on a per-version basis, we need the documentation to be
+relocatable.  Whenever you make references to other assets
+(images, PDFs, other parts of the documentation), use the special
+path <code>/docs/8.2.0/</code> as a stand-in for the <em>root of the <code>docs/</code>
+directory</em>.  When referencing the SHIELD codebase, the special
+path <code>https://github.com/starkandwayne/shield/tree/v8.2.0/</code> can be used.  For example, to link to the
+<code>core/main.go</code> file, use the path <code>https://github.com/starkandwayne/shield/tree/v8.2.0/core/main.go</code>.</p>
+
+<h2>Generating the Documentation</h2>
+
+<p>To review the documentation for formatting and readability, you
+will need to run the generation process.  This process creates an
+embeddedable, relocated copy of the documentation in a new output
+directory, while properly resolving the <code>/docs/8.2.0/</code> and <code>https://github.com/starkandwayne/shield/tree/v8.2.0/</code>
+placeholders to their appropriate values.</p>
+
+<p>The process is all wrapped up in the <code>bin/mkdocs</code> script.  You can
+run it like this:</p>
+
+<pre><code>$ ./bin/mkdocs --version v8.1.x \
+               --output  tmp/docs \
+               --docroot file://$PWD/tmp/docs \
+               --style   basic
+</code></pre>
+
+<p>This should copy a bunch of files into a new <code>tmp/docs</code> directory
+in the current working directory.  To visit the site in your
+browser:</p>
+
+<pre><code>$ open file://$PWD/tmp/docs
+</code></pre>
+
+<p>The <em>basic</em> style provides enough boilerplate style and javascript
+code to make the docs readable.  Namely, it provides a dynamically
+generated sidebar for navigation, including all <h2> and <h3>
+headings.</p>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?9" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/docs/latest/ops/getting-started">Getting Started</a></li>
+							<li><a href="/docs/latest">Documentation</a></li>
+							<li><a href="/community">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2019 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/libs.js?9"></script>
+	<script type="text/javascript" src="/js/common.js?9"></script>
+</body>
+</html>

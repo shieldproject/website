@@ -1,0 +1,82 @@
+<h1>Writing SHIELD Documentation</h1>
+
+<p>This super-meta document explains how to write and review the
+documentation in the SHIELD codebase.</p>
+
+<p>Documentation is stored in the <code>docs/</code> director.  There are two
+main sub-categories: Operator documentation in <code>docs/ops</code> and
+Developer documentation in <code>docs/dev</code>.</p>
+
+<p>Every document / guide / write-up exists as a markdown file in
+it's sub-category directory, and a directory to contain images for
+that document.  For example, assume we want to write a new
+operator document, called <em>How To Install SHIELD on a Raspberry
+Pi</em>.  We might start with the following:</p>
+
+<pre><code>$ mkdir docs/ops/install-on-raspberry-pi
+$ vim   docs/ops/install-on-raspberry-pi.md
+</code></pre>
+
+<p>For the markdown document, write it as though it is the only set
+of headers; start with an <h1>, and follow outline format from
+there.</p>
+
+<h2>The Documentum Instance</h2>
+
+<p>To ensure that screenshots of SHIELD are uniform, we supply a
+docker-compose recipe that spins up a fixed configuration of
+SHIELD.  It can be found in <code>docs/docker-compose.yml</code>, and you run
+it like this:</p>
+
+<pre><code>$ docker-compose -f docs/docker-compose up
+</code></pre>
+
+<p>Then, you can access the SHIELD instance at http://localhost:9009.
+You can log into it with the username <code>admin</code>, and the password
+<code>password</code>, and may want to import the documentation data set:</p>
+
+<pre><code>$ ./shield api http://localhost:9009 documentum
+$ ./shield -c documentum login
+$ ./shield -c documentum import docs/import.yml
+</code></pre>
+
+<h2>Hyperlink References</h2>
+
+<p>Because we intend to generate copies of the documentation, and
+store them on a per-version basis, we need the documentation to be
+relocatable.  Whenever you make references to other assets
+(images, PDFs, other parts of the documentation), use the special
+path <code>/docs/8.2.0/</code> as a stand-in for the <em>root of the <code>docs/</code>
+directory</em>.  When referencing the SHIELD codebase, the special
+path <code>https://github.com/starkandwayne/shield/tree/v8.2.0/</code> can be used.  For example, to link to the
+<code>core/main.go</code> file, use the path <code>https://github.com/starkandwayne/shield/tree/v8.2.0/core/main.go</code>.</p>
+
+<h2>Generating the Documentation</h2>
+
+<p>To review the documentation for formatting and readability, you
+will need to run the generation process.  This process creates an
+embeddedable, relocated copy of the documentation in a new output
+directory, while properly resolving the <code>/docs/8.2.0/</code> and <code>https://github.com/starkandwayne/shield/tree/v8.2.0/</code>
+placeholders to their appropriate values.</p>
+
+<p>The process is all wrapped up in the <code>bin/mkdocs</code> script.  You can
+run it like this:</p>
+
+<pre><code>$ ./bin/mkdocs --version v8.1.x \
+               --output  tmp/docs \
+               --docroot file://$PWD/tmp/docs \
+               --style   basic
+</code></pre>
+
+<p>This should copy a bunch of files into a new <code>tmp/docs</code> directory
+in the current working directory.  To visit the site in your
+browser:</p>
+
+<pre><code>$ open file://$PWD/tmp/docs
+</code></pre>
+
+<p>The <em>basic</em> style provides enough boilerplate style and javascript
+code to make the docs readable.  Namely, it provides a dynamically
+generated sidebar for navigation, including all <h2> and <h3>
+headings.</p>
+

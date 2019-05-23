@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css?9">
+<link rel="stylesheet" href="/css/main.css?9">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?9" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/community">Community</a></li>
+					<li><a href="/docs/latest/ops">Docs</a></li>
+					<li><a href="/docs/latest/dev">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/docs/latest/ops">Documentation</a></li>
+							<li><a href="/docs/latest/dev">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 auto-title">
+        <!-- this space intentionally left blank - for art -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-3 toc">
+        
+      </div>
+      <div class="col-md-8 col-md-push-1">
+        <div class="content">
+        <h1>Agent Fabrics</h1>
+
+<p>Prior to version 8.1, SHIELD only supported one method of agent
+orchestration: an active SSH connection was made from the SHIELD
+core every time a task needed executing.</p>
+
+<p>This works great in single-segment networking, when address
+translation is not in play.  However, as soon as the agent host
+and the SHIELD Core are separated by one or more NAT devices, it
+breaks down.</p>
+
+<p>Starting with 8.1, we have abstracted this communication method
+out from the core code, to allow alternate systems to be tried out
+and implemented, based on site and operator need.  We call these
+<em>fabrics</em>.</p>
+
+<p>Each <em>fabric</em> implements the <code>fabric.Fabric</code> interface, as defined
+in <code>https://github.com/starkandwayne/shield/tree/v8.2.0/core/fabric/fabric.go</code>:</p>
+
+<pre><code>type Fabric interface {
+    /* back up a target to a store, encrypt it,
+       and optionally compress it. */
+    Backup(*db.Task, vault.Parameters) scheduler.Chore
+
+    /* restore an encrypted archive to a target. */
+    Restore(*db.Task, vault.Parameters) scheduler.Chore
+
+    /* check the status of the agent. */
+    Status(*db.Task) scheduler.Chore
+
+    /* purge an from cloud storage archive. */
+    Purge(*db.Task) scheduler.Chore
+
+    /* test the viability of a storage system. */
+    TestStore(*db.Task) scheduler.Chore
+}
+</code></pre>
+
+<p>Each of these methods corresponds to a task type.</p>
+
+<h2>Configuring Fabrics</h2>
+
+<p>With the exception of trivial fabrics (which we'll see in a
+moment), all fabrics need some sort of configuration.  To
+facilitate this, the SHIELD Core now has a top-level <code>fabrics:</code>
+configuration directive that houses operator-provided details
+about how the fabric in question should behave.</p>
+
+<p>Here is an example configuration snippet, which provides the SSH
+private key necessary for the Legacy (Active SSH) fabric to work:</p>
+
+<pre><code>fabrics:
+  - name: legacy
+    ssh-key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEpQIBAAKCAQEAw1G6CPhJ/+/6WdYGab80FeBU/ERxaYUY7GT3WHnsth1Pw77O
+      ... etc. ...
+      6JKLdAirjIQB7QVu8DtFFN6gnqrvD+roej55exRlKN8uAGo0VrCo3LQ=
+      -----END RSA PRIVATE KEY-----
+</code></pre>
+
+<p><strong>Note</strong>: each fabric has bespoke code in the SHIELD core module
+to handle this configuration.  If a new fabric is added, the core
+needs to be updated accordingly.</p>
+
+<h2>Fabric Selection</h2>
+
+<p>TBD</p>
+
+<h2>The Dummy Fabric</h2>
+
+<p>For <em>TESTING PURPOSES ONLY</em>, the Dummy Fabric implements mock
+handlers for all task types.  The fabric as a whole can be
+configured with a <em>delay</em> parameter, which it uses to sleep during
+task execution.  This can be quite handy for testing out the
+SHIELD scheduler, since it slows down the normally fast-paced
+scheduling and execution activities, so you can observe the
+scheduler and its priority queue.</p>
+
+<p>Configuration is as follows:</p>
+
+<pre><code>fabrics:
+  - name:  dummy
+    delay: 15 # seconds
+</code></pre>
+
+<p>The Dummy Fabric is defined in <code>https://github.com/starkandwayne/shield/tree/v8.2.0/core/fabric/dummy.go</code>.</p>
+
+<h2>The Error Fabric</h2>
+
+<p>The Error fabric exists mostly as an internal implementation
+detail.  Operators should never configure this fabric in their
+SHIELD cores.  Every method results in a failed task.</p>
+
+<p>The Error Fabric is defined in <code>https://github.com/starkandwayne/shield/tree/v8.2.0/core/fabric/error.go</code>.</p>
+
+<h2>The Legacy (Active SSH) Fabric</h2>
+
+<p>The Legacy Fabric provides the active SSH connection method of
+agent orchestration that was built into SHIELD versions prior to
+8.1.  Every task is executed across an SSH <code>exec</code> channel.</p>
+
+<p>To configure the Legacy fabric, the SHIELD operator has to provide
+the private SSH key to use for initiating connections to the
+listening agents:</p>
+
+<pre><code>fabrics:
+  - name: legacy
+    ssh-key: |
+      ... an RSA private key, in PEM format ...
+</code></pre>
+
+<p>The Legacy Fabric is defined in <code>https://github.com/starkandwayne/shield/tree/v8.2.0/core/fabric/legacy.go</code>.</p>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?9" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/docs/latest/ops/getting-started">Getting Started</a></li>
+							<li><a href="/docs/latest">Documentation</a></li>
+							<li><a href="/community">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2019 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/libs.js?9"></script>
+	<script type="text/javascript" src="/js/common.js?9"></script>
+</body>
+</html>

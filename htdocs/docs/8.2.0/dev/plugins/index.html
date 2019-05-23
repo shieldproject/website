@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css?9">
+<link rel="stylesheet" href="/css/main.css?9">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?9" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/community">Community</a></li>
+					<li><a href="/docs/latest/ops">Docs</a></li>
+					<li><a href="/docs/latest/dev">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/docs/latest/ops">Documentation</a></li>
+							<li><a href="/docs/latest/dev">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 auto-title">
+        <!-- this space intentionally left blank - for art -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-3 toc">
+        
+      </div>
+      <div class="col-md-8 col-md-push-1">
+        <div class="content">
+        <h1>SHIELD Plugins</h1>
+
+<p>(<em>Note:</em> a ton more stuff needs to go here)</p>
+
+<h2>Plugin Configuration Metadata</h2>
+
+<p>Plugins have configuration, and that configuration has to conform
+to what the plugin code is expecting to find, or nothing works.</p>
+
+<p>To make it easier for operators to properly configure their backup
+jobs, each plugin executable needs to be able to describe what
+information it needs, provide hints on where one might find that
+information, explain what format that information must be in, etc.</p>
+
+<p>This is called <strong>plugin configuration metadata</strong></p>
+
+<p>It looks something like this:</p>
+
+<pre><code>[
+  {
+    "mode"     : "target",
+    "name"     : "base_dir",
+    "type"     : "abspath",
+    "title"    : "Base Directory",
+    "help"     : "Absolute path of the directory to backup.",
+    "example"  : "/srv/www/htdocs",
+    "required" : true
+  },
+  {
+    "mode"     : "store",
+    "name"     : "base_dir",
+    "type"     : "abspath",
+    "title"    : "Base Directory",
+    "help"     : "Where to store the backup archives, on-disk.  This must be an absolute path, and the directory must exist.",
+    "example"  : "/var/store/backups",
+    "required" : true
+  },
+  {
+    "mode"     : "target",
+    "name"     : "include",
+    "type"     : "string",
+    "title"    : "Files to Include",
+    "help"     : "Only files that match this pattern will be included in the backup archive.  If not specified, all files will be included."
+  },
+  {
+    "mode"     : "target",
+    "name"     : "exclude",
+    "type"     : "abspath",
+    "title"    : "Files to Exclude",
+    "help"     : "Files that match this pattern will be excluded from the backup archive.  If not specified, no files will be excluded."
+  },
+  {
+    "mode"    : "both",
+    "name"    : "bsdtar",
+    "type"    : "abspath",
+    "title"   : "Path to `bsdtar` Utility",
+    "help"    : "Absolute path to the `bsdtar` utility, which is used for reading and writing backup archives.",
+    "default" : "/var/vcap/packages/shield/bin/bsdtar"
+  }
+]
+</code></pre>
+
+<p>(example taken from the <code>fs</code> plugin)</p>
+
+<p>Each element in the list is a map describing exactly one field.
+The order of the fields is significant; the SHIELD UIs will honor
+it when rendering its form (web UI) or asking questions (CLI).</p>
+
+<p>The following fields are valid for a field definition:</p>
+
+<h4>mode</h4>
+
+<p>One of either <code>target</code>, <code>store</code>, or <code>both</code>, indiciating which mode
+of operation this field metadata definition applies to.  Some
+fields are used only when a plugin is being used as a data target,
+while other fields are used differently, and may have different
+semantics, or different default values, when used during storage
+operations vs. target system mode.</p>
+
+<p>This field is required.</p>
+
+<h4>name</h4>
+
+<p>The internal name of the field.  This will be used to generate the
+endpoint configuration.  It will never be shown to the end user.</p>
+
+<p>This field is required.</p>
+
+<h4>type</h4>
+
+<p>The type of data, indicating what type of form field should be
+presented to the user.  Valid types are:</p>
+
+<ul>
+<li><p><strong>string</strong> - A (usually short) single-line string.  For the web
+UI, this would be displayed as an <code>&lt;input type="text"&gt;</code> HTML
+form field, and the CLI might read from standard input until a
+newline is reached.</p></li>
+<li><p><strong>text</strong> - A multi-line string  For the web UI, this is
+displayed as a <code>&lt;textarea&gt;</code> HTML form field, and the CLI might
+allow reading from a file, or open up an editor.</p></li>
+<li><p><strong>bool</strong> - A yes/no proposition, sent to the backend as a
+boolean true / false value.  The web UI will display this as a
+checkbox; the CLI will ask a "yes/no" question.</p></li>
+<li><p><strong>enum</strong> - An enumerate field, whose values must be members of a
+closed set of text strings.  The allowable values are specified
+in the <code>enum</code> key.</p></li>
+<li><p><strong>password</strong> - Like "text", but sensitive.  Whatever the user
+enters into this field should not be visible.</p></li>
+<li><p><strong>port</strong> - A numeric value that must be greater than 0 and less
+than 65536, for use in TCP or UDP port number configuration.</p></li>
+<li><p><strong>asbpath</strong> - A string that represents an absolute path on a
+compatible UNIX filesystem.  Absolute paths <em>must</em> begin with a
+forward slash <code>/</code>).</p></li>
+<li><p><strong>pem-x509</strong> - A text field that ought to contain an X.509
+public certificate.  Additional validation can be carried out in
+UI / CLI contexts, to ensure that the proposed value <em>looks</em>
+like an X.509 PEM-encoded certificate.</p></li>
+<li><p><strong>pem-rsa-pk</strong> - A text field that ought to contain an RSA
+private key.  The Web UI / CLI can then redact this properly, as
+well as validate that it contains the right BEGIN / END markers.</p></li>
+</ul>
+
+<p>This field is required.</p>
+
+<h4>title</h4>
+
+<p>A display name of the field.  UIs can use this to prompt the user,
+either via forms or CLI.  This value will almost always be sent to
+the end user.</p>
+
+<p>This field is required.</p>
+
+<h4>required</h4>
+
+<p>A boolean that determines whether or not the end user can leave
+this field blank.  Blank fields will <em>not</em> be set in the endpoint
+configuration JSON (their keys will be omitted entirely).</p>
+
+<p>This field is required, on the pretense that it is better to be
+explicit about what needs filled in.</p>
+
+<h4>default</h4>
+
+<p>The literal default value that the plugin will infer if the field
+is not specified (or is given as an empty value like "", or 0).</p>
+
+<h4>placeholder</h4>
+
+<p>Placeholder text that can be used in (at least) the Web UI HTML
+forms for configuring this plugin.  It should either convey the
+default value, or explain what the default behavior is.  For
+example, if the S3 plugin's default <code>s3_host</code> parameter is
+"s3.amazonaws.com", that would be a suitable placeholder.  On the
+other hand, the PostgreSQL plugin defaults to backing up all
+database unless <code>pg_database</code> is set, so a placeholder of "(all
+databases)" (note the parentheses) would be appropriate.</p>
+
+<p>This field is not required; if not present, there will be no
+placeholder text.  Required fields with straightforward semantics,
+like a <em>Username</em> field, do not need placeholder text.</p>
+
+<h4>enum</h4>
+
+<p>A list of values that are allowed for fields of type <code>enum</code>.  If
+the type of this field is <code>enum</code>, this key is <strong>required</strong>.
+Otherrwise, this key is <strong>forbidden</strong>, and must not appear.</p>
+
+<h4>help</h4>
+
+<p>A helpful couple of sentences that explains what the field is used
+for, what one might want to put in it, what format is expected,
+etc.</p>
+
+<h4>example</h4>
+
+<p>A string that (in English) list possible values that could be
+input <em>verbatim</em>, to assist operators in determining things like
+proper formatting, whether to include the <code>https://</code> in URLs, etc.</p>
+
+<h3>Web UI Form Field Display Example</h3>
+
+<p>Here is an example of a field, as displayed in the Web UI, as an
+element of an HTML form:</p>
+
+<p><img src="field.png" alt="Form Field Example" /></p>
+
+<p>and here is an example of a field with an error:</p>
+
+<p><img src="field-error.png" alt="Form Field Error Example" /></p>
+
+<h3>CLI Form Field Display Example</h3>
+
+<p>Here is an example of a field, as displayed in the Web UID:</p>
+
+<pre><code>Label
+  (Hints) Lorem ipsum dolor sit amet, consectetur adipisciing
+  elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore
+
+  For example: example 1, example 2, or example 3
+
+Label:
+Placeholder&gt; _
+</code></pre>
+
+<p>(this is just a mockup, I'm not entirely convinced that all the
+ extra text is justified / justifiable)</p>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?9" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/docs/latest/ops/getting-started">Getting Started</a></li>
+							<li><a href="/docs/latest">Documentation</a></li>
+							<li><a href="/community">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2019 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/libs.js?9"></script>
+	<script type="text/javascript" src="/js/common.js?9"></script>
+</body>
+</html>

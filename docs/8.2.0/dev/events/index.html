@@ -1,0 +1,337 @@
+<h1>SHIELD Events</h1>
+
+<p>Central to the SHIELD Web UI interaction is the event stream, a
+websocket anchored at /v2/events that relays <em>events</em> from the
+backend to the frontend.  This document attempts to catalog and
+define each event, where it comes from, and what information is
+contained in the event payload.</p>
+
+<h2>Queue Naming</h2>
+
+<p>Events are dispatched to one or more <em>queues</em>, which front-end
+users are implicitly subscribed to based on their rights and
+privileges inside of SHIELD.</p>
+
+<p>There are a few fixed queus with special uses:</p>
+
+<p>| Queue    | Purpose |
+| -------- | ------- |
+| <code>*</code>      | Everyone gets these messages. |
+| <code>admins</code> | SHIELD Administrators get these messages. |</p>
+
+<p>Other queues are <em>parametric</em>, and use pattern-based names to
+represent a multitude of exclusive queues:</p>
+
+<p>| Queue Pattern  | Purpose |
+| -------------- | ------- |
+| <code>tenant:$UUID</code> | Members of the given tenant receive messages. |
+| <code>user:$UUID</code>   | The given user receives messages. |</p>
+
+<p>Here, <code>$UUID</code> represents the lower-case UUID of the object being
+targeted, either a tenant or a user.</p>
+
+<h2>Event Types</h2>
+
+<p>The following event types are defined, in <code>https://github.com/starkandwayne/shield/tree/v8.2.0/core/bus/bus.go</code>:</p>
+
+<p>| Type                 | Description |
+| -------------------- | ----------- |
+| <code>error</code>              | A general error has occurred.  See <strong>Error Events</strong> |
+| <code>unlock-core</code>        | Sent when the SHIELD core become unlocked. See <strong>System-wide Events</strong> |
+| <code>create-object</code>      | Sent when an object (tenant, task, job, etc.) is created. |
+| <code>update-object</code>      | Sent when an object is updated. |
+| <code>delete-object</code>      | Sent when an object is deleted. |
+| <code>task-status-update</code> | Sent when the status of a task is changed. See <strong>Task Events</strong> |
+| <code>task-log-update</code>    | Sent when new lines in the task log are received by SHIELD. See <strong>Task Events</strong> |
+| <code>tenant-invite</code>      | Sent when a user is invited into a tenant, or promoted / demoted. See <strong>Tenant Membership Events</strong> |
+| <code>tenant-banish</code>      | Sent when a user is removed from a tenant. See <strong>Tenant Membership Events</strong> |</p>
+
+<h2>Agent Events</h2>
+
+<p>When a new Agent is registered with the system, it is sent to the
+frontend, as a <em>create-object</em> event, with the following payload:</p>
+
+<pre><code>{
+  "uuid"         : "9145bbe8-c2af-43ca-8cca-95ad1990788d",
+  "name"         : "us-east-1/prod-cf/postgres-0",
+  "address"      : "10.14.5.6:5444",
+  "version"      : "6.7.8",
+  "status"       : "failing",
+  "last_error"   : "Something broker",
+  "last_seen_at" : 1550253924           # UNIX epoch timestamp
+}
+</code></pre>
+
+<p>This event is sent to the <code>*</code> queue, so that all connected web
+clients receive it.</p>
+
+<h2>Job Events</h2>
+
+<p>Events are sent for a job for every step in its lifecycle.  When a
+new job is configured, a <em>create-object</em> event for that job is
+sent.  Any re-configuration of the job results in an
+<em>update-object</em> event, and the removal of a job sends a
+<em>delete-object</em> event.</p>
+
+<p>The <em>create-object</em> and <em>update-object</em> events have the following
+payload:</p>
+
+<pre><code>{
+  "uuid"        : "44354b93-f509-4838-b7be-007a48c31c5b",
+  "name"        : "Daily Backups"
+  "summary"     : "A daily backup of the something something",
+  "healthy"     : true,
+  "keep_n"      : 90,
+  "keep_days"   : 90,
+  "schedule"    : "daily 3am",
+  "paused"      : false,
+  "fixed_key"   : false,
+
+  "tenant_uuid" : "bba340d0-2b61-43a9-913f-1be9abdccbd1",
+  "target_uuid" : "0e0983fd-92f3-468c-8e9d-92a6d8443f58",
+  "store_uuid"  : "2f8bdd7a-fb78-4639-8480-489f78e685ab"
+}
+</code></pre>
+
+<p>The <em>delete-object</em> event has the following payload:</p>
+
+<pre><code>{
+  "uuid" : "44354b93-f509-4838-b7be-007a48c31c5b"
+}
+</code></pre>
+
+<p><em>(Note: there may be other fields in the <em>delete-object</em> event,
+but they are not relevant, and should not be relied upon.)</em></p>
+
+<p>All three of these events are sent to the tenant queue
+(<code>tenant:$UUID</code>).</p>
+
+<h2>Store Events</h2>
+
+<p>gvents are sent for a store for every step in its lifecycle.  When
+a new store is configured, a <em>create-object</em> event for that store
+is sent.  Any re-configuration of the store results in an
+<em>update-object</em> event, and the removal of a store sends a
+<em>delete-object</em> event.</p>
+
+<p>The <em>create-object</em> and <em>update-object</em> events have the following payload:</p>
+
+<pre><code>{
+  "uuid"           : "2f8bdd7a-fb78-4639-8480-489f78e685ab"
+  "name"           : "Main S3 Bucket"
+  "summary"        : "Our primary bucket in Amazon's S3",
+  "agent"          : "127.0.0.1:5444",
+  "plugin"         : "s3",
+  "healthy"        : true,
+
+  "tenant_uuid"    : "bba340d0-2b61-43a9-913f-1be9abdccbd1",
+  "global"         : false,
+
+  "daily_increase" : 43008,              #  42.0 KB
+  "storage_used"   : 250295091,          # 238.7 MB
+  "threshold"      : 419430400,          # 400.0 MB
+  "archive_count"  : 892
+
+  "config" : {
+    "bucket" : "backups",
+    /* ... etc ... */
+  },
+  "display_config" : [
+    {
+      "label" : "S3 Bucket",
+      "value" : "bucket"
+    },
+    /* ... etc ... */
+  ]
+}
+</code></pre>
+
+<p>The <em>delete-object</em> event has the following payload:</p>
+
+<pre><code>{
+  "uuid" : "2f8bdd7a-fb78-4639-8480-489f78e685ab"
+}
+</code></pre>
+
+<p><em>(Note: there may be other fields in the <em>delete-object</em> event,
+but they are not relevant, and should not be relied upon.)</em></p>
+
+<p>Where these events get sent depends on the visibility of the
+store.  Events for global stores are sent to the <code>*</code> queue, so
+that everyone gets the updates.  Events for tenant-specific stores
+are sent to the tenant queue (<code>tenant:$UUID</code>).</p>
+
+<h2>Target Events</h2>
+
+<p>Events are sent for a target for every step in its lifecycle.
+When a new target is configured, a <em>create-object</em> event for that
+target is sent.  Any re-configuration of the target results in an
+<em>update-object</em> event, and the removal of a target sends a
+<em>delete-object</em> event.</p>
+
+<p>The <em>create-object</em> and <em>update-object</em> events have the following payload:</p>
+
+<pre><code>{
+  "uuid"           : "0e0983fd-92f3-468c-8e9d-92a6d8443f58",
+  "tenant_uuid"    : "bba340d0-2b61-43a9-913f-1be9abdccbd1",
+
+  "name"           : "Important Files"
+  "summary"        : "Our most important of files.",
+  "agent"          : "10.0.0.6:5444",
+  "plugin"         : "fs",
+  "healthy"        : true,
+  "compression"    : "bzip2",
+
+  "config" : {
+    "root" : "/var/files",
+    /* ... etc ... */
+  }
+}
+</code></pre>
+
+<p>The <em>delete-object</em> event has the following payload:</p>
+
+<pre><code>{
+  "uuid" : "0e0983fd-92f3-468c-8e9d-92a6d8443f58",
+}
+</code></pre>
+
+<p><em>(Note: there may be other fields in the <em>delete-object</em> event,
+but they are not relevant, and should not be relied upon.)</em></p>
+
+<p>These events are sent to the tenant queue (<code>tenant:$UUID</code>).</p>
+
+<h2>Task Events</h2>
+
+<p>Like other objects, tasks emit events when they are created, and
+updated.  Unlike other objects, however, tasks use specific event
+types, with custom payloads, for the updates.</p>
+
+<p>When a task is created, a <em>create-object</em> event is sent, with the
+following payload:</p>
+
+<pre><code>{
+  "uuid"         : "f6b7689a-e804-4beb-8803-f2b031781f5d",
+  "tenant_uuid"  : "bba340d0-2b61-43a9-913f-1be9abdccbd1",
+  "owner"        : "system",
+  "op"           : "backup",
+  "job_uuid"     : "44354b93-f509-4838-b7be-007a48c31c5b",
+  "store_uuid"   : "2f8bdd7a-fb78-4639-8480-489f78e685ab"
+  "target_uuid"  : "0e0983fd-92f3-468c-8e9d-92a6d8443f58",
+
+  "archive_uuid" : "502e583e-8407-495b-be4a-bd4585993446",
+  "status"       : "running",
+  "requested_at" : 1550257564,
+  "started_at"   : 1550257568,
+  "stopped_at"   : 0,
+  "ok"           : true,
+  "notes"        : "",
+  "clear"        : ""
+}
+</code></pre>
+
+<p>Updates are handled based on the type of update.  Status updates
+come through as <em>task-status-update</em> messages with the following
+payload:</p>
+
+<pre><code>{
+  "uuid"         : "f6b7689a-e804-4beb-8803-f2b031781f5d",
+  "status"       : "done",
+  "started_at"   : 1550257568,
+  "stopped_at"   : 1550258134,
+  "ok"           : true
+}
+</code></pre>
+
+<p>Whenever text is appended to the task log, usually as a result of
+output being received from the agent, a <em>task-log-update</em> message
+is sent, with the following payload:</p>
+
+<pre><code>{
+  "uuid" : "f6b7689a-e804-4beb-8803-f2b031781f5d",
+  "tail" : "\n\n... an additional log message...\n"
+}
+</code></pre>
+
+<p>Where these messages are sent depends entirely on the type of
+task, and its scope.  Tasks that are specific to a tenant, either
+attached to its targets, private cloud storage systems, or
+scheduled jobs, are sent to the tenant queue (<code>tenant:$UUID</code>).
+Tasks that are <em>not</em> tenant-specific are sent to SHIELD
+Administrators, via the <code>admins</code> queue.</p>
+
+<h2>Tenant Events</h2>
+
+<p>There are only two lifecycle events related directly to tenant
+objects: <code>update-object (tenant)</code> and <code>delete-object (tenant)</code>.</p>
+
+<p><em>update-object</em> events fire whenever anyone makes a change to the
+metadata of the tenant itself.  If someone renames a tenant, an
+<em>update-object</em> event will fire.  Whenever storage usage
+aggregates for the tenant are re-calcualted, the new values will
+be communicated through an <em>update-object</em> event.</p>
+
+<p>The contents of a tenant <em>update-object</em> event are:</p>
+
+<pre><code>{
+  "uuid"           : "9c17ffd6-084f-47a7-bf50-75df205a7544",
+  "name"           : "Example Tenant",
+  "daily_increase" : 43008,              #  42.0 KB
+  "storage_used"   : 250295091,          # 238.7 MB
+  "archive_count"  : 892
+}
+</code></pre>
+
+<p><em>delete-object</em> events fire whenever a SHIELD administrator
+removes a tenant (and all of its associated objects) from the
+system.</p>
+
+<p>The contents of a tenant <em>delete-object</em> event are:</p>
+
+<pre><code>{
+  "uuid" : "9c17ffd6-084f-47a7-bf50-75df205a7544"
+}
+</code></pre>
+
+<p><em>(Note: there may be other fields in the <em>delete-object</em> event,
+but they are not relevant, and should not be relied upon.)</em></p>
+
+<p>Both <em>update-object</em> and <em>delete-object</em> events are sent to the
+tenant queue (<code>tenant:$UUID</code>).</p>
+
+<h2>Tenant Membership Events</h2>
+
+<p>Other important events related to tenants involve membership in
+those tenants, specifically, <em>tenant-invite</em> and <em>tenant-banish</em>
+events.</p>
+
+<p>An <em>tenant-invite</em> event fires when either of the following occurs:</p>
+
+<ol>
+<li><p>A user is added to a tenant they did not previously have
+ access to.</p></li>
+<li><p>A member of a tenant has their role changed (promoted <em>or</em>
+ demoted)  on that tenant.</p></li>
+</ol>
+
+<p>The <em>tenant-invite</em> event payload looks like this:</p>
+
+<pre><code>{
+  "user_uuid"   : "a10a9007-1ece-4b8d-bd9b-dd6b440e8d2a",
+  "tenant_uuid" : "9c17ffd6-084f-47a7-bf50-75df205a7544",
+  "role"        : "new-role"
+}
+</code></pre>
+
+<p>A <em>tenant-banish</em> event fires when a member of tenant is removed
+from that tenant entirely.  The payload looks like this:</p>
+
+<pre><code>{
+  "user_uuid"   : "a10a9007-1ece-4b8d-bd9b-dd6b440e8d2a",
+  "tenant_uuid" : "9c17ffd6-084f-47a7-bf50-75df205a7544"
+}
+</code></pre>
+
+<p>Both <em>tenant-invite</em> and <em>tenant-banish</em> events are sent to queues
+for the tenant (<code>tenant:$UUID</code>) and the user (<code>user:$UUID</code>).</p>
+

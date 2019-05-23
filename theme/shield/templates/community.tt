@@ -112,11 +112,11 @@
     <div class="row">
       <div class="col-md-8">
         <div class="row">
-          <div class="col-md-6 card"><div><a href="/docs/getting-started#deploying-shield">Install <span>SHIELD</span></a></div></div>
-          <div class="col-md-6 card"><div><a href="/docs/getting-started#how-to-use-shield">Learn <span>The Basics</span></a></div></div>
+          <div class="col-md-6 card"><div><a href="/docs/latest/ops/getting-started#deploying-shield">Install <span>SHIELD</span></a></div></div>
+          <div class="col-md-6 card"><div><a href="/docs/latest/ops/getting-started#how-to-use-shield">Learn <span>The Basics</span></a></div></div>
         </div>
         <div class="row">
-          <div class="col-md-6 card"><div><a href="/dev">Develop <span>for SHIELD</span></a></div></div>
+          <div class="col-md-6 card"><div><a href="/docs/latest/dev">Develop <span>for SHIELD</span></a></div></div>
           <div class="col-md-6 card"><div><a href="https://starkandwayne.com">Hire Us <span>Managed Services &amp; Support</span></a></div></div>
         </div>
       </div>

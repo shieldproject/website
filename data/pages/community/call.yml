@@ -83,7 +83,7 @@ Thursday, September 13th, 2018.
      recovery of a SHIELD core itself?
 
      We have a process, and it's sort of documented, but not well.  We're
-     working on fleshing out the [SHIELD Operations Manual](/docs/manual)
+     working on fleshing out the [SHIELD Operations Manual](/docs/latest/ops/manual)
      with these details.
 
    - **Authentication Tokens** - Authentication Tokens seem to be tied to
@@ -158,7 +158,7 @@ Thursday, August 9th, 2018.
 
 2. **Plugin Reference Documentation**
 
-   We've started documenting the [SHIELD Plugins](/docs/plugins) and their
+   We've started documenting the [SHIELD Plugins](/docs/latest/ops/plugins) and their
    configuration.
 
 Thanks all for joining!  See you next month!
@@ -179,8 +179,8 @@ on Thursday, July 12th, 2018.
    We are putting all of our documentation, guides, and manuals there
 
    Work is underway on fleshing out the
-   [SHIELD Operator's Manual](/docs/manual), and the
-   [Plugin Reference](/docs/plugins).
+   [SHIELD Operator's Manual](/docs/latest/ops/manual), and the
+   [Plugin Reference](/docs/latest/ops/plugins).
 
    We're also hoping to build out recipe-based docs like
    _How do I backup Cloud Foundry?_

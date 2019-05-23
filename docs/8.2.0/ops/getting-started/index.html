@@ -1,0 +1,86 @@
+<h1>Getting Started</h1>
+
+<p>Hi!</p>
+
+<p>Welcome to the SHIELD Getting Started guide.  This document is for
+you if you;</p>
+
+<ol>
+<li>Care about your data systems</li>
+<li>Want to run SHIELD to protect your data</li>
+<li>Have access to Docker</li>
+</ol>
+
+<p>That's it!</p>
+
+<p>After you've run through this guide, you'll have a working SHIELD
+installation, with a configured data system, a successful backup
+job, an archive, and you'll have run through a restore.  More
+importantly, we hope you'll be comfortable working with SHIELD,
+and ready to explore more of what you can do with it.</p>
+
+<h2>Deploying SHIELD</h2>
+
+<p>We're going to use <a href="https://docs.docker.com/compose/overview/">Docker Compose</a> to spin up SHIELD and all
+of its components (there's quite a few of them).</p>
+
+<pre><code>$ mkdir ~/shield-demo
+$ cd ~/shield-demo
+$ curl -sLO https://raw.githubusercontent.com/starkandwayne/shield/v8.2.0/docker-compose.yml
+</code></pre>
+
+<p>Now that you have the compose recipe file locally, let's fire it
+up.</p>
+
+<pre><code>$ docker-compose up
+</code></pre>
+
+<p>SHIELD is now running at https://localhost:9009.  If you visit it
+in your browser of choice, you should see something like this:</p>
+
+<p><img src="/docs/8.2.0/ops/getting-started/login.png" alt="The SHIELD Login Page" /></p>
+
+<p>The default credentials for SHIELD are <code>admin</code> (username) and
+<code>shield</code> (password).  After you log in, you will be presented with
+the <em>initialization screen</em>, where you'll set your master
+password, to protect the encryption parameters of all backup
+archives.</p>
+
+<p><img src="/docs/8.2.0/ops/getting-started/init.png" alt="The SHIELD Initialization Page" /></p>
+
+<p>After you've set your master password (via the form on the right),
+SHIELD generates a <em>fixed key</em> which isn't terribly important
+right now but is very important in production.  It's used to
+encrypt the backup archives of the SHIELD metadata, for disaster
+recovery.</p>
+
+<p><img src="/docs/8.2.0/ops/getting-started/fixed-key.png" alt="The Fixed Key" /></p>
+
+<p>Copy that fixed key into your password manager for safe-keeping
+and click the "I Understand" button to continue.</p>
+
+<p>You should now be all logged into SHIELD.</p>
+
+<p><img src="/docs/8.2.0/ops/getting-started/home.png" alt="SHIELD Interface" /></p>
+
+<h2>Your First Backup Job</h2>
+
+<h2>Restoring the Data</h2>
+
+<h2>Backing up SHIELD Itself</h2>
+
+<p>In a disaster recover situations is important to get shield back up and
+running as soon as possible to facilitate the restore of the your other
+systems.</p>
+
+<pre><code>"Name": "SHIELD"
+"Notes": "SHIELD Backup"
+"Agent": "alex-lab-shield/shield@z1/0"
+"Backup Plugin": "Local Filesystem (fs)"
+"Base Directory": "/var/vcap/store/shield"
+"Files to Include": &lt;blank&gt;*
+"Files to Exclude": &lt;blank&gt;*
+"Fixed-Key Encryption?": &lt;checked&gt;
+"Strict Mode": &lt;unchecked&gt;
+</code></pre>
+
