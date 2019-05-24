@@ -40,6 +40,17 @@ if [[ "$CURRENT_VERSION" != "$VERSION" ]]; then
 	mv $REPO_ROOT/data/releases.tmp $REPO_ROOT/data/releases
 fi
 
+header "Building Docs"
+pushd shield-checked-out
+	./bin/mkdocs
+		--version $VERSION \
+		--docroot /docs/$VERSION \
+		--output ~/code/shield/website/docs/$VERSION \
+	&& rm -rf ~/code/shield/website/docs/latest \
+	&& cp -a ~/code/shield/website/docs/$VERSION \
+			~/code/shield/website/docs/latest
+popd
+
 header "Re-building Website Static Assets"
 pushd $REPO_ROOT
 	make
