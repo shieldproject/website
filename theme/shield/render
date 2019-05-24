@@ -38,7 +38,7 @@ if (exist "{root}/docs") {
 		open my $out, ">", $_
 			or die "$File::Find::name: $!\n";
 		my $content = $tpl;
-		$content =~ s/{{CONTENT}}/$html/;
+		$content =~ s/\{\{CONTENT}}/$html/;
 		print $out $content;
 		close $out;
 	}, path("{site}/docs/");
