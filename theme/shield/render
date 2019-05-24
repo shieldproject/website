@@ -15,32 +15,12 @@ copy "{theme}/assets/*"  if exist "{theme}/assets";
 copy "{root}/content/*"  if exist "{root}/content";
 
 if (exist "{root}/docs") {
-	#render { _attrs => { body => '{{CONTENT}}' } },
-	render(Verse::Object::Page->parse("---\n--- |-\n{{CONTENT}}"),
-		using  => 'docs.tt',
-		at     => "{root}/docs.tpl");
 	copy "{root}/docs";
-
-	open my $in, "<", path("{root}/docs.tpl")
-		or die "docs.tpl: $!\n";
-	my $tpl = do { local $/; <$in>; };
-	close $in;
-	unlink path("{root}/docs.tpl");
-
 	find sub {
 		return unless m/\.html$/;
-		print "[wrap] $File::Find::name\n";
-		open my $in, "<", $_
-			or die "$File::Find::name: $!\n";
-		my $html = do { local $/; <$in>; };
-		close $in;
-
-		open my $out, ">", $_
-			or die "$File::Find::name: $!\n";
-		my $content = $tpl;
-		$content =~ s/\{\{CONTENT}}/$html/;
-		print $out $content;
-		close $out;
+		render { content => readf $File::Find::name },
+			using => 'docs.tt',
+			at    => $File::Find::name;
 	}, path("{site}/docs/");
 }
 

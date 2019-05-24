@@ -15,11 +15,11 @@
   <div id="container" class="container">
     <div class="row">
       <div class="col-md-3 toc">
-        [% page.attrs.toc %]
       </div>
       <div class="col-md-8 col-md-push-1">
         <div class="content">
-        [% page.attrs.body %]
+          [% content %]
+        </div>
       </div>
     </div>
   </div>
