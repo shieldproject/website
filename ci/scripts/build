@@ -42,6 +42,7 @@ fi
 
 header "Building Docs"
 pushd shield-checked-out
+	cpan -i -T Text::Markdown < /dev/null
 	./bin/mkdocs
 		--version $VERSION \
 		--docroot /docs/$VERSION \
