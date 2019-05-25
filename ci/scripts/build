@@ -45,10 +45,10 @@ pushd shield-checked-out
 	cpan -i -T Text::Markdown < /dev/null
 	./bin/mkdocs --version $VERSION \
 		--docroot /docs/$VERSION \
-		--output ~/code/shield/website/docs/$VERSION \
-	&& rm -rf ~/code/shield/website/docs/latest \
-	&& cp -a ~/code/shield/website/docs/$VERSION \
-			 ~/code/shield/website/docs/latest
+		--output $BASE_DIR/$REPO_ROOT/docs/$VERSION \
+	&& rm -rf $BASE_DIR/$REPO_ROOT/docs/latest \
+	&& cp -a $BASE_DIR/$REPO_ROOT/docs/$VERSION \
+			 $BASE_DIR/$REPO_ROOT/docs/latest
 popd
 
 header "Re-building Website Static Assets"
