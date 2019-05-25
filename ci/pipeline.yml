@@ -14,6 +14,12 @@ meta:
     starkandwayne:
       access_token: (( vault "secret/pipelines/github/starkandwayne/shield-bot:access_token" ))
 
+    shield:
+      uri: git@github.com:starkandwayne/shield
+      branch: master
+      private_key:  (( vault "secret/pipelines/github/starkandwayne/shield-bot:private" ))
+      access_token: (( vault "secret/pipelines/github/starkandwayne/shield-bot:access_token" ))
+
   shout:
     topic:    (( grab meta.name ))
     url:      http://10.200.131.1:7109
@@ -32,11 +38,31 @@ meta:
 jobs:
   - name: build
     plan:
-      - aggregate:
+      - in_parallel:
         - get: changes
           trigger: true
         - get: releases
           trigger: true
+        - get: shield
+      - task: checkout-tag
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: huntprod/verse
+              tag:        latest
+          inputs:
+            - name: shield
+            - name: releases
+          outputs:
+            - name: shield-checked-out
+          run:
+            path: sh
+            args:
+              - -exc
+              - 'cd shield && git checkout "$(cat ../releases/tag)" && cd ..  && cp -R shield/* shield-checked-out'
+
       - task: build
         config:
           platform: linux
@@ -48,6 +74,7 @@ jobs:
           inputs:
             - name: changes
             - name: releases
+            - name: shield-checked-out
           outputs:
             - name: pushme
           run:
@@ -212,3 +239,11 @@ resources:
       url:      (( grab meta.shout.url ))
       username: (( grab meta.shout.username ))
       password: (( grab meta.shout.password ))
+  - name: shield
+    type: git
+    source:
+      uri:         (( grab meta.github.shield.uri ))
+      branch:      (( grab meta.github.shield.branch ))
+      private_key: (( grab meta.github.shield.private_key ))
+      ignore_paths:
+        - htdocs
