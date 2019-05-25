@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css?9">
+<link rel="stylesheet" href="/css/main.css?9">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?9" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/community">Community</a></li>
+					<li><a href="/docs/latest/ops">Docs</a></li>
+					<li><a href="/docs/latest/dev">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/docs/latest/ops">Documentation</a></li>
+							<li><a href="/docs/latest/dev">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 auto-title">
+        <!-- this space intentionally left blank - for art -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-3 toc">
+      </div>
+      <div class="col-md-8 col-md-push-1">
+        <div class="content">
+          <h1>SHIELD Web UI Design Notes</h1>
+
+<div class="historical-note">This document is primarily of
+historical interest.  The recommendations and ideas contained
+herein have been incorporated into SHIELD, as of version 8.0</div>
+
+<p>SHIELD needs a better Web User Interface.  Here, we have collected
+our thoughts on the matter, and supplied some design mocks.</p>
+
+<p>This undertaking is ambitious.  It involves not just a visual
+refresh of the existing functionality, but new features and
+behaviors to provide a better user experience.</p>
+
+<h2>Main Dashboard</h2>
+
+<p>May I present the new SHIELD dashboard.</p>
+
+<p><img src="dashboard.png" alt="Main Dashboard Image" /></p>
+
+<p>It sure is pretty.</p>
+
+<h3>1. Top Bar</h3>
+
+<p>The <strong>Top Bar</strong> provides a minimal global identification space on the left-hand side, and current user indication on the right-hand side.</p>
+
+<p>On the left, the word "SHIELD" is always followed by the name of this SHIELD (which is managed by the system implementor / BOSH deployment team), and then the non-loopback IP VM IP address.  This allows an operator accessing the web UI to unequivocally identify <em>which</em> SHIELD they are working on.</p>
+
+<p>On the right, the currently logged-in user's display name will be shown.  This feature doesn't make a whole lot of sense until we get to RBAC/MT -- Role-Based Access Control / Multi-Tenancy.  Administrators who have access to all things, including shared resources, will have the text <code>(admin)</code> appended after their display name, to remind them that they have elevated privileges.  The hamburger icon on the far right expands a user-centric menu for things like password changes, profile management, etc (not shown). </p>
+
+<h3>2. Story Sidebar</h3>
+
+<p>The <strong>Story Sidebar</strong> is an attempt to provide operators with more procedural interfaces for managing SHIELD.  We have observed several people of varying skill levels attempt to navigate the previous web user interface; they primarily have solid, concrete objectives for each session with the UI.  If we can capture those stories, and encode them into web forms and other user interfaces, SHIELD will be much easier to use.</p>
+
+<p>Each story has a name, like <em>Perform an ad hoc backup</em>, and a description.  These help operators find the story they wish to follow.  The Story Sidebar shows these two bits of information.</p>
+
+<p>Ideally, we will need only a small number of these stories.  If they can all comfortably fit on the sidebar, then the displayed search interface (<em>What shall we do?</em>) can be omited.</p>
+
+<h3>3. Heads-Up Display</h3>
+
+<p>The <strong>Heads-Up Display</strong> serves to provide operators with tactical / operational feedback on the current state and health of this SHIELD instance.  There is a fine line to walk here -- not enough data, and the HUD is useless; too much, and we risk becoming our own monitoring system.</p>
+
+<p>The HUD is split into three segments: <em>Instance Information</em>, <em>Health Indicators</em>, and <em>Data Protection Summary</em>.  These sections are described below.</p>
+
+<h4>Instance Information</h4>
+
+<p>Here, we provide more information about the SHIELD instance itself, including:</p>
+
+<ul>
+<li><strong>Version</strong> - The version of the SHIELD daemon</li>
+<li><strong>Instance IP</strong> - The non-loopback IP address of this SHIELD instance.  We may be able to handle multiple IP addresses here, whereas the Top Bar is limited to just one address.</li>
+<li><strong>Base URL</strong> - The base URL of this instance, for accessing it by name.</li>
+<li><strong>Name</strong> - The name of the SHIELD instance, as set by the deployment manifest.  The screen mock shows <em>PRODUCTION</em> written in green; it would be a nice touch to enable the deployment manifest to provide a "color", for teams that which to color-code their deployments (perhaps red for prod, green for sandbox).</li>
+</ul>
+
+<h4>Health Indicators</h4>
+
+<p>We have identified the following key health indicators for the SHIELD instance's base functionality:</p>
+
+<ol>
+<li>Whether the SHIELD API is responding</li>
+<li>Whether Cloud Storage is accessible</li>
+<li>Whether there are any failed or pending jobs</li>
+</ol>
+
+<p>It may seem odd to have a check on the SHIELD API from the SHIELD UI, especially since they are, ostensibly, both served by the same daemon process.  However, the UI only <em>loads</em> from the server; it executes entirely on the client.  It is quite possible for an operator to keep a SHIELD UI window open for hours, days, or even weeks.</p>
+
+<p>The "Cloud Storage" health indicator is novel.  It reports on any problems related to the <em>storage</em> of backup archives, by testing the viability of storage endpoint configurations.  This is new behavior, that requires changes to both the SHIELD daemon, and the plugin framework as well.</p>
+
+<p>We can implement this in one of two ways.</p>
+
+<p>The simplest way involves modifying the plugin framework to provide a new action, <code>test</code>, which will not only validate the configuration, but also perform some small viability test.  For example, the <code>s3</code> plugin may write a small file, and then read it back to verify that both store and retrieve operations work.  Then, the SHIELD daemon could be set to run these tests on a set schedule -- if any of them fail, the HUD would reflect the failure.</p>
+
+<p>A more nuanced implementation would take into account the SHIELD agents being leveraged in performing backups.  For each storage endpoint, determine what SHIELD agents could be called upon to connect to it, and execute the tests from those agents.  This more closely matches reality, and would catch environmental issues like intervening firewalls or IaaS security groups.  It does, however, require changes to the SHIELD agents as well as the core and the plugin suite.</p>
+
+<p>The final health indicator shows green if all scheduled jobs have run at least once, and the most recent run (ad hoc or scheduled) has succeeded.  This is similar to the current UI, which provides a list of jobs that are failing, in a <em>warning banner</em>.</p>
+
+<p>For each of these health indicators, clicking on it when it is in the "failing" state should take the operator to a page detailing exactly what is wrong, with links to other relevant parts of the system.  For example, for failing jobs, the link would go to a page listing off exactly which jobs are failing, with further links to each individual job, to allow reconfiguration and retries.</p>
+
+<h4>Data Protection Summary</h4>
+
+<p>The <strong>Data Protection Summary</strong> provides tactical information that may or may not have a "health" component, but is nonetheless useful to operators.</p>
+
+<ul>
+<li><strong>Scheduled Backup Jobs</strong> - How many backup jobs have been scheduled.  We believe that operators have a gut feeling for how large or small their SHIELD instances are, based on their environment (production vs. staging), their placement (us-east-1 vs. on-prem datacenter #2), etc.  Showing them this information lets them check reality against their expectation.</li>
+<li><strong>Backup Archives</strong> - How many backup archives currently exist, across all storage backends.  This is a surprisingly difficult question to answer with today's version of SHIELD.</li>
+<li><strong>Cloud Storage Used</strong> - How much space is being used by resident backup archives.  The primary cost in any SHIELD deployment is the storage pool.  Amazon's S3 offering is cheap, but definitely not free.  Operators ought to be able to see just how much space they are using, to aide them in understanding the ramifications of frequent scheduling and long retention policies.</li>
+<li><strong>Daily Storage Increase</strong> - How much Cloud Storage Usage is expected to increase, on a daily basis, given current frequencies, retention policies, configured backup jobs, and historical data about backup archive sizes.</li>
+</ul>
+
+<p>The first two metrics are easily obtained with the current data model.</p>
+
+<p>The storage usage metrics will require changes to the API and the database schema, to track archive size and return summarizations.</p>
+
+<p>The <em>Daily Storage Increase</em> metric is interesting, from a calculation point-of-view; we shall see how well it fares in the real world.  To determine this value, SHIELD will need to perform a linear fit on time-series data regarding backup archive sizes, taking into account archive purgation due to retention policy.  Once each backup job has an linear approximation, it should be trivial to combine these and come up with a projection for daily increase (or decrease).</p>
+
+<p>Showing a storage usage delta may give operators a rough idea of their scaling and capacity requirements.  This calculation also figures into some screen mocks shown later.</p>
+
+<p>An underlying assumption of this model is that backup archives change size linearly.  This may not bear out in practice and if it does not, this feature will have to be scrapped.</p>
+
+<h4>4. Content Area</h4>
+
+<p>The main content goes here.  What exactly that means is highly dependent on what you are doing in the SHIELD web UI.</p>
+
+<h2>Backup Jobs</h2>
+
+<p>The configured backup jobs are displayed in a card interface:</p>
+
+<p><img src="backup-cards.png" alt="Backup Jobs Card Interface" /></p>
+
+<p>Each card provides at least the following information:</p>
+
+<ul>
+<li>The name of the backup job, i.e. <em>BOSH Database Backup</em>.</li>
+<li>The job's schedule, in a human readable format.</li>
+<li>The job's retention policy, expressed in days.</li>
+<li>A more human-friendly description of what the schedule + retention policy means -- how many archives will <em>actually</em> be kept?</li>
+<li>A health indicator.</li>
+<li>A visual summary of the target ⇔ store configuration (with target on the left, store on the right, and a non-trivial line connecting the two)</li>
+</ul>
+
+<p>When the mouse hovers over the card, edit / delete icons will appears, as can be seen in the <em>BOSH Database Weekly</em> card.</p>
+
+<p>The <em>CF UAA Database</em> card shows what a failing job looks like; the health indicator is visibly bigger than (almost 1.75x) the size of the "ok" indicator.  The name of the job is also rendered in a scary red font.</p>
+
+<p>Clicking anywhere on the card will bring up the Job page (discussed later).</p>
+
+<p>So far, this screen has not introduced any new functionality, outside of perhaps a minor tweak to the API to calculate the number of kept archives.</p>
+
+<p>However, we may want to modify the <em>{target, schedule, retention policy, store}</em> tuple, and allow a job to be <em>{target, store}</em>, with one or more <em>{schedule, retention policy}</em> elements.  The bottom-left card, <em>BOSH Database Backup</em> shows this scheme in action.  Here, BOSH is being backed up weekly for 3 months, and daily for a week.  This scheme has a few advantages:</p>
+
+<ul>
+<li>It is trivial and uncomplicated to show all of the archives for a given target system, and let the operator choose the one they want, withcout forcing them to hop between mostly unrelated jobs.</li>
+<li>Operators do not have to practice the dark art of <em>name mangling</em> by appending " - Daily" or " - Weekly" to their job names to make them unique and unambiguous.</li>
+</ul>
+
+<p>The primary downside of this approach is, of course, migrating data.  Perhaps we should survey the community to see if anyone is availing themselves of the multi-schedule capabilities of SHIELD.</p>
+
+<p>The detail page for a backup job looks like this:</p>
+
+<p><img src="backup-detail.png" alt="Backup Job Detail Page" /></p>
+
+<p>The card from the listing page is repeated, in the top left.  To the right, any summary / notes provided by operators during job configuration should be displayed.  These are not expected to be terribly lengthy, so the side-by-side format should suffice.</p>
+
+<p>For the most part, people access job details to perform one of two actions: (a) verification of scheduling / configuration and (b) to find an archive and restore it.</p>
+
+<p>The next section assists with (b), by listing out all of the archives generated for this job.  This is where hanging <em>{schedule, retention policy}</em> as a one-to-many off of <em>{target, store}</em> comes in handy.  The table lists the schedule that each archive was taken under, when the backup was performed, what retention policy governs the archive, how big the archive is, and provides a link to view task details (perhaps in a lightbox).  The two icons on the far right enable manual download of archives, and the restoration of archives.</p>
+
+<p>Some operators have requested the ability to annotate backup archives.  This is shown in the third archive.  This has several uses, not the least of which is accounting for ad hoc job runs (especally failing ones) with more detail and context.</p>
+
+<p>The final section of this page, <em>Failed Task Runs</em>, will contains a list of non-ok tasks associated with this job, for operator review (and possible annotation).</p>
+
+<h2>Storage Endpoints</h2>
+
+<p>As we said before, the primary <em>cost</em> of SHIELD is its storage.  Having better tools to understand the impact SHIELD is having on storage, how it is using storage, etc. makes using and scaling SHIELD easier.</p>
+
+<p><img src="storage-detail.png" alt="Storage Endpoint Mock" /></p>
+
+<p>The name of the storage endpoint, as assigned by the operator, is shown on the left, in large font.  The plugin is shown to the right, in the same blue, rounded-corner rectangle as the Backup Jobs Cards use.</p>
+
+<p>The interesting bit, however, comes from the usage meter in the middle.</p>
+
+<p>If we modify SHIELD to track the size of each archive, it becomes trivial to calculate the total size of all archives in a given storage endpoint.  This value can be plotted.</p>
+
+<p>The <em>Threshold</em> value in the middle is something we imagine conscientious operators will want to set, both on pay-as-you-go solutions like Amazon S3, and on local disk / SAN offerings.  What SHIELD does with this threshold is currently up in the air.  It seems a bit harsh to suspend backup activities until the usage is back under the threshold (presumably, because of either manual or automatic purges).  At the very least, we should make the data available to any interested monitoring systems.</p>
+
+<p>The <em>Projected</em> value is also of interest.  Given the same calculations that underly the daily storage increase metric in the HUD, we can project out storage usage on this endpoint by only considering jobs that involve this store.  If we put a time frame on the projection (6 months, 1 years, etc.), we can provide some (hopefully) meaningful data to backup system operators, arming them to either reduce retention periods, reduce schedule frequency, or increase backend storage, before it becomes a problem.</p>
+
+<p>To accommodate this particular view, we will need to add some new fields to the <code>stores</code> table, for tracking threshold name / value, and a new configuration option to the SHIELD daemon for setting the projection time frame.</p>
+
+<p>The <em>Storage Details</em> section contains additional pertinent information.  Some of it may not be necessary.  Redundant information (like <em>Storage Used</em>) may be omited in the final UI.  Particularly, we would like to see the configuration details as understood by the plugin configuration.  In the screen mock, the S3 host, access key and prefix path are shown.  We probably need to modify the plugin framework to allow plugins to generate the metadata that goes here, in some presentation agnostic format (i.e. not HTML).</p>
+
+<h2>Agent Inspection</h2>
+
+<p>One thing missing from the current web UI is the ability to see what agents are registered with the system, what version of SHIELD they are running, and what capabilities they have.  The UI doesn't show this information because it cannot.  Both the SHIELD agent implementation and the SHIELD daemon core need to be modified to provide this level of reflection.  For several reasons, this change is on the roadmap.</p>
+
+<p><img src="agents.png" alt="Agents of SHIELD" /></p>
+
+<p>Each known agent is listed in the table, with its:</p>
+
+<ul>
+<li><strong>Name</strong> - The name of the agent, as set by the deployment.  In BOSH-land, this will probably take the form of <em>deployment/instange/index</em></li>
+<li><strong>Address</strong> - The IP address (shown) and port (not shown) that the SHIELD core uses to contact the SHIELD agent.</li>
+<li><strong>Version</strong> - What version of SHIELD is the agent running.  More on this in a bit.</li>
+<li><strong>Storage</strong> - Initially, this was meant to show the amount of storage used by jobs run on this agent.  That may not be a terribly relevant number.</li>
+<li><strong>Status</strong> - The health status of the agent.  Once we have a regular system of pinging the agent, we can perform remote health checks and get more detail about the ability of an agent to perform its duties.</li>
+<li><strong>Last Seen</strong> - When the SHIELD core last saw health / registration information from this agent.  This seeks to inform operators who will probably abuse the next column...</li>
+<li><strong>Ping</strong> - The satellite dish icon lets operators initiate an immediate ping to the agent to see if its state has changed.  This can come in quite handy, for example, after you have fixed a misconfigured firewall, or updated a security group.</li>
+</ul>
+
+<p>SHIELD is a highly distributed system, more so than even Cloud Foundry (although it has far fewer moving parts!)  It can be difficult to keep all components of the overarching system on the same version, since different environments may be subject to different change windows, waiting periods, etc.  Once we have version information that can be queried for all parts of the system, we can use it to warn operators of known inconsistencies.</p>
+
+<p>The screen mock shows just such an example, with a hypothetical incompatibility between SHIELD core 6.5.0+, and SHIELD agents prior to 6.3.0.  In this (fabricated) scenario, the cf-prod/uaadb/0 agent is failing to report in because of an upgrade.</p>
+
+<p>Tracking these inconsistencies will not be easy.  However, we believe it will be worth it, by enabling operators to recover in the face of incompatibility, without tying the hands of the developers with respect to backwards compatibility.</p>
+
+<h1>Future Direction</h1>
+
+<p>This document is by no means complete.  There are several other screens that need to be mocked out, and other UI elements to be designed, considered and implemented.</p>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?9" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/docs/latest/ops/getting-started">Getting Started</a></li>
+							<li><a href="/docs/latest">Documentation</a></li>
+							<li><a href="/community">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2019 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/libs.js?9"></script>
+	<script type="text/javascript" src="/js/common.js?9"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<h1>The SHIELD Web UI - Developer Notes</h1>
+
+<p>This document contains notes for the initiate SHIELD Web UI
+Developer, that curious creature who has decided to forego the
+trappings of <em>modern Javascript development</em> and live closer to
+the land.  Or something.</p>
+
+<h2>A Note on Namespacing</h2>
+
+<p>Not polluting the global namespace is all the rage these days.  We
+took it a step too far, and put all of the definitions that we
+need in a single namespace, <code>S.H.I.E.L.D</code>; yes -- that's a nested
+structure 4 or 5 levels deep.  You're welcome.</p>
+
+<h2>The Data Structures At Play</h2>
+
+<p>The core engine of the SHIELD Web UI is the <code>Database</code> object.  Or
+maybe we're calling it the <code>Engine</code> class, or just plain old <code>UI</code>.
+Who can even keep up with the furious change of pace here??</p>
+
+<p>Anyway, it's the only class we have, and it's pretty central to
+the UI.  It governs how the templates are drawn, how data gets
+pulled down via WebSocket and XMLHttpRequests, aggregates and
+composites data elements, and more.</p>
+
+<p>To keep things straight, this magical class maintains local state,
+via variables that are publicly accessible, and made available
+explicitly to template code.</p>
+
+<p>To keep all of this straight, we present the Utmostly Correct and
+One True Way of Accessing Data.</p>
+
+<ul>
+<li><p><code>.shield</code> - Metadata about the SHIELD Core, including things set
+by the operator, like the environment name, color, motd.  Also
+includes version and IP information.</p>
+
+<p>Note: this element is always set, and it rarely changes.</p></li>
+<li><p><code>.user</code> - A User object.  If the viewer is not authenticated,
+this will be <em>undefined</em> (but present), and the reset of the
+elements are probably missing.</p></li>
+<li><p><code>.tenant</code> - The UUID of the currently targeted tenant.  If the
+authenticated user has zero grants, this will be <em>undefined</em>.</p></li>
+<li><p><code>.tenants</code> - A map of UUID &rarr; Tenant object, for all tenants
+the authenticated user belongs to.   Each Tenant object
+contains:</p>
+
+<ul>
+<li><p><code>.tenants[uuid].targets</code> - The target data systems defined for
+this tenant.</p></li>
+<li><p><code>.tenants[uuid].stores</code> - The storage systems defined for this
+tenant.  This <em>DOES NOT</em> include global storage systems.</p></li>
+<li><p><code>.tenants[uuid].jobs</code> - Scheduled backup jobs for this tenant.</p></li>
+<li><p><code>.tenants[uuid].archives</code> - Backup archives for this tenant.</p></li>
+<li><p><code>.tenants[uuid].role</code> - The name of the role that this user
+has been granted, on this tenant (a string).</p></li>
+<li><p><code>.tenants[uuid].grants[right]</code> - A set of booleans, one for
+each tenant right, that translates roles like "admin" into
+answers to questions like "is this user an engineer on this
+tenant?"</p></li>
+</ul>
+
+<p>Currently recognized rights are: <code>admin</code>, <code>engineer</code>, and
+<code>operator</code>.</p></li>
+<li><p><code>.system.grants[right]</code> - A set of booleans, one for each system
+right, that translate roles like "engineer" into answers to
+questions like "is this user an admin?"</p>
+
+<p>Currently recognized rights are: <code>admin</code>, <code>manager</code>, and
+<code>engineer</code>.</p></li>
+<li><p><code>.global.stores</code> - A map of UUID &rarr; Store object, for all
+globally defined stores.  Admin accounts will have access to
+more (sensitive) attributes on each storage system.</p></li>
+<li><p><code>.global.tenants</code> - A map of UUID &rarr; Tenant object, for all
+tenants.  This is only available for admins.</p></li>
+</ul>
+
+<p>Some of this data is duplicated.  That is unfortunate, but the
+structure described above serves the purposes of the web UI,
+without burdening the frontend developer with too many performance
+optimization shenanigans.</p>
+
+<p>As data comes across the WebSocket, or via XMLHttpRequests, the
+attributes will be merged in an overriding fashion.  Additional
+fields not specified in an update are strictly to be left alone.
+This allows the web UI to store additional metadata, or cache
+calculated attributes, without fear of losing them later because
+of a refresh or update.</p>
+
