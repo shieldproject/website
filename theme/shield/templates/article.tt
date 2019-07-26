@@ -1,13 +1,25 @@
 [% dometa = 'yes' %]
-<article>
-	<header>
-		<time datetime="[% date.format(article.timestamp, "%Y-%m-%d") %]">[% article.attrs.dated %]</time>
-		<h2>[% article.attrs.title %][% if article.attrs.subtitle %]<p>[% article.attrs.subtitle %]</p>[% end %]</h2>
-	</header>
-	<ul class="social">
-		<li class="fb"></li>
-		<li class="tw"></li>
-		<li class="gg"></li>
-	</ul>
-	[% article.attrs.body %]
-</article>
+
+<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>[% article.attrs.title %]</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-push-1">
+        <div class="content">
+        	[% article.attrs.body %]
+		</div>
+      </div>
+    </div>
+  </div>
+</section>

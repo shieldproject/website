@@ -21,7 +21,8 @@
       </div>
       <div class="col-md-8 col-md-push-1">
         <div class="content">
-        [% page.attrs.body %]
+          [% page.attrs.body %]
+        </div>
       </div>
     </div>
   </div>
