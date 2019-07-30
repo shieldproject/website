@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<meta name="twitter:card"       content="summary">
+
+
+<meta property="og:type"        content="article">
+<meta property="og:title"       content="SHIELD Concepts">
+<meta property="og:site_name"   content="SHIELD">
+<meta property="og:url"         content="https://shieldproject.io/writings/SHIELD-concepts.html">
+
+
+<meta property="og:description" content="I'm sure it's enthralling and interesting">
+
+
+<title>SHIELD Concepts - SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css?9">
+<link rel="stylesheet" href="/css/main.css?9">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?9" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/community">Community</a></li>
+					<li><a href="/docs/latest/ops">Docs</a></li>
+					<li><a href="/docs/latest/dev">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/docs/latest/ops">Documentation</a></li>
+							<li><a href="/docs/latest/dev">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	
+
+<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>SHIELD Concepts</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-push-1">
+        <div class="content">
+        	<p>So previously in the SHIELD blog series we’ve taken a look at evaluating SHIELD with docker compose as well as deploying SHIELD to bosh via genesis or to kubernetes. Let’s talk today about the concepts and primitives that are essential for SHIELD administration and operation. Our goal for today is to take a dive in and get a more holistic view of the SHIELD and it’s parts.</p>
+
+<h2>Tennants</h2>
+
+<p>Creating a tenant is one of the first things we do after our first login to SHIELD. <strong>Tenants</strong> are used in SHIELD to allow multiple teams to work on the same installation without interfering with each others systems. In addition to organizing our data systems, tenants allow us to set up role based users and permissions that you can distribute to engineers and administrators within your team or organization. In addition to basic authentication SHIELD can also be configured to use UAA or Github auth. You can see what tenant you're in currrently in the top right corner of the screen next to your user as seen below.</p>
+
+<p><img src="concepts-blog-tenant.png" alt="tenants" title=""></p>
+
+<h2>Stores</h2>
+
+<p>One of the next primitives you will run into when configuring your SHIELD installation is cloud storage. A <strong>store</strong> is a configured object store where SHIELD will keep and retrieve your backups. Ideally this is an off site storage solution like S3 for safe keeping. Stores are configured in SHIELD using a variety of storage plugins. Storage plugins represent the currently supported backend stores that SHIELD can utilize.  Currently SHIELD has plugins to support S3 (and S3 compatible stores like Minio), Webdav, Azure, Google, and Backblaze. Internal to SHIELD stores can be configured two ways, as a shared store and as a private store. Shared stores are accessible to all tenants while any private store is scoped to the tenant it was configured in. </p>
+
+<p><img src="concepts-blog-stores.png" alt="tenants" title=""></p>
+
+<h2>Targets</h2>
+
+<p>Once you have a storage backend configured you are ready to start setting up your backups. A <strong>target</strong> represents the configuration for a data system ready to start getting backed up. Targets are created via the webui wizard or from a <code>SHIELD import</code> cli command. The types of systems that can be backed up with SHIELD is determined by the backup plugins currently available.</p>
+
+<p>Currently, SHIELD supports the following:</p>
+
+<ul>
+<li>Local Filesystem</li>
+<li>Mysql</li>
+<li>PostgreSQL </li>
+<li>MongoDB</li>
+<li>Cassandra</li>
+<li>Consul</li>
+<li>BBR</li>
+<li>Vault</li>
+<li>Cloud Foundry Service Brokers (postgresql, redis, rabbitmq)</li>
+</ul>
+
+<h2>Jobs</h2>
+
+<p>Once you've configured your data system as a target the wizard will prompt you for details on how you want to back up this system. <strong>Jobs</strong> are the “how and when” for SHIELD backups. Information like when the backup will run, how long the backup will stay in storage, and whether or not the at rest encryption for the target will use fixed or randomized keys. SHIELD targets can have multiple jobs associated in case you want a daily backup that only lasts a few days in addition to a weekly backup that lasts much longer.</p>
+
+<h2>Archives</h2>
+
+<p>Once a job has run to completion and succeeded you can find the resulting archive as well as any others listed on the target’s page. Important metadata can be found about an archive like it’s UUID, creation date, which store it’s located in, it’s valid/purged status, and it’s size. Size can be particularly useful as quick validation on an archive. If you’re backing up a directory that contains some large files and binaries with the filesystem plugin for example, a resulting archive that is 10kb is more than likely misconfigured.</p>
+
+<p><img src="concepts-blog-target.png" alt="tenants" title=""></p>
+
+<h2>Conclusion</h2>
+
+<p>Hopefully after today you have a better understanding of the pieces and components that are used in day to day shield operation and administration. If you ever have any further questions or just want to say hi feel free to reach out on slack!</p>
+		</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?9" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/docs/latest/ops/getting-started">Getting Started</a></li>
+							<li><a href="/docs/latest">Documentation</a></li>
+							<li><a href="/community">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2019 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/libs.js?9"></script>
+	<script type="text/javascript" src="/js/common.js?9"></script>
+</body>
+</html>
