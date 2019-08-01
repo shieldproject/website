@@ -3,9 +3,12 @@
 title:  SHIELD Concepts
 permalink:  SHIELD-concepts
 format: markdown
---- |-
+intro: |
+  Let’s talk today about the concepts and primitives that are essential for
+  SHIELD administration and operation. Our goal for today is to take a dive in
+  and get a more holistic view of the SHIELD and it’s parts.
 
-  
+--- |-
 So previously in the SHIELD blog series we’ve taken a look at evaluating SHIELD with docker compose as well as deploying SHIELD to bosh via genesis or to kubernetes. Let’s talk today about the concepts and primitives that are essential for SHIELD administration and operation. Our goal for today is to take a dive in and get a more holistic view of the SHIELD and it’s parts.
 
 Tennants

@@ -1,0 +1,27 @@
+<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>SHIELD Blog</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <div id="container" class="container">
+    [% for article in articles %]
+    <div class="row">
+      <div class="col-md-10 col-md-push-1">
+        <div class="content">
+          <h2>[% article.attrs.title %]</h2>
+          [% article.attrs.intro %]
+          <p><a href="/blog/[% article.attrs.permalink %]">Read More &raquo;</a></p>
+        </div>
+      </div>
+    </div>
+    [% end %]
+  </div>
+</section>

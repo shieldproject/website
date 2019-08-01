@@ -29,6 +29,11 @@ my @blog = reverse
 	grep { !$_->attrs->{draft} } blog->read_all;
 $_->{timestamp} = $_->{__dated} for @blog;
 
+render { articles => \@blog },
+	using  => 'blog.tt',
+	layout => 'site.tt',
+	at     => '{site}/blog/index.html';
+
 for my $blog (@blog){
 	render $blog, 
 		using  => $blog->attrs->{template} || "article.tt",
