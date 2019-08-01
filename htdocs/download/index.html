@@ -62,10 +62,12 @@
     <div class="row">
       <div class="col-md-3 toc">
         <ul>
-          <li><a href="#latest">Latest Release (8.2.1)</a></li>
+          <li><a href="#latest">Latest Release (8.3.0)</a></li>
           <li><a href="#source">Build From Source</a></li>
           <li><a href="#older">Older Releases</a>
             <ul>
+              
+              <li><a href="#v8.2.1">8.2.1</a></li>
               
               <li><a href="#v8.2.0">8.2.0</a></li>
               
@@ -109,17 +111,73 @@
       </div>
       <div class="col-md-8 col-md-push-1">
         <div class="content">
-          <span id="v8.2.1"></span>
-          <h1 id="latest">SHIELD v8.2.1</h1>
+          <span id="v8.3.0"></span>
+          <h1 id="latest">SHIELD v8.3.0</h1>
           
             <h3>Improvements</h3>
 
 <ul>
-<li><p>The <code>swift</code> plugin now supports the Openstack v3 Identity API</p></li>
-<li><p>The <code>vault</code> plugin now supports k/v v2 endpoints, which are
-now the default in contemporary versions of Vault.</p></li>
+<li><p>Submit buttons on forms now (a) disable themselves when clicked
+and (b) change their text to indicate an ongoing operation.
+This greatly increases the usability of the web UI.  See #505</p></li>
+<li><p>The web UI for rekeying SHIELD Core now correctly identifies
+when the operator would like to rotate the fixed key.  Also, the
+error messaging for an incorrect <em>current</em> master password is
+better now, and by default, the "rotate fixed key" checkbox on
+the rekeying form is off.  See #546</p></li>
+<li><p>The default password for the failsafe account has been changed
+from <code>shield</code> to <code>password</code>, for more continuity across various
+packaging formats.  See #531</p></li>
+<li><p>The <code>shield tasks</code> command (and the backing API) can now filter
+tasks based on their task type (i.e. "backup", or "restore")
+See #523</p></li>
+<li><p>The <code>Encryption</code> column of the system detail page's backup jobs
+table now <em>always</em> shows something.  For jobs that do not used
+the fixed key, the new tag is <code>randomized</code>.  See #536</p></li>
+<li><p>SHIELD now tracks when it last checked each agent separately
+from when it last "saw" the agent.  <em>Last Seen</em> now means the
+point in time when the agent last connected to the SHIELD core,
+and <em>Last Checked</em> is when the core last connected to the agent
+for metadata retrieval.</p></li>
+<li><p>SHIELD now allows agents to change their IP address; only the
+agent name is unchangeable.  Previously, attempts to change an
+agents registered IP address (without changing its name) would
+fail.</p></li>
+<li><p>Both the SHIELD Agent and the SHIELD CLI now trust the system
+X.509 CA Certificate Stores.  See #555 and #556</p></li>
 </ul>
-            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.2.1" target="_blank">Download v8.2.1 from Github</a>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li><p>The MotD separator no longer displays if the MotD is empty
+or not specified.  See #530</p></li>
+<li><p>The Ad Hoc Backup and Restore wizards now handle the "empty"
+state more gracefully, and instead of showing an empty table
+when there are no data systems, they warn you that you have
+no systems to backup or restore.  See #532 and #533</p></li>
+<li><p>Stores (global and tenant-specific) can now be properly deleted
+via the web UI and CLI.</p></li>
+<li><p>When editing targets and stores on the webui changes are now
+persisted when editing again without a refresh.</p></li>
+<li><p>The "Agents of SHIELD" admin page no longer gets stuck in a
+loading loop whenever websocket events are seen.</p></li>
+<li><p>Global Storage Configuration details are now properly loaded
+when accessing a global store detail page from the admin panel.
+Previously, the details would only load if you visited the
+global store from the "Storage Systems" (non-admin) top-level,
+which only works if you actually have a tenant.  See #535</p></li>
+<li><p><code>shield annotate-archive</code> now works with short uuids</p></li>
+<li><p>Orphaned archives from a target deletion no longer prevent users
+from loggin into SHIELD</p></li>
+<li><p>The <code>mongo</code> plugin now handles hosts with embedded ports,
+allowing operators to configure multi-node mongo across
+different ports on the same node, without <code>--port</code> getting in
+the way.</p></li>
+<li><p>The <code>mongo</code> plugin now allows you to authenticate against a
+database <em>other</em> than "admin" (which remains the default).</p></li>
+</ul>
+            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.3.0" target="_blank">Download v8.3.0 from Github</a>
           
 
           <h1>Build From Source</h1>
@@ -127,6 +185,16 @@ now the default in contemporary versions of Vault.</p></li>
           <p>... we're still working on this one ... <!-- FIXME --></p>
 
           <h1 id="older">Older SHIELD Releases</h1>
+          
+          <h2 id="v8.2.1">SHIELD v8.2.1</h2>
+          <h3>Improvements</h3>
+
+<ul>
+<li><p>The <code>swift</code> plugin now supports the Openstack v3 Identity API</p></li>
+<li><p>The <code>vault</code> plugin now supports k/v v2 endpoints, which are
+now the default in contemporary versions of Vault.</p></li>
+</ul>
+          <a href="https://github.com/starkandwayne/shield/releases/tag/v8.2.1" target="_blank">Download v8.2.1 from Github</a>
           
           <h2 id="v8.2.0">SHIELD v8.2.0</h2>
           <h3>Bug Fixes</h3>
