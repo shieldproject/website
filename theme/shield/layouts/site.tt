@@ -35,6 +35,7 @@
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/css/libs.css?[% site.buster %]">
 <link rel="stylesheet" href="/css/main.css?[% site.buster %]">
+<link rel="stylesheet" href="/css/extra.css?[% site.buster %]">
 <link rel="alternate home" type="application/rss+xml" title="[% site.title %] - RSS feed" href="/feed.xml">
 </head>
 <body class="dark-load">
