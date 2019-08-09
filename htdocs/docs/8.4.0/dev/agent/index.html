@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/libs.css?10">
+<link rel="stylesheet" href="/css/main.css?10">
+<link rel="stylesheet" href="/css/extra.css?10">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body class="dark-load">
+	<header id="top-nav" class="top-nav page-header">
+		<div class="container">
+			<a class="logo smooth-scroll" href="/">
+				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?10" />
+			</a>
+			<nav class="top-menu">
+				<ul class="sf-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/download">Download</a></li>
+					<li><a href="/community">Community</a></li>
+					<li><a href="/docs/latest/ops">Docs</a></li>
+					<li><a href="/docs/latest/dev">Developers</a></li>
+				</ul>
+			</nav>
+			<div id="mobile-menu">
+				<div class="inner-wrap">
+					<nav>
+						<ul class="nav_menu">
+							<li><a href="/">Home</a></li>
+							<li><a href="/download">Download</a></li>
+							<li><a href="/docs/latest/ops">Documentation</a></li>
+							<li><a href="/docs/latest/dev">Developers</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section id="top" class="display-page img-parallax bg-mask background-image"
+         data-image="/img/hbg.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 auto-title">
+        <!-- this space intentionally left blank - for art -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="page">
+  <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+  <div id="container" class="container">
+    <div class="row">
+      <div class="col-md-3 toc">
+      </div>
+      <div class="col-md-8 col-md-push-1">
+        <div class="content">
+          <h1>SHIELD Agent Protocol</h1>
+
+<p>The Agents of SHIELD are the workhorse of the data protection
+solution.  They perform backup and restore tasks.</p>
+
+<p>All communication with the Agents is initiated by the Core.
+Agents <strong>never</strong> initiate a connection to the Core themselves.</p>
+
+<p>All communication is handled over an SSH connection.  This
+provides endpoint identity validation (keys must match) and
+confidentiality (so that credentials to target / storage systems
+are not compromised).  The SSH protocol is documented fully in
+<a href="https://tools.ietf.org/rfc/rfc4251.txt">RFC 4251 (Architecture)</a>, <a href="https://tools.ietf.org/rfc/rfc4252.txt">RFC 4252 (AUTH
+Protocol)</a>, <a href="https://tools.ietf.org/rfc/rfc4253.txt">RFC 4253 (Transport Layer)</a>, and
+<a href="https://tools.ietf.org/rfc/rfc4254.txt">RFC 4254 (Connection Protocol)</a>.</p>
+
+<p>Communication between the Core and the Agent is intermittent; the
+Core does <strong>not</strong> maintain a persistent SSH connection to any
+Agent.  Instead, as tasks are run on by the Core Scheduler,
+connections are made to the involved Agents as needed.</p>
+
+<p>SHIELD uses the <a href="https://tools.ietf.org/rfc/rfc4254.txt">Connection Protocol (RFC 4254)</a> to issue
+commands from the SHIELD Core to its participating Agents.  Each
+connection from the Core to an Agent initiates a new SSH Session.
+Once that Session is fully set up, an <code>SSH_MSG_CHANNEL_REQUEST</code> is
+sent, and a new Channel, of type "exec" is established.  The
+<em>command</em> string sent with this channel is a JSON-encoded
+Agent-Request.</p>
+
+<p>(For more information on SSH channels, refer to RFC 4254).</p>
+
+<p>The format of an Agent-Request is as follows:</p>
+
+<pre><code>{
+  "operation"       : "OP-STRING",
+
+  "target_plugin"   : "PLUGIN-NAME",
+  "target_endpoint" : "JSON-encoded STRING",
+
+  "store_plugin"    : "PLUGIN-NAME",
+  "store_endpoint"  : "JSON-encoded STRING",
+
+  "restore_key"     : "OPAQUE-IDENTIFIER",
+}
+</code></pre>
+
+<p>As of SHIELD v0.10.8, the only recognized operations are:</p>
+
+<ul>
+<li>backup</li>
+<li>restore</li>
+<li>purge</li>
+</ul>
+
+<h2>Future Direction</h2>
+
+<p>For the 7.x version of SHIELD, the <a href="https://github.com/starkandwayne/shield/blob/master/ROADMAP.md">ROADMAP</a> lays out several
+ambitious usability goals that require changes to the Agent
+Protocol.  In order to give operators and site administrators the
+smoothest possible roll-out, we need to be highly aware of
+backwards-compatibility at every turn.</p>
+
+<p>The following new functionality needs to be added:</p>
+
+<ul>
+<li><p><strong>Metadata</strong> - Agents must respond to metadata queries from the
+SHIELD core and provide information about themselves, including
+identifiers (name / address), version details, available plugins
+(and <em>their</em> versions), metadata for how to configure each
+plugin, etc.</p></li>
+<li><p><strong>Storage Tests</strong> - Agents must respond to "test" requests by
+running plugin-specific health checks against the given endpoint
+configurations.  This helps operators answer questions like "can
+I retrieve archives from S3?"</p></li>
+<li><p><strong>Plugin Validation</strong> - Agents must respond to "validate"
+requests by running plugin validation for the given plugin,
+against the given configuration.</p></li>
+</ul>
+
+<p>To this end, Agents will need to be able to handle the following
+new request types:</p>
+
+<h3>"status"</h3>
+
+<p>The SHIELD Core requests Agent status by issuing the following
+Agent-Request:</p>
+
+<pre><code>{
+  "operation" : "status"
+}
+</code></pre>
+
+<p>Older SHIELD agents will respond to this with an error.  SHIELD
+Core will have to mark the agent as v0.0.0 (or whatever the most
+recent version before agents learned how to respond properly), and
+treat the health as "degraded"</p>
+
+<p>Newer SHIELD agents will respond with the following JSON:</p>
+
+<pre><code>{
+  "name"    : "&lt;name-set-by-admin&gt;",
+  "version" : "&lt;X.Y.Z&gt;",
+  "health"  : "ok",
+  "plugins" : {
+    "s3" : {
+      "name"    : "S3 Backup + Storage Plugin",
+      "author"  : "Stark \u0026 Wayne",
+      "version" : "0.0.1",
+      "features": {
+          "target" : "no",
+          "store"  : "yes"
+      },
+      "config" : {
+        "store" : [
+          { FIELD-DEFINITION },
+          ...
+        ]
+      }
+    },
+    ...
+  }
+}
+</code></pre>
+
+<p>The <code>name</code> and <code>version</code> field are just strings.  The Web UI will
+interpret <code>version</code> and search for appropriate misconfigurations
+and other pitfalls between Core version and Agent version.</p>
+
+<p>The <code>health</code> field indicates an Agent-defined assertion of the
+overall health of the Agent.  The specifics of what goes into
+making this decision are left to the Agent implementation.  The
+possible values are:</p>
+
+<ul>
+<li>"ok" - Everything is good; no problems detected.</li>
+<li>"degraded" - Non-fatal issues were detected.  For example,
+some plugin scripts may not be executable.</li>
+<li>"failing" - Fatal issues were detected.  No plugins, invalid
+plugins detected, other environmental issues, etc.</li>
+</ul>
+
+<p>(Note that a SHIELD core may upgrade the critical-ness of a health
+alert.  For example, a non-responsive agent may be marked as
+"failing")</p>
+
+<p>The <code>plugins</code> field contains a map of plugin metadata, keyed by
+executable name.  This allows the Core to build up a list of
+capabilities for each agent, and validate configuration before it
+is attempted on-Agent.</p>
+
+<p>The values of the <code>plugins</code> map are the JSON output by executing
+the <code>info</code> command.  Legacy plugin binaries will not include the
+<code>config</code> top-level key; that is a new addition.</p>
+
+<h3>"test"</h3>
+
+<p>The SHIELD Core requests a plugin configuration test by issuing
+the following Agent-Request:</p>
+
+<pre><code>{
+  "operation" : "test"
+  "plugin"    : "&lt;PLUGIN-NAME&gt;"
+  "endpoint"  : {
+     ...
+  }
+}
+</code></pre>
+
+<p>Older SHIELD agents will respond to this with an error.  SHIELD
+Core must interpret this as a non-blocking failure of plugin
+testing.  For purposes of gauging Cloud Storage Health, the
+storage plugin should be considered failed.  Other circumstances
+may call for more or less caution.</p>
+
+<p>Newer SHIELD agents will respond with the following JSON:</p>
+
+<pre><code>{
+  "status"  : "ok",
+  "message" : "Targeting S3 at s3.example.com"
+}
+</code></pre>
+
+<p>or, in the event of failure:</p>
+
+<pre><code>{
+  "status"  : "failed",
+  "message" : "Unable to contact s3.example.com - connection refused"
+}
+</code></pre>
+
+<p>The only two valid values for <code>status</code> are <code>"ok"</code> and <code>"failed"</code>.</p>
+
+<p>The <code>message</code> can be displayed to the end user if the UI deems it
+useful and appropriate.  Plugin authors are discouraged from
+embedding sensitive information in the status message.</p>
+
+<h3>"validate"</h3>
+
+<p>The SHIELD Core requests validation of a given plugin + endpoint
+by issuing the following Agent-Request:</p>
+
+<pre><code>{
+  "operation" : "validate"
+  "plugin"    : "&lt;PLUGIN-NAME&gt;"
+  "endpoint"  : {
+     ...
+  }
+</code></pre>
+
+<p>A <em>validation</em> is run by the plugin against the endpoint
+configuration (passed here as a first-class map, instead of a
+doubly JSON-encoded representation).</p>
+
+<p>Older SHIELD agents will respond to this with an error.  SHIELD
+Core must interpret that as a nonblocking failure.  The
+configuration <em>may</em> be valid, but the Agent is unable to perform
+the validation, so it is unknown.</p>
+
+<p>Newer SHIELD agents will respond with the output of the plugin
+<code>validate</code> execution run, and a channel exit code of 0 for success
+and non-zero for failure.  (This is how existing tasks are
+reported)</p>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<a class="logo" href="https://starkandwayne.com/">
+						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?10" />
+						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
+					</a>
+				</div>
+
+				<div class="col-md-4">
+					<div class="links">
+						<h5>SHIELD</h5>
+						<ul class="list">
+							<li><a href="/download">Download SHIELD</a></li>
+							<li><a href="/docs/latest/ops/getting-started">Getting Started</a></li>
+							<li><a href="/docs/latest">Documentation</a></li>
+							<li><a href="/community">Community Support</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="down-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p>&copy; 2019 Stark &amp; Wayne.  All Rights Reserved.</p>
+						<ul class="footer-menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="/js/libs.js?10"></script>
+	<script type="text/javascript" src="/js/common.js?10"></script>
+</body>
+</html>

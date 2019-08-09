@@ -62,10 +62,12 @@
     <div class="row">
       <div class="col-md-3 toc">
         <ul>
-          <li><a href="#latest">Latest Release (8.3.0)</a></li>
+          <li><a href="#latest">Latest Release (8.4.0)</a></li>
           <li><a href="#source">Build From Source</a></li>
           <li><a href="#older">Older Releases</a>
             <ul>
+              
+              <li><a href="#v8.3.0">8.3.0</a></li>
               
               <li><a href="#v8.2.1">8.2.1</a></li>
               
@@ -111,10 +113,33 @@
       </div>
       <div class="col-md-8 col-md-push-1">
         <div class="content">
-          <span id="v8.3.0"></span>
-          <h1 id="latest">SHIELD v8.3.0</h1>
+          <span id="v8.4.0"></span>
+          <h1 id="latest">SHIELD v8.4.0</h1>
           
-            <h3>Improvements</h3>
+            <h3>New Features</h3>
+
+<ul>
+<li>SHIELD now features a new <code>etcd</code> plugin for backing up and restoring your etcd key-value stores.  It supports single- and multi-node clusters and can authenticate via roles and X.509 certificates.  If you want, you can restrict the backup to a subset of the etcd tree (via a prefix setting).  It also supports <em>additive restore</em> for situations that need it. You can also do a clean restore of the etcd cluster.</li>
+</ul>
+
+<h3>Improvements</h3>
+
+<ul>
+<li>The <code>cancel</code>, <code>task</code>, <code>restore-archive</code> and <code>purge-archive</code>
+commands in the SHIELD CLI now properly support short UUIDs,
+like all other commands.</li>
+</ul>
+            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.4.0" target="_blank">Download v8.4.0 from Github</a>
+          
+
+          <h1>Build From Source</h1>
+
+          <p>... we're still working on this one ... <!-- FIXME --></p>
+
+          <h1 id="older">Older SHIELD Releases</h1>
+          
+          <h2 id="v8.3.0">SHIELD v8.3.0</h2>
+          <h3>Improvements</h3>
 
 <ul>
 <li><p>Submit buttons on forms now (a) disable themselves when clicked
@@ -177,14 +202,7 @@ the way.</p></li>
 <li><p>The <code>mongo</code> plugin now allows you to authenticate against a
 database <em>other</em> than "admin" (which remains the default).</p></li>
 </ul>
-            <a href="https://github.com/starkandwayne/shield/releases/tag/v8.3.0" target="_blank">Download v8.3.0 from Github</a>
-          
-
-          <h1>Build From Source</h1>
-
-          <p>... we're still working on this one ... <!-- FIXME --></p>
-
-          <h1 id="older">Older SHIELD Releases</h1>
+          <a href="https://github.com/starkandwayne/shield/releases/tag/v8.3.0" target="_blank">Download v8.3.0 from Github</a>
           
           <h2 id="v8.2.1">SHIELD v8.2.1</h2>
           <h3>Improvements</h3>
