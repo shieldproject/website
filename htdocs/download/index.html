@@ -75,81 +75,65 @@ like all other commands.</li>
       <h2>Improvements</h2>
 
 <ul>
-<li>Submit buttons on forms now (a) disable themselves when clicked
+<li><p>Submit buttons on forms now (a) disable themselves when clicked
 and (b) change their text to indicate an ongoing operation.
-This greatly increases the usability of the web UI.  See #505
-</li>
-<li>The web UI for rekeying SHIELD Core now correctly identifies
+This greatly increases the usability of the web UI.  See #505</p></li>
+<li><p>The web UI for rekeying SHIELD Core now correctly identifies
 when the operator would like to rotate the fixed key.  Also, the
 error messaging for an incorrect <em>current</em> master password is
 better now, and by default, the "rotate fixed key" checkbox on
-the rekeying form is off.  See #546
-</li>
-<li>The default password for the failsafe account has been changed
+the rekeying form is off.  See #546</p></li>
+<li><p>The default password for the failsafe account has been changed
 from <code>shield</code> to <code>password</code>, for more continuity across various
-packaging formats.  See #531
-</li>
-<li>The <code>shield tasks</code> command (and the backing API) can now filter
+packaging formats.  See #531</p></li>
+<li><p>The <code>shield tasks</code> command (and the backing API) can now filter
 tasks based on their task type (i.e. "backup", or "restore")
-See #523
-</li>
-<li>The <code>Encryption</code> column of the system detail page's backup jobs
+See #523</p></li>
+<li><p>The <code>Encryption</code> column of the system detail page's backup jobs
 table now <em>always</em> shows something.  For jobs that do not used
-the fixed key, the new tag is <code>randomized</code>.  See #536
-</li>
-<li>SHIELD now tracks when it last checked each agent separately
+the fixed key, the new tag is <code>randomized</code>.  See #536</p></li>
+<li><p>SHIELD now tracks when it last checked each agent separately
 from when it last "saw" the agent.  <em>Last Seen</em> now means the
 point in time when the agent last connected to the SHIELD core,
 and <em>Last Checked</em> is when the core last connected to the agent
-for metadata retrieval.
-</li>
-<li>SHIELD now allows agents to change their IP address; only the
+for metadata retrieval.</p></li>
+<li><p>SHIELD now allows agents to change their IP address; only the
 agent name is unchangeable.  Previously, attempts to change an
 agents registered IP address (without changing its name) would
-fail.
-</li>
-<li>Both the SHIELD Agent and the SHIELD CLI now trust the system
-X.509 CA Certificate Stores.  See #555 and #556</li>
+fail.</p></li>
+<li><p>Both the SHIELD Agent and the SHIELD CLI now trust the system
+X.509 CA Certificate Stores.  See #555 and #556</p></li>
 </ul>
 
 <h2>Bug Fixes</h2>
 
 <ul>
-<li>The MotD separator no longer displays if the MotD is empty
-or not specified.  See #530
-</li>
-<li>The Ad Hoc Backup and Restore wizards now handle the "empty"
+<li><p>The MotD separator no longer displays if the MotD is empty
+or not specified.  See #530</p></li>
+<li><p>The Ad Hoc Backup and Restore wizards now handle the "empty"
 state more gracefully, and instead of showing an empty table
 when there are no data systems, they warn you that you have
-no systems to backup or restore.  See #532 and #533
-</li>
-<li>Stores (global and tenant-specific) can now be properly deleted
-via the web UI and CLI.
-</li>
-<li>When editing targets and stores on the webui changes are now
-persisted when editing again without a refresh.
-</li>
-<li>The "Agents of SHIELD" admin page no longer gets stuck in a
-loading loop whenever websocket events are seen.
-</li>
-<li>Global Storage Configuration details are now properly loaded
+no systems to backup or restore.  See #532 and #533</p></li>
+<li><p>Stores (global and tenant-specific) can now be properly deleted
+via the web UI and CLI.</p></li>
+<li><p>When editing targets and stores on the webui changes are now
+persisted when editing again without a refresh.</p></li>
+<li><p>The "Agents of SHIELD" admin page no longer gets stuck in a
+loading loop whenever websocket events are seen.</p></li>
+<li><p>Global Storage Configuration details are now properly loaded
 when accessing a global store detail page from the admin panel.
 Previously, the details would only load if you visited the
 global store from the "Storage Systems" (non-admin) top-level,
-which only works if you actually have a tenant.  See #535
-</li>
-<li><code>shield annotate-archive</code> now works with short uuids
-</li>
-<li>Orphaned archives from a target deletion no longer prevent users
-from loggin into SHIELD
-</li>
-<li>The <code>mongo</code> plugin now handles hosts with embedded ports,
+which only works if you actually have a tenant.  See #535</p></li>
+<li><p><code>shield annotate-archive</code> now works with short uuids</p></li>
+<li><p>Orphaned archives from a target deletion no longer prevent users
+from loggin into SHIELD</p></li>
+<li><p>The <code>mongo</code> plugin now handles hosts with embedded ports,
 allowing operators to configure multi-node mongo across
 different ports on the same node, without <code>--port</code> getting in
-the way.
-</li>
-<li>The <code>mongo</code> plugin now allows you to authenticate against a
-database <em>other</em> than "admin" (which remains the default).</li>
+the way.</p></li>
+<li><p>The <code>mongo</code> plugin now allows you to authenticate against a
+database <em>other</em> than "admin" (which remains the default).</p></li>
 </ul>
       <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.3.0" target="_blank">Download v8.3.0 from Github</a>
       
@@ -157,10 +141,9 @@ database <em>other</em> than "admin" (which remains the default).</li>
       <h2>Improvements</h2>
 
 <ul>
-<li>The <code>swift</code> plugin now supports the Openstack v3 Identity API
-</li>
-<li>The <code>vault</code> plugin now supports k/v v2 endpoints, which are
-now the default in contemporary versions of Vault.</li>
+<li><p>The <code>swift</code> plugin now supports the Openstack v3 Identity API</p></li>
+<li><p>The <code>vault</code> plugin now supports k/v v2 endpoints, which are
+now the default in contemporary versions of Vault.</p></li>
 </ul>
       <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.2.1" target="_blank">Download v8.2.1 from Github</a>
       
@@ -168,45 +151,39 @@ now the default in contemporary versions of Vault.</li>
       <h2>New Features</h2>
 
 <ul>
-<li>The SHIELD Web UI now allows you to download the SHIELD CLI
+<li><p>The SHIELD Web UI now allows you to download the SHIELD CLI
 directly, for both MacOS (Darwin) and Linux.  From now on,
-SHIELD releases will include the paired version of the CLI.
-</li>
-<li>We now support minutely backups, but only from the CLI.
-</li>
-<li>New <code>shield op pry</code> for decrypting and inspecting the contents
-of a SHIELD Vault Crypt.</li>
+SHIELD releases will include the paired version of the CLI.</p></li>
+<li><p>We now support minutely backups, but only from the CLI.</p></li>
+<li><p>New <code>shield op pry</code> for decrypting and inspecting the contents
+of a SHIELD Vault Crypt.</p></li>
 </ul>
 
 <h2>Improvements</h2>
 
 <ul>
-<li>SHIELD now cleans up the Vault when archives are marked as
-expired (for purgation).
-</li>
-<li>Scheduled jobs no longer "stack" in the queue.  If SHIELD goes
+<li><p>SHIELD now cleans up the Vault when archives are marked as
+expired (for purgation).</p></li>
+<li><p>Scheduled jobs no longer "stack" in the queue.  If SHIELD goes
 to schedule a backup and an existing task is in-flight for the
 same job, an already-cancelled task is stored in the database,
-as a placeholder to the task that should have run.
-</li>
-<li>Storage Health Check Tasks no longer stack.  SHIELD only allows
-one in-flight task for a given Cloud Storage System, at a time.
-</li>
-<li>The <code>shield</code> CLI now handles API endpoints with any number of
-trailing forward slash (<code>/</code>) characters.</li>
+as a placeholder to the task that should have run.</p></li>
+<li><p>Storage Health Check Tasks no longer stack.  SHIELD only allows
+one in-flight task for a given Cloud Storage System, at a time.</p></li>
+<li><p>The <code>shield</code> CLI now handles API endpoints with any number of
+trailing forward slash (<code>/</code>) characters.</p></li>
 </ul>
 
 <h2>Bug Fixes</h2>
 
 <ul>
-<li>Web UI page dispatch logic now properly cancels all outstanding
+<li><p>Web UI page dispatch logic now properly cancels all outstanding
 AJAX requests, to avoid a rather annoying lag/delay UX issue
 where pages would flip "back" to a previous node in the history,
 because a delayed AJAX request was still working away in the
-background.
-</li>
-<li><code>shield import</code> now honors the <code>paused</code> setting on jobs that it
-creates on your behalf.</li>
+background.</p></li>
+<li><p><code>shield import</code> now honors the <code>paused</code> setting on jobs that it
+creates on your behalf.</p></li>
 </ul>
       <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.1.0" target="_blank">Download v8.1.0 from Github</a>
       
