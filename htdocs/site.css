@@ -89,7 +89,7 @@ div.hero {
   height: 90vh;
   box-sizing: border-box;
   position: relative;
-  background: linear-gradient(#00000000, #000000cc), url(hero.jpg);
+  background: linear-gradient(#00000000, #000000cc), url(hero.jpg), linear-gradient(#0d174e, #0d174e);
   background-size: cover; }
 
 div.hero > div {
@@ -484,7 +484,8 @@ a.button {
   cursor: pointer;
   text-decoration: none;
   padding: 0.5em 1em;
-  box-shadow: 2px 3px 8px #777; }
+  box-shadow: 2px 3px 8px #777;
+  margin: 0 10px 11px 0; }
 
 .content.downloads a.button {
   float: right;

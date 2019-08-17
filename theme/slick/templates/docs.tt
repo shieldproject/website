@@ -1,7 +1,6 @@
   <div class="header">
     <div>
-      <h1>[% page.attrs.title %]</h1>
-      [% if page.attrs.subtitle %]<h2>[% page.attrs.subtitle %]</h2>[% end %]
+      <h1>SHIELD Documentation</h1>
     </div>
   </div>
 

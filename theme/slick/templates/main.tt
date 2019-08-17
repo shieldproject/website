@@ -2,7 +2,7 @@
     <div>
       <h1>SHIELD</h1>
       <h2>Protect Your Cloud.</h2>
-      <button>Get Started</button>
+      <a class="button" href="/docs/latest/ops/getting-started/">Get Started</a>
     </div>
   </div>
 
@@ -27,5 +27,6 @@
   <div class="cta">
     <h2>Get <span>Started</span></h2>
     <p>SHIELD provides a centralized solution and interface designed to make it easier for operations to protect their critical infrastructure. SHIELD excels at managing core Cloud Foundry backups, BOSH deployed services, and more. The SHIELD daemon is lightweight and low-impact, and it enables you to quickly have a fully-functional disaster recovery plan.</p>
-    <button>Start Protecting</button>
+
+    <a class="button" href="/docs/latest/ops/getting-started/">Start Protecting</a>
   </div>
