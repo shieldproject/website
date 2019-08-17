@@ -11,62 +11,34 @@
 
 
 <link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="/css/libs.css?10">
-<link rel="stylesheet" href="/css/main.css?10">
-<link rel="stylesheet" href="/css/extra.css?10">
+<link rel="stylesheet" href="/site.css?46df68a349c2b92734617f2b6444d33649a68e4d">
 <link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
 </head>
-<body class="dark-load">
-	<header id="top-nav" class="top-nav page-header">
-		<div class="container">
-			<a class="logo smooth-scroll" href="/">
-				<img class="logo-white" alt="Stark & Wayne" src="/img/logo.png?10" />
-			</a>
-			<nav class="top-menu">
-				<ul class="sf-menu">
-					<li><a href="/">Home</a></li>
-					<li><a href="/download">Download</a></li>
-					<li><a href="/community">Community</a></li>
-					<li><a href="/docs/latest/ops">Docs</a></li>
-					<li><a href="/docs/latest/dev">Developers</a></li>
-				</ul>
-			</nav>
-			<div id="mobile-menu">
-				<div class="inner-wrap">
-					<nav>
-						<ul class="nav_menu">
-							<li><a href="/">Home</a></li>
-							<li><a href="/download">Download</a></li>
-							<li><a href="/docs/latest/ops">Documentation</a></li>
-							<li><a href="/docs/latest/dev">Developers</a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</header>
+<body>
+  <header class="top">
+    <img src="/logo.png?ff0ba38e9fa8f9381eef73598fef456192dbadc1">
+    <nav>
+      <li><a href="/">Home</a></li>
+      <li><a href="/download/">Download</a></li>
+      <li><a href="/community/">Community</a></li>
+      <li><a href="/docs/latest/ops/">Docs</a></li>
+      <li><a href="/docs/latest/dev/">Developers</a></li>
+    </nav>
+  </header>
 
-	<section id="top" class="display-page img-parallax bg-mask background-image"
-         data-image="/img/hbg.jpg">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 auto-title">
-        <!-- this space intentionally left blank - for art -->
-      </div>
+    <div class="header">
+    <div>
+      <h1></h1>
+      
     </div>
   </div>
-</section>
 
+  <div class="content">
+    <div class="autotoc-nav">
+    </div>
 
-<section class="page">
-  <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
-  <div id="container" class="container">
-    <div class="row">
-      <div class="col-md-3 toc">
-      </div>
-      <div class="col-md-8 col-md-push-1">
-        <div class="content">
-          <h1>SHIELD Events</h1>
+    <div data-autotoc-headings="h2" data-autotoc-title="Table of Contents" data-autotoc-nav=".autotoc-nav">
+      <h1>SHIELD Events</h1>
 
 <p>Central to the SHIELD Web UI interaction is the event stream, a
 websocket anchored at /v2/events that relays <em>events</em> from the
@@ -404,50 +376,36 @@ from that tenant entirely.  The payload looks like this:</p>
 for the tenant (<code>tenant:$UUID</code>) and the user (<code>user:$UUID</code>).</p>
 
 
-        </div>
-      </div>
     </div>
   </div>
-</section>
 
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4">
-					<a class="logo" href="https://starkandwayne.com/">
-						<img class="logo-white" alt="Stark & Wayne" src="/img/swlogo.png?10" />
-						<p><strong>SHIELD</strong> is funded and supported by <strong>Stark &amp; Wayne</strong>, the premier BOSH and Cloud Foundry consulting firm.<br>Stark &amp; Wayne: We Know Cloud.</p>
-					</a>
-				</div>
+  <footer>
+    <div class="g">
+      <div class="x3">
+        <img src="/swlogo.png?0b567bdcee59ac95e3eaf667ec543ebc1631d6c0">
 
-				<div class="col-md-4">
-					<div class="links">
-						<h5>SHIELD</h5>
-						<ul class="list">
-							<li><a href="/download">Download SHIELD</a></li>
-							<li><a href="/docs/latest/ops/getting-started">Getting Started</a></li>
-							<li><a href="/docs/latest">Documentation</a></li>
-							<li><a href="/community">Community Support</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+        <p>SHIELD is maintained by Stark &amp; Wayne,
+        a leading Cloud-Native consulting firm.</p>
+      </div>
 
-		<div class="down-footer">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<p>&copy; 2019 Stark &amp; Wayne.  All Rights Reserved.</p>
-						<ul class="footer-menu"></ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+      <div class="x3">
+        <nav>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/community/">Community</a></li>
+          <li><a href="/docs/latest/ops/">Docs</a></li>
+          <li><a href="/docs/latest/dev/">Developers</a></li>
+        </nav>
+      </div>
 
-	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-	<script type="text/javascript" src="/js/libs.js?10"></script>
-	<script type="text/javascript" src="/js/common.js?10"></script>
+      <div class="x3">
+      </div>
+    </div>
+
+    <div class="copyright">
+      <p>Copyright &copy; 2019 The SHIELD Authors.  All rights reserved.</p>
+    </div>
+  </footer>
+  <script type="text/javascript" src="/site.js?d2112e355882784cf7f38561cf3ccb0bd5da3111"></script>
 </body>
 </html>

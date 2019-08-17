@@ -1,0 +1,15 @@
+  <div class="header">
+    <div>
+      <h1>[% page.attrs.title %]</h1>
+      [% if page.attrs.subtitle %]<h2>[% page.attrs.subtitle %]</h2>[% end %]
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="autotoc-nav">
+    </div>
+
+    <div data-autotoc-headings="h2" data-autotoc-title="Table of Contents" data-autotoc-nav=".autotoc-nav">
+      [% content %]
+    </div>
+  </div>

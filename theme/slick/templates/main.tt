@@ -1,0 +1,31 @@
+  <div class="hero">
+    <div>
+      <h1>SHIELD</h1>
+      <h2>Protect Your Cloud.</h2>
+      <button>Get Started</button>
+    </div>
+  </div>
+
+  <div class="band-x3">
+    <li>
+      <i></i>
+      <h2>Multi-Tenancy</h2>
+      <p>Set up multiple tenants, each with their own private configurations.</p>
+    </li>
+    <li>
+      <i></i>
+      <h2>Data Security</h2>
+      <p>All of your sensitive data is encrypted, both in-flight, and at-rest.</p>
+    </li>
+    <li>
+      <i></i>
+      <h2>Ease-of-use</h2>
+      <p>A modern web user interface, optimized for operator efficiency.</p>
+    </li>
+  </div>
+
+  <div class="cta">
+    <h2>Get <span>Started</span></h2>
+    <p>SHIELD provides a centralized solution and interface designed to make it easier for operations to protect their critical infrastructure. SHIELD excels at managing core Cloud Foundry backups, BOSH deployed services, and more. The SHIELD daemon is lightweight and low-impact, and it enables you to quickly have a fully-functional disaster recovery plan.</p>
+    <button>Start Protecting</button>
+  </div>

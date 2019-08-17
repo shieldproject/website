@@ -1,0 +1,23 @@
+  <div class="header">
+    <div>
+      <h1>[% page.attrs.title %]</h1>
+      [% if page.attrs.subtitle %]<h2>[% page.attrs.subtitle %]</h2>[% end %]
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+      [% if page.attrs.nav %]
+      <nav>
+        <h2>Table of Contents</h2>
+        [% for link in page.attrs.nav %]
+        <li><a href="[% link.url %]">[% link.text %]</a></li>
+        [% end %]
+      </nav>
+      [% end %]
+    </div>
+
+    <div>
+      [% page.attrs.body %]
+    </div>
+  </div>

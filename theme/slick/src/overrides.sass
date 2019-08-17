@@ -1,0 +1,133 @@
+.content.downloads > div:nth-child(2)
+  h3
+    border-bottom: none
+  li
+    margin: 1em 0
+    position: relative
+
+    &:before
+      position: absolute
+      left: -15px
+
+a.button
+  display: inline-block
+  background-color: #0071bc
+  color: #fff
+  font-weight: bold
+  font-size: 24px
+  border-radius: 12px
+  border: none
+  cursor: pointer
+  text-decoration: none
+  padding: 0.5em 1em
+  box-shadow: 2px 3px 8px #777
+
+.content.downloads
+  a.button
+    float: right
+    clear: both
+  h1
+    margin-top: 5em
+    &:first-child
+      margin-top: 0
+
+.content > div:first-child li + h2
+  margin-top: 4em
+
+.content > div:nth-child(2)
+  h1 + h2, h2 + h3
+    padding-top: 1em
+  ul, ol
+    margin: 2em 0
+  li > p
+    margin: 0.75em 0
+  p a
+    color: #0071bc
+    text-decoration: none
+    border-bottom: 1px dotted #0071bc
+
+  h1:first-child,
+  h2:first-child,
+  h3:first-child,
+    padding: 0
+
+tt, code, kbd, samp, var
+  font-family: "Hack Regular", monospace
+  background-color: rgba(27,31,35,.05)
+  border-radius: 3px
+  font-size: 85%
+  margin: 0
+  padding: .2em .4em
+
+.band
+  padding: 84px 5%
+  display: flex
+  flex-direction: row
+  justify-content: space-around
+
+  > img
+    margin: 0 2em 2em 2em
+
+  p
+    margin: 2em 0
+    line-height: 1.25em
+
+    a
+      color: #0071bc
+      text-decoration: none
+      border-bottom: 1px dotted #0071bc
+
+  h2
+    font-size: 48pt
+    span
+      color: #0071bc
+
+  div
+    min-width: 30vw
+    max-width: 33em
+
+  img
+    height: 100%
+    max-width: 50vw
+
+  &.github
+    background-color: #000
+    color: #fff
+
+    img
+      max-width: 241px
+
+    a, h2 span
+      color: yellow
+      border-color: yellow
+
+  &.trello
+    background-color: #127ABD
+    color: #fff
+    flex-direction: row-reverse
+
+    img
+      max-width: 316px
+
+    a, h2 span
+      color: yellow
+      border-color: yellow
+
+@media only screen and (max-width: 759px)
+  .band
+    flex-direction: column
+    &.trello
+      flex-direction: column-reverse
+
+    h2
+      text-align: center
+
+    img
+      max-width: none
+      width: 100%
+      margin: 0 auto
+
+
+
+header.top li
+  font-size: 75%

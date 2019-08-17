@@ -1,0 +1,67 @@
+  <div class="header">
+    <div>
+      <h1>[% page.attrs.title %]</h1>
+      [% if page.attrs.subtitle %]<h2>[% page.attrs.subtitle %]</h2>[% end %]
+    </div>
+  </div>
+
+  <div class="slack band" id="slack">
+    <div>
+      <h2>Talk to Us on Slack</h2>
+
+      <p>If you've got questions or comments, we'd love to hear from you!
+      We hang out on the <strong><tt>shieldproject</tt></strong> Slack org,
+      which you can join for free!</p>
+
+      <a href="https://join.slack.com/t/shieldproject/shared_invite/enQtMjYyMTAxNjcwMDQ5LTNjZmVhZWMxZmRhNGU4MDBlZWYyNmQ3OWE4OTI5NzA3NzU4MDA2ODAwZDRkMTMxNDk3NjE0MzQ4ZjA3YzBjZmQ"
+         class="button">Join Slack</a>
+
+      <p>We're waiting to hear from you!</p>
+    </div>
+
+    <img src="/community/slack-shot.png" />
+  </div>
+
+  <div class="github band" id="github">
+    <div>
+      <h2>Find us on GitHub</h2>
+
+      <p>All of the SHIELD code lives on GitHub, because we're all about
+      Open Source.  We use issues to track problems, pull requests for code changes,
+      and releases for, well, releases.</p>
+
+      <p>The <strong>SHIELD Core</strong> is the source code to SHIELD itself and all of its plugins.<br/>
+      <a href="https://github.com/shieldproject/shield">https://github.com/shieldproject/shield</a></p>
+
+      <p>The best way to deploy SHIELD is via its BOSH release:<br/>
+      <a href="https://github.com/shieldproject/shield-boshrelease">https://github.com/shieldproject/shield-boshrelease</a></p>
+
+      <p>Related projects live under the <strong>shieldproject</strong> GitHub org:<br/>
+      <a href="https://github.com/shieldproject">https://github.com/shieldproject</a></p>
+    </div>
+    <img src="/community/github.png" />
+  </div>
+
+  <div class="call band" id="call">
+    <div>
+      <h2>Join <span>Our Call</span></h2>
+
+      <p>We're always happy for people to get involved with SHIELD and help out.
+      We hold a <a href="/community/call">monthly SHIELD Roadmap Call</a>
+      where you can get progress updates and participate in the conversation!</p>
+    </div>
+
+    <img src="/community/zoom.png">
+  </div>
+
+  <div class="trello band" id="trello">
+    <div>
+      <h2>Work with us on <span>Trello</span></h2>
+
+      <p>We coordinate a loose-knit group of hackers on the
+      Internet via our public <a href="https://trello.com/b/qLZCvexK/shield">Trello Board</a>.
+      Whether you want to get involved and pick up some cards,
+      or just keep pace with the state of SHIELD, check it out!</p>
+    </div>
+    <img src="/community/trello.png" />
+  </div>

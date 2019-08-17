@@ -1,0 +1,21 @@
+  <div class="header">
+    <div>
+      <h1>SHIELD Blog</h1>
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+    </div>
+
+    <div>
+      [% for article in articles %]
+      <article>
+        <h2>[% article.attrs.title %]</h2>
+        [% filter markdown %][% article.attrs.intro %][% end %]
+
+        <p><a href="/blog/[% article.attrs.permalink %]/">Read More &raquo;</a></p>
+      </article>
+      [% end %]
+    </div>
+  </div>

@@ -1,0 +1,17 @@
+[% dometa = 'yes' %]
+
+  <div class="header">
+    <div>
+      <h1>[% article.attrs.title %]</h1>
+      [% if article.attrs.subtitle %]<h2>[% article.attrs.subtitle %]</h2>[% end %]
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="autotoc">
+    </div>
+
+    <div data-autotoc-headings="h2" data-autotoc-nav=".autotoc">
+      [% article.attrs.body %]
+    </div>
+  </div>

@@ -2,13 +2,16 @@
 
 PERL5LIB :=
 
-build:
+build: theme/slick/assets/site.css
 	rm -rf htdocs
 	./bin/verse build
 
-theme:
-	cd template && gulp
-	make build
+SASS_SRC := theme/slick/src/slick.sass
+SASS_SRC += theme/slick/src/local.sass
+SASS_SRC += theme/slick/src/overrides.sass
+theme/slick/assets/site.css: $(SASS_SRC)
+	sassc theme/slick/src/slick.sass > $@.new
+	mv $@.new $@
 
 demo: build
 	./bin/verse run
@@ -25,4 +28,4 @@ staging:
 prod:
 	cf push -f cf/manifest.yml
 
-.PHONY: buidl theme demo local check staging prod
+.PHONY: build theme demo local check staging prod
