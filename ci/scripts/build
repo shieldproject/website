@@ -55,7 +55,7 @@ popd
 
 header "Re-building Website Static Assets"
 pushd $REPO_ROOT
-	make
+	make rebuild
 popd
 
 if [[ -n "$(cd ${REPO_ROOT}; git status --porcelain)" ]]; then
