@@ -264,10 +264,21 @@ div.cta button
 .content > div:nth-child(2) h1,
 .content > div:nth-child(2) h2,
 .content > div:nth-child(2) h3
-  padding-top: 84px
+  padding-top: 2em
   line-height: 1.1em
+
+  & + p,
+  & + ul,
+  & + ol
+    margin-top: 1em
+
 .content > div:nth-child(2) h1:first-child
   padding: 0
+.content > div
+  strong, b
+    font-weight: bold
+  em, i
+    font-style: italic
 .content > div p
   margin: 2em 0
 .content > div p > img

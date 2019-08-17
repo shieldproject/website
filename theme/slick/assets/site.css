@@ -253,11 +253,27 @@ div.cta button {
 .content > div:nth-child(2) h1,
 .content > div:nth-child(2) h2,
 .content > div:nth-child(2) h3 {
-  padding-top: 84px;
+  padding-top: 2em;
   line-height: 1.1em; }
+  .content > div:nth-child(2) h1 + p,
+  .content > div:nth-child(2) h1 + ul,
+  .content > div:nth-child(2) h1 + ol,
+  .content > div:nth-child(2) h2 + p,
+  .content > div:nth-child(2) h2 + ul,
+  .content > div:nth-child(2) h2 + ol,
+  .content > div:nth-child(2) h3 + p,
+  .content > div:nth-child(2) h3 + ul,
+  .content > div:nth-child(2) h3 + ol {
+    margin-top: 1em; }
 
 .content > div:nth-child(2) h1:first-child {
   padding: 0; }
+
+.content > div strong, .content > div b {
+  font-weight: bold; }
+
+.content > div em, .content > div i {
+  font-style: italic; }
 
 .content > div p {
   margin: 2em 0; }
@@ -476,7 +492,7 @@ footer .copyright {
 a.button {
   display: inline-block;
   background-color: #0071bc;
-  color: #fff;
+  color: #fff !important;
   font-weight: bold;
   font-size: 24px;
   border-radius: 12px;
@@ -505,10 +521,10 @@ a.button {
 .content > div:nth-child(2) ul, .content > div:nth-child(2) ol {
   margin: 2em 0; }
 
-.content > div:nth-child(2) li > p {
+.content > div:nth-child(2) li > ul, .content > div:nth-child(2) li > ol, .content > div:nth-child(2) li > p {
   margin: 0.75em 0; }
 
-.content > div:nth-child(2) p a {
+.content > div:nth-child(2) a {
   color: #0071bc;
   text-decoration: none;
   border-bottom: 1px dotted #0071bc; }

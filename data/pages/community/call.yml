@@ -1,8 +1,20 @@
 ---
 # vim:ft=markdown:tw=76
-title:  SHIELD Roadmap Call
-url:    /community/call/index.html
-format: markdown
+title:    SHIELD Roadmap Call
+url:      /community/call/index.html
+format:   markdown
+template: call.tt
+
+next:
+  - id:   20190822
+    date: August 22nd, 2019
+previous:
+  - id:   20180913
+    date: September 2018
+  - id:   20180809
+    date: August 2018
+  - id:   20180712
+    date: July 2018
 --- |-
 
 # Joining the Call
@@ -13,7 +25,7 @@ development progress, and future direction.
 
 The next SHIELD Roadmap Call is
 <br>
-**Thursday, April 11th** at **11:00am EDT**.
+**Thursday, August 22nd** at **11:00am EDT**.
 
 We use zoom: <https://zoom.us/j/7165551212>
 
@@ -24,13 +36,13 @@ You can also call in (the Meeting ID is **716 555 1212**):
 
 Calls are not recorded.
 
-# Agenda for April 11th, 2018
+# Agenda for August 22nd, 2019
 
 1. Introductions
 
 2. Announcements
    - Resumption of the monthly call (!!)
-   - SHIELD v8.1.0
+   - SHIELD v8.5.0
    - Planned Website Improvements
 
 3. Development Progress Update
@@ -41,226 +53,217 @@ Calls are not recorded.
 
 # Previous Calls
 
-<a id="20180913"></a>
+We don't record the roadmap calls, but we do tae copious amounts of notes
+and attempt to summarize them below.  Wouldn't your rather skim a report
+_on_ a meeting, rather than watch a static recording _of_ the meeting??
 
-## September 13th, 2018
+<h2 id="20180913">September 13th, 2018</h2>
 
 These are the notes from our third community call, held at 11:00am EDT on
 Thursday, September 13th, 2018.
 
-1. **New BackBlaze Storage Plugin**
+### New BackBlaze Storage Plugin
 
-   Thanks to the efforts of Mr. Dan Molik (Stark & Wayne), the SHIELD
-   project now has support for storing backup archives in BackBlaze's B2
-   endpoint, via the new `b2` storage plugin!
+Thanks to the efforts of Mr. Dan Molik (Stark & Wayne), the SHIELD
+project now has support for storing backup archives in BackBlaze's B2
+endpoint, via the new `b2` storage plugin!
 
-2. **Download (and re-encryption) of Backup Archives**
+### Download (and re-encryption) of Backup Archives
 
-   The SHIELD Team is working on building new functionality into SHIELD for
-   (securely) downloading archives from Cloud Storage, via the web interface
-   or the CLI.
+The SHIELD Team is working on building new functionality into SHIELD for
+(securely) downloading archives from Cloud Storage, via the web interface
+or the CLI.
 
-   This used to be a lot easier in SHIELD v6, but when we introduced
-   encryption into the mix, we lost the ability to inspect individual
-   archives.  Furthermore, SHIELD complicates the issue by randomizing the
-   keys and initialization vectors (IVs) for _each archive_, and stores them
-   in the local Vault, which operators do not have access to.  Even for
-   "fixed-key" backups, the key that the operators are given is used to
-   _derive_ the key and IV used to encrypt the archives.
+This used to be a lot easier in SHIELD v6, but when we introduced
+encryption into the mix, we lost the ability to inspect individual
+archives.  Furthermore, SHIELD complicates the issue by randomizing the
+keys and initialization vectors (IVs) for _each archive_, and stores them
+in the local Vault, which operators do not have access to.  Even for
+"fixed-key" backups, the key that the operators are given is used to
+_derive_ the key and IV used to encrypt the archives.
 
-   To remedy this, and yet maintain the security of archives, SHIELD is
-   being extended to include a new API endpoint for downloading and
-   re-encrypting a single archive (subject to tenant rights and access
-   control).  This new endpoint will take encryption parameters from the
-   operator, and re-encrypt the archive as it is streamed from storage.
+To remedy this, and yet maintain the security of archives, SHIELD is
+being extended to include a new API endpoint for downloading and
+re-encrypting a single archive (subject to tenant rights and access
+control).  This new endpoint will take encryption parameters from the
+operator, and re-encrypt the archive as it is streamed from storage.
 
+### Open Forum
 
-3. **Open Forum**
+Jordan and Phillip asked several very good questions.  Good on them!
 
-   Jordan and Phillip asked several very good questions.  Good on them!
+**Smoking Hole SHIELD Restores** - _Do we have documentation for the
+recovery of a SHIELD core itself?_
 
-   - **Smoking Hole SHIELD Restores** - Do we have documentation for the
-     recovery of a SHIELD core itself?
+We have a process, and it's sort of documented, but not well.  We're
+working on fleshing out the [SHIELD Operations Manual](/docs/latest/ops/manual)
+with these details.
 
-     We have a process, and it's sort of documented, but not well.  We're
-     working on fleshing out the [SHIELD Operations Manual](/docs/latest/ops/manual)
-     with these details.
+**Authentication Tokens** - _Authentication Tokens seem to be tied to
+individual SHIELD user accounts.  Do those persist across SHIELD
+re-deployments?_
 
-   - **Authentication Tokens** - Authentication Tokens seem to be tied to
-     individual SHIELD user accounts.  Do those persist across SHIELD
-     re-deployments?
+Yes, Authentication Tokens are tied to individual accounts.  Behind the
+scenes, those are implemented as non-expiring sessions associated with
+the user who created them.
 
-     Yes, Authentication Tokens are tied to individual accounts.  Behind the
-     scenes, those are implemented as non-expiring sessions associated with
-     the user who created them.
+Because they are resident in the sessions table in the database, they
+should persist across BOSH deploys, assuming (a) you are using
+persistent disks and (b) you are not deleting the BOSH deployment
+first.
 
-     Because they are resident in the sessions table in the database, they
-     should persist across BOSH deploys, assuming (a) you are using
-     persistent disks and (b) you are not deleting the BOSH deployment
-     first.
+**Bootstrapping Local Users** - _Can The SHIELD BOSH Release Bootstrap
+Local Users?_
 
-   - **Bootstrapping Local Users** - Can The SHIELD BOSH Release Bootstrap
-     Local Users?
+No it cannot, but it should.
 
-     No it cannot, but it should.
+**Mutual Network Visibility of SHIELD Agents** - _In v6, the only
+communication channel was unidirectional, wherein the SHIELD core
+connected to each SHIELD agent to orchestrate a baackup.  This does not
+seem to be the case in v8._
 
-   - **Mutual Network Visibility of SHIELD Agents** - In v6, the only
-     communication channel was unidirectional, wherein the SHIELD core
-     connected to each SHIELD agent to orchestrate a baackup.  This does not
-     seem to be the case in v8.
+This isn't really a question, but we'll let that slide.
 
-     This isn't really a question, but we'll let that slide.
+In v8, the SHIELD core still initiates an SSH session to the agent
+involved to orchestrate it.  What's new in v8 is an HTTPS registration
+ping from the agents to the core.  This "ping" puts the agent in the
+SHIELD core's database, so that the core can SSH back into the agent
+and retrieve metadata from them.
 
-     In v8, the SHIELD core still initiates an SSH session to the agent
-     involved to orchestrate it.  What's new in v8 is an HTTPS registration
-     ping from the agents to the core.  This "ping" puts the agent in the
-     SHIELD core's database, so that the core can SSH back into the agent
-     and retrieve metadata from them.
+This poses a severe problem with NAT'ed installations which lack the
+required _mutual network visibility_ to make this work.  What we (Stark
+& Wayne) have been doing is just colocating the SHIELD core in the same
+NAT "scope" as the systems being orchestrated.
 
-     This poses a severe problem with NAT'ed installations which lack the
-     required _mutual network visibility_ to make this work.  What we (Stark
-     & Wayne) have been doing is just colocating the SHIELD core in the same
-     NAT "scope" as the systems being orchestrated.
+We've designed a few alternatives to this.  One is a SHIELD-aware NAT
+traversal proxy that would handle connections to/from the agents across
+the NAT boundary.  This is a fair bit of engineering work, but it does
+preserve backwards compatibility.
 
-     We've designed a few alternatives to this.  One is a SHIELD-aware NAT
-     traversal proxy that would handle connections to/from the agents across
-     the NAT boundary.  This is a fair bit of engineering work, but it does
-     preserve backwards compatibility.
-
-     A far superior solution is to break backwards compatibility, and invert
-     the orchestration flows.  If the SHIELD agents SSH into the SHIELD
-     core, announce themselves, and then await orders, we can handle both
-     the metadata retrieval / agent discovery, and traverse NATs with ease.
-
-Thanks all for joining!  See you next month!
+A far superior solution is to break backwards compatibility, and invert
+the orchestration flows.  If the SHIELD agents SSH into the SHIELD
+core, announce themselves, and then await orders, we can handle both
+the metadata retrieval / agent discovery, and traverse NATs with ease.
 
 
-
-
-<a id="20180809"></a>
-
-## August 9th, 2018
+<h2 id="20180809">August 9th, 2018</h2>
 
 These are the notes from our second community call, held at 11:00am EDT on
 Thursday, August 9th, 2018.
 
-1. **Lean Table View**
+### Lean Table View
 
-   SHIELD now supports a Lean Table View, for collapsing lots of cards into
-   a more compact, tabular view.  We'll be working on making that view also
-   available on the wizards (configure backup, run ad hoc, and restore).
+SHIELD now supports a Lean Table View, for collapsing lots of cards into
+a more compact, tabular view.  We'll be working on making that view also
+available on the wizards (configure backup, run ad hoc, and restore).
 
-2. **Optional Compression**
+### Optional Compression
 
-   Bzip2 Compression of archives is now optional.  The implementation makes
-   it modular, so we can add in new compression schemes (gzip, zip, lzma,
-   etc.)
+Bzip2 Compression of archives is now optional.  The implementation makes
+it modular, so we can add in new compression schemes (gzip, zip, lzma,
+etc.)
 
-2. **Plugin Reference Documentation**
+## Plugin Reference Documentation
 
-   We've started documenting the [SHIELD Plugins](/docs/latest/ops/plugins) and their
-   configuration.
+We've started documenting the [SHIELD Plugins](/docs/latest/ops/plugins) and
+their configuration.
 
 Thanks all for joining!  See you next month!
 
 
 
-<a id="20180712"></a>
-
-## July 12th, 2018
+<h2 id="20180712">July 12th, 2018</h2>
 
 These are the notes for our first ever community call, held at 11:00am EDT
 on Thursday, July 12th, 2018.
 
-1. **The Website**
+### The Website
 
-   We have a website at <https://shieldproject.io>.
+We have a website at <https://shieldproject.io>.
 
-   We are putting all of our documentation, guides, and manuals there
+We are putting all of our documentation, guides, and manuals there
 
-   Work is underway on fleshing out the
-   [SHIELD Operator's Manual](/docs/latest/ops/manual), and the
-   [Plugin Reference](/docs/latest/ops/plugins).
+Work is underway on fleshing out the
+[SHIELD Operator's Manual](/docs/latest/ops/manual), and the
+[Plugin Reference](/docs/latest/ops/plugins).
 
-   We're also hoping to build out recipe-based docs like
-   _How do I backup Cloud Foundry?_
+We're also hoping to build out recipe-based docs like
+_How do I backup Cloud Foundry?_
 
-2. **The Trello Board**
+### The Trello Board
 
-   We have started using a [Trello Board][trello] for coordinating developer
-   activity.  If you want to get involved in hacking on SHIELD, ask in
-   the #help channel on [Slack][slack].
+We have started using a [Trello Board][trello] for coordinating developer
+activity.  If you want to get involved in hacking on SHIELD, ask in
+the #help channel on [Slack][slack].
 
-   Github Issues will still be the place to report bugs and ask for feature
-   requests.  Trello is more for things that require multiple different
-   states, prioritization, backlog management, etc.
+Github Issues will still be the place to report bugs and ask for feature
+requests.  Trello is more for things that require multiple different
+states, prioritization, backlog management, etc.
 
-   Every month we will be highlighting delivered features and fixed bugs
-   that we feel are important enough to announce (big, operator-visible
-   stuff), and discussing our focus for the next month.
+Every month we will be highlighting delivered features and fixed bugs
+that we feel are important enough to announce (big, operator-visible
+stuff), and discussing our focus for the next month.
 
-3. **Current Future Direction**
+### Current Future Direction
 
-   We've got a lot of minor bugs in the Trello backlog; we're focusing on
-   those first, to get them fixed and get the fixes shipped.
+We've got a lot of minor bugs in the Trello backlog; we're focusing on
+those first, to get them fixed and get the fixes shipped.
 
-   We've also conducted an internal review, which we're calling _Gap
-   Analysis_.  Put simply, it's all the things we haven't finished, and all
-   the features we know we need but haven't implemented.  This includes
-   things like being able to edit systems from the web interface, viewing
-   tasks, rescheduling backup jobs, etc.
+We've also conducted an internal review, which we're calling _Gap
+Analysis_.  Put simply, it's all the things we haven't finished, and all
+the features we know we need but haven't implemented.  This includes
+things like being able to edit systems from the web interface, viewing
+tasks, rescheduling backup jobs, etc.
 
-   Once we've got the bug backlog tamed, we'll be moving onto the gap
-   tickets.
+Once we've got the bug backlog tamed, we'll be moving onto the gap
+tickets.
 
-4. **Release Cadence**
+### Release Cadence
 
-   We're hoping to hit a weekly release schedule with SHIELD, the SHIELD
-   BOSH release, and the SHIELD Genesis Kit.  Our current plan is to cut new
-   point releases on Friday afternoons.
+We're hoping to hit a weekly release schedule with SHIELD, the SHIELD
+BOSH release, and the SHIELD Genesis Kit.  Our current plan is to cut new
+point releases on Friday afternoons.
 
-5. **Open Forum**
+### Open Forum
 
-   Jordan asked a bunch of questions.  Thanks, mate!
+Jordan asked a bunch of questions.  Thanks, mate!
 
-   - **CLI Help Documentation** - Curious whether or not we were going to
-     provide more documentation for CLI usage, either via the website, or
-     inline via `--help` flags.
+**CLI Help Documentation** - _Curious whether or not we were going to
+provide more documentation for CLI usage, either via the website, or
+inline via `--help` flags._
 
-     Short answer: yes.
+Short answer: yes.
 
-     Long answer: definitely yes, via both methods.  We'll review the state
-     of SHIELD help inside the CLI, and see if there are logical places to
-     flesh out what we've got, cover more abstract topics, etc.
+Long answer: definitely yes, via both methods.  We'll review the state
+of SHIELD help inside the CLI, and see if there are logical places to
+flesh out what we've got, cover more abstract topics, etc.
 
-   - **Can SHIELD itself be recovered via the CLI only?**
+**Can SHIELD itself be recovered via the CLI only?**
 
-     Currently, no.  The SHIELD recovery mechanism (with the fixed key
-     backup) relies on visual elements that are part of the Web UI.
-     However, it's a good feature (one we're missing, so it's a "gap"),
-     and we'll be looking into support for that particular workflow.
+Currently, no.  The SHIELD recovery mechanism (with the fixed key
+backup) relies on visual elements that are part of the Web UI.
+However, it's a good feature (one we're missing, so it's a "gap"),
+and we'll be looking into support for that particular workflow.
 
-   - **Manual Archive Management** - Having deleted archives manually from
-     backing cloud storage, Jordan noticed that the SHIELD Web UI didn't
-     update its storage usage counts.
+**Manual Archive Management** - _Having deleted archives manually from
+backing cloud storage, Jordan noticed that the SHIELD Web UI didn't
+update its storage usage counts._
 
-     This is normal, and we'll address it specifically in the documentation,
-     since SHIELD expects to have full and complete control over cloud
-     storage.  We did talk through a UI view (CLI and Web) for browsing cloud
-     storage archives, and deleting them there, with an eye towards reclaiming
-     space.
+This is normal, and we'll address it specifically in the documentation,
+since SHIELD expects to have full and complete control over cloud
+storage.  We did talk through a UI view (CLI and Web) for browsing cloud
+storage archives, and deleting them there, with an eye towards reclaiming
+space.
 
-   - **Monitoring and Notifications** - Is it possible to notify about storage
-     usage limits being reached, failing storage, failing jobs, etc.?
+**Monitoring and Notifications** - _Is it possible to notify about storage
+usage limits being reached, failing storage, failing jobs, etc.?_
 
-     Short answer: yes, via the `/v2/health` endpoint, in an external
-     monitoring system.
+Short answer: yes, via the `/v2/health` endpoint, in an external
+monitoring system.
 
-     Long answer: we have plans for a separate project / product, for handling
-     notifications more globally, with business logic and dispatch rules built
-     into _that_ system, which SHIELD would then integrate with.
-
-Thanks all for joining!  See you next month!
+Long answer: we have plans for a separate project / product, for handling
+notifications more globally, with business logic and dispatch rules built
+into _that_ system, which SHIELD would then integrate with.
 
 [trello]: https://trello.com/b/qLZCvexK/shield
 [slack]:  /community#slack

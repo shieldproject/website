@@ -1,0 +1,23 @@
+  <div class="header">
+    <div>
+      <h1>[% page.attrs.title %]</h1>
+      [% if page.attrs.subtitle %]<h2>[% page.attrs.subtitle %]</h2>[% end %]
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+      <nav>
+        <h2>Coming Up</h2>
+        <li><a href="#next">[% page.attrs.next.0.date %]</a></li>
+        <h2>Previous Calls</h2>
+        [% for call in page.attrs.previous %]
+        <li><a href="#[% call.id %]">[% call.date %]</a></li>
+        [% end %]
+      </nav>
+    </div>
+
+    <div>
+      [% page.attrs.body %]
+    </div>
+  </div>

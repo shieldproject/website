@@ -11,7 +11,7 @@
 
 
 <link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="/site.css?acdf615b5e84eef5232863d2ab1b398df153f382">
+<link rel="stylesheet" href="/site.css?b56db032aec2831cc3f83d86db057e35efc5047b">
 <link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
 </head>
 <body>
@@ -35,7 +35,18 @@
 
   <div class="content">
     <div>
-      
+      <nav>
+        <h2>Coming Up</h2>
+        <li><a href="#next">August 22nd, 2019</a></li>
+        <h2>Previous Calls</h2>
+        
+        <li><a href="#20180913">September 2018</a></li>
+        
+        <li><a href="#20180809">August 2018</a></li>
+        
+        <li><a href="#20180712">July 2018</a></li>
+        
+      </nav>
     </div>
 
     <div>
@@ -47,7 +58,7 @@ development progress, and future direction.</p>
 
 <p>The next SHIELD Roadmap Call is
 <br>
-<strong>Thursday, April 11th</strong> at <strong>11:00am EDT</strong>.</p>
+<strong>Thursday, August 22nd</strong> at <strong>11:00am EDT</strong>.</p>
 
 <p>We use zoom: <a href="https://zoom.us/j/7165551212">https://zoom.us/j/7165551212</a></p>
 
@@ -60,42 +71,43 @@ development progress, and future direction.</p>
 
 <p>Calls are not recorded.</p>
 
-<h1>Agenda for April 11th, 2018</h1>
+<h1>Agenda for August 22nd, 2019</h1>
 
 <ol>
-<li><p>Introductions</p></li>
-<li><p>Announcements</p>
-
+<li>Introductions
+</li>
+<li>Announcements
 <ul>
 <li>Resumption of the monthly call (!!)</li>
-<li>SHIELD v8.1.0</li>
+<li>SHIELD v8.5.0</li>
 <li>Planned Website Improvements</li>
 </ul></li>
-<li><p>Development Progress Update</p>
-
+<li>Development Progress Update
 <ul>
 <li><a href="https://trello.com/b/qLZCvexK/shield">Trello Board</a> Review</li>
 <li>Dev Team Status Report</li>
 </ul></li>
-<li><p>Open Forum</p></li>
+<li>Open Forum</li>
 </ol>
 
 <h1>Previous Calls</h1>
 
-<p><a id="20180913"></a></p>
+<p>We don't record the roadmap calls, but we do tae copious amounts of notes
+and attempt to summarize them below.  Wouldn't your rather skim a report
+<em>on</em> a meeting, rather than watch a static recording <em>of</em> the meeting??</p>
 
-<h2>September 13th, 2018</h2>
+<h2 id="20180913">September 13th, 2018</h2>
 
 <p>These are the notes from our third community call, held at 11:00am EDT on
 Thursday, September 13th, 2018.</p>
 
-<ol>
-<li><p><strong>New BackBlaze Storage Plugin</strong></p>
+<h3>New BackBlaze Storage Plugin</h3>
 
 <p>Thanks to the efforts of Mr. Dan Molik (Stark &amp; Wayne), the SHIELD
 project now has support for storing backup archives in BackBlaze's B2
-endpoint, via the new <code>b2</code> storage plugin!</p></li>
-<li><p><strong>Download (and re-encryption) of Backup Archives</strong></p>
+endpoint, via the new <code>b2</code> storage plugin!</p>
+
+<h3>Download (and re-encryption) of Backup Archives</h3>
 
 <p>The SHIELD Team is working on building new functionality into SHIELD for
 (securely) downloading archives from Cloud Storage, via the web interface
@@ -113,21 +125,22 @@ in the local Vault, which operators do not have access to.  Even for
 being extended to include a new API endpoint for downloading and
 re-encrypting a single archive (subject to tenant rights and access
 control).  This new endpoint will take encryption parameters from the
-operator, and re-encrypt the archive as it is streamed from storage.</p></li>
-<li><p><strong>Open Forum</strong></p>
+operator, and re-encrypt the archive as it is streamed from storage.</p>
+
+<h3>Open Forum</h3>
 
 <p>Jordan and Phillip asked several very good questions.  Good on them!</p>
 
-<ul>
-<li><p><strong>Smoking Hole SHIELD Restores</strong> - Do we have documentation for the
-recovery of a SHIELD core itself?</p>
+<p><strong>Smoking Hole SHIELD Restores</strong> - <em>Do we have documentation for the
+recovery of a SHIELD core itself?</em></p>
 
 <p>We have a process, and it's sort of documented, but not well.  We're
 working on fleshing out the <a href="/docs/latest/ops/manual">SHIELD Operations Manual</a>
-with these details.</p></li>
-<li><p><strong>Authentication Tokens</strong> - Authentication Tokens seem to be tied to
+with these details.</p>
+
+<p><strong>Authentication Tokens</strong> - <em>Authentication Tokens seem to be tied to
 individual SHIELD user accounts.  Do those persist across SHIELD
-re-deployments?</p>
+re-deployments?</em></p>
 
 <p>Yes, Authentication Tokens are tied to individual accounts.  Behind the
 scenes, those are implemented as non-expiring sessions associated with
@@ -136,15 +149,17 @@ the user who created them.</p>
 <p>Because they are resident in the sessions table in the database, they
 should persist across BOSH deploys, assuming (a) you are using
 persistent disks and (b) you are not deleting the BOSH deployment
-first.</p></li>
-<li><p><strong>Bootstrapping Local Users</strong> - Can The SHIELD BOSH Release Bootstrap
-Local Users?</p>
+first.</p>
 
-<p>No it cannot, but it should.</p></li>
-<li><p><strong>Mutual Network Visibility of SHIELD Agents</strong> - In v6, the only
+<p><strong>Bootstrapping Local Users</strong> - <em>Can The SHIELD BOSH Release Bootstrap
+Local Users?</em></p>
+
+<p>No it cannot, but it should.</p>
+
+<p><strong>Mutual Network Visibility of SHIELD Agents</strong> - <em>In v6, the only
 communication channel was unidirectional, wherein the SHIELD core
 connected to each SHIELD agent to orchestrate a baackup.  This does not
-seem to be the case in v8.</p>
+seem to be the case in v8.</em></p>
 
 <p>This isn't really a question, but we'll let that slide.</p>
 
@@ -167,47 +182,38 @@ preserve backwards compatibility.</p>
 <p>A far superior solution is to break backwards compatibility, and invert
 the orchestration flows.  If the SHIELD agents SSH into the SHIELD
 core, announce themselves, and then await orders, we can handle both
-the metadata retrieval / agent discovery, and traverse NATs with ease.</p></li>
-</ul></li>
-</ol>
+the metadata retrieval / agent discovery, and traverse NATs with ease.</p>
 
-<p>Thanks all for joining!  See you next month!</p>
-
-<p><a id="20180809"></a></p>
-
-<h2>August 9th, 2018</h2>
+<h2 id="20180809">August 9th, 2018</h2>
 
 <p>These are the notes from our second community call, held at 11:00am EDT on
 Thursday, August 9th, 2018.</p>
 
-<ol>
-<li><p><strong>Lean Table View</strong></p>
+<h3>Lean Table View</h3>
 
 <p>SHIELD now supports a Lean Table View, for collapsing lots of cards into
 a more compact, tabular view.  We'll be working on making that view also
-available on the wizards (configure backup, run ad hoc, and restore).</p></li>
-<li><p><strong>Optional Compression</strong></p>
+available on the wizards (configure backup, run ad hoc, and restore).</p>
+
+<h3>Optional Compression</h3>
 
 <p>Bzip2 Compression of archives is now optional.  The implementation makes
 it modular, so we can add in new compression schemes (gzip, zip, lzma,
-etc.)</p></li>
-<li><p><strong>Plugin Reference Documentation</strong></p>
+etc.)</p>
 
-<p>We've started documenting the <a href="/docs/latest/ops/plugins">SHIELD Plugins</a> and their
-configuration.</p></li>
-</ol>
+<h2>Plugin Reference Documentation</h2>
+
+<p>We've started documenting the <a href="/docs/latest/ops/plugins">SHIELD Plugins</a> and
+their configuration.</p>
 
 <p>Thanks all for joining!  See you next month!</p>
 
-<p><a id="20180712"></a></p>
-
-<h2>July 12th, 2018</h2>
+<h2 id="20180712">July 12th, 2018</h2>
 
 <p>These are the notes for our first ever community call, held at 11:00am EDT
 on Thursday, July 12th, 2018.</p>
 
-<ol>
-<li><p><strong>The Website</strong></p>
+<h3>The Website</h3>
 
 <p>We have a website at <a href="https://shieldproject.io">https://shieldproject.io</a>.</p>
 
@@ -218,8 +224,9 @@ on Thursday, July 12th, 2018.</p>
 <a href="/docs/latest/ops/plugins">Plugin Reference</a>.</p>
 
 <p>We're also hoping to build out recipe-based docs like
-<em>How do I backup Cloud Foundry?</em></p></li>
-<li><p><strong>The Trello Board</strong></p>
+<em>How do I backup Cloud Foundry?</em></p>
+
+<h3>The Trello Board</h3>
 
 <p>We have started using a <a href="https://trello.com/b/qLZCvexK/shield">Trello Board</a> for coordinating developer
 activity.  If you want to get involved in hacking on SHIELD, ask in
@@ -231,8 +238,9 @@ states, prioritization, backlog management, etc.</p>
 
 <p>Every month we will be highlighting delivered features and fixed bugs
 that we feel are important enough to announce (big, operator-visible
-stuff), and discussing our focus for the next month.</p></li>
-<li><p><strong>Current Future Direction</strong></p>
+stuff), and discussing our focus for the next month.</p>
+
+<h3>Current Future Direction</h3>
 
 <p>We've got a lot of minor bugs in the Trello backlog; we're focusing on
 those first, to get them fixed and get the fixes shipped.</p>
@@ -244,54 +252,54 @@ things like being able to edit systems from the web interface, viewing
 tasks, rescheduling backup jobs, etc.</p>
 
 <p>Once we've got the bug backlog tamed, we'll be moving onto the gap
-tickets.</p></li>
-<li><p><strong>Release Cadence</strong></p>
+tickets.</p>
+
+<h3>Release Cadence</h3>
 
 <p>We're hoping to hit a weekly release schedule with SHIELD, the SHIELD
 BOSH release, and the SHIELD Genesis Kit.  Our current plan is to cut new
-point releases on Friday afternoons.</p></li>
-<li><p><strong>Open Forum</strong></p>
+point releases on Friday afternoons.</p>
+
+<h3>Open Forum</h3>
 
 <p>Jordan asked a bunch of questions.  Thanks, mate!</p>
 
-<ul>
-<li><p><strong>CLI Help Documentation</strong> - Curious whether or not we were going to
+<p><strong>CLI Help Documentation</strong> - <em>Curious whether or not we were going to
 provide more documentation for CLI usage, either via the website, or
-inline via <code>--help</code> flags.</p>
+inline via <code>--help</code> flags.</em></p>
 
 <p>Short answer: yes.</p>
 
 <p>Long answer: definitely yes, via both methods.  We'll review the state
 of SHIELD help inside the CLI, and see if there are logical places to
-flesh out what we've got, cover more abstract topics, etc.</p></li>
-<li><p><strong>Can SHIELD itself be recovered via the CLI only?</strong></p>
+flesh out what we've got, cover more abstract topics, etc.</p>
+
+<p><strong>Can SHIELD itself be recovered via the CLI only?</strong></p>
 
 <p>Currently, no.  The SHIELD recovery mechanism (with the fixed key
 backup) relies on visual elements that are part of the Web UI.
 However, it's a good feature (one we're missing, so it's a "gap"),
-and we'll be looking into support for that particular workflow.</p></li>
-<li><p><strong>Manual Archive Management</strong> - Having deleted archives manually from
+and we'll be looking into support for that particular workflow.</p>
+
+<p><strong>Manual Archive Management</strong> - <em>Having deleted archives manually from
 backing cloud storage, Jordan noticed that the SHIELD Web UI didn't
-update its storage usage counts.</p>
+update its storage usage counts.</em></p>
 
 <p>This is normal, and we'll address it specifically in the documentation,
 since SHIELD expects to have full and complete control over cloud
 storage.  We did talk through a UI view (CLI and Web) for browsing cloud
 storage archives, and deleting them there, with an eye towards reclaiming
-space.</p></li>
-<li><p><strong>Monitoring and Notifications</strong> - Is it possible to notify about storage
-usage limits being reached, failing storage, failing jobs, etc.?</p>
+space.</p>
+
+<p><strong>Monitoring and Notifications</strong> - <em>Is it possible to notify about storage
+usage limits being reached, failing storage, failing jobs, etc.?</em></p>
 
 <p>Short answer: yes, via the <code>/v2/health</code> endpoint, in an external
 monitoring system.</p>
 
 <p>Long answer: we have plans for a separate project / product, for handling
 notifications more globally, with business logic and dispatch rules built
-into <em>that</em> system, which SHIELD would then integrate with.</p></li>
-</ul></li>
-</ol>
-
-<p>Thanks all for joining!  See you next month!</p>
+into <em>that</em> system, which SHIELD would then integrate with.</p>
     </div>
   </div>
 
