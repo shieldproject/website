@@ -24,12 +24,9 @@ curl -sL 'https://packages.cloudfoundry.org/stable?release=linux64-binary&versio
 mv cf /usr/bin/cf
 chmod 0755 /usr/bin/cf
 
-header "Re-building Website Static Assets"
-cd $REPO_ROOT
-make
-
 export CF_DIAL_TIMEOUT=30
 header "Publishing $(spruce json cf/$MANIFEST | jq -r '.applications[0].routes[0].route') via cf manifest cf/$MANIFEST"
+cd $REPO_ROOT
 cf api $CF_API_URL
 cf auth $CF_USERNAME "$CF_PASSWORD"
 cf target -o $CF_ORG -s $CF_SPACE

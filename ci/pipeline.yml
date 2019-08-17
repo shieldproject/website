@@ -4,27 +4,31 @@ meta:
   target: shield@pipes
   url:    https://pipes.starkandwayne.com
 
+  pws:
+    username: ((pws.username))
+    password: ((pws.password))
+    org:      starkandwayne
+    space:    shieldproject
+    api:      https://api.run.pivotal.io
+
   github:
     website:
       uri: git@github.com:shieldproject/website
       branch: master
-      private_key:  (( vault "secret/pipelines/github/starkandwayne/shield-bot:private" ))
-      access_token: (( vault "secret/pipelines/github/starkandwayne/shield-bot:access_token" ))
-
-    starkandwayne:
-      access_token: (( vault "secret/pipelines/github/starkandwayne/shield-bot:access_token" ))
+      private_key:  ((github.private_key))
+      access_token: ((github.access_token))
 
     shield:
-      uri: git@github.com:starkandwayne/shield
+      uri: git@github.com:shieldproject/shield
       branch: master
-      private_key:  (( vault "secret/pipelines/github/starkandwayne/shield-bot:private" ))
-      access_token: (( vault "secret/pipelines/github/starkandwayne/shield-bot:access_token" ))
+      private_key:  ((github.private_key))
+      access_token: ((github.access_token))
 
   shout:
     topic:    (( grab meta.name ))
-    url:      http://10.200.131.1:7109
-    username: ops
-    password: (( vault "secret/buffalo/lab/concourse/shout/ops:password" ))
+    url:      ((shout.url))
+    username: ((shout.username))
+    password: ((shout.password))
 
     metadata:
       build-team-name:     $BUILD_TEAM_NAME
@@ -82,8 +86,8 @@ jobs:
             args: []
           params:
             CF_API_URL:  https://api.run.pivotal.io
-            CF_USERNAME: (( vault "secret/pivotal/bot:username" ))
-            CF_PASSWORD: (( vault "secret/pivotal/bot:password" ))
+            CF_USERNAME: ((pws.username))
+            CF_PASSWORD: ((pws.password))
             CF_ORG:      starkandwayne
             CF_SPACE:    shieldproject
             REPO_ROOT:   changes
@@ -228,9 +232,9 @@ resources:
   - name: releases
     type: github-release
     source:
-      user:         starkandwayne
+      user:         shieldproject
       repository:   shield
-      access_token: (( grab meta.github.starkandwayne.access_token ))
+      access_token: (( grab meta.github.shield.access_token ))
 
   - name: notify
     type: shout-notification
