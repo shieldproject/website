@@ -9,7 +9,6 @@ use Verse::Object::Page;
 use File::Find;
 use List::Util qw/max/;
 use JSON::PP qw/decode_json/;
-use Digest::SHA1 qw/sha1_hex/;
 
 dir "{site}";
 copy "{theme}/assets/*"  if exist "{theme}/assets";
@@ -21,9 +20,8 @@ find sub {
 	my $n = $File::Find::name;
 	$n =~ s|^$assets/||;
 	$n =~ s/[^a-z0-9]+/-/g;
-	open my $fh, "<", $File::Find::name;
-	verse->{site}{cache}{$n} = sha1_hex(do { local $/; <$fh> });
-	close $fh;
+	chomp(my $sha = qx(sha1sum $File::Find::name)); $sha =~ s/\s+.*//;
+	verse->{site}{cache}{$n} = $sha;
 }, $assets;
 
 if (exist "{root}/docs") {
