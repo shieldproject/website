@@ -43,7 +43,8 @@ fi
 
 header "Building Docs"
 pushd shield-checked-out
-	cpan -i -T Text::Markdown < /dev/null
+	# see https://gist.github.com/vifo/2718520
+	perl -MCPAN -e 'foreach (@ARGV) { CPAN::Shell->rematein("notest", "install", $_) }' Text::Markdown </dev/null
 	./bin/mkdocs --version $VERSION \
 		--docroot /docs/$VERSION \
 		--output $BASE_DIR/$REPO_ROOT/docs/$VERSION \
