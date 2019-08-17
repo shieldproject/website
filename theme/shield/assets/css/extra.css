@@ -1,4 +1,0 @@
-@media print {
-  header, footer { display: none; }
-  section#top { background: none; }
-}
