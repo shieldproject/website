@@ -569,7 +569,7 @@ tt, code, kbd, samp, var {
   .band img {
     height: auto;
     max-width: 50vw;
-    max-height: 60vh; }
+    object-fit: contain; }
   .band.github {
     background-color: #000;
     color: #fff; }
