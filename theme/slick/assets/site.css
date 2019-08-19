@@ -437,7 +437,8 @@ footer .copyright {
     background-size: contain;
     position: relative; }
   header.top img {
-    visibility: hidden; }
+    visibility: hidden;
+    max-width: 50%; }
   header.top nav {
     flex-direction: column; }
   div.hero {
