@@ -567,13 +567,15 @@ tt, code, kbd, samp, var {
     min-width: 30vw;
     max-width: 33em; }
   .band img {
-    height: 100%;
-    max-width: 50vw; }
+    height: auto;
+    max-width: 50vw;
+    max-height: 60vh; }
   .band.github {
     background-color: #000;
     color: #fff; }
     .band.github img {
-      max-width: 241px; }
+      max-width: 241px;
+      max-height: 235px; }
     .band.github a, .band.github h2 span {
       color: yellow;
       border-color: yellow; }
@@ -582,7 +584,8 @@ tt, code, kbd, samp, var {
     color: #fff;
     flex-direction: row-reverse; }
     .band.trello img {
-      max-width: 316px; }
+      max-width: 316px;
+      max-height: 300px; }
     .band.trello a, .band.trello h2 span {
       color: yellow;
       border-color: yellow; }
