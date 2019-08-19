@@ -117,15 +117,8 @@ div.hero h2
   font-weight: bold
   margin-bottom: 24px
 
-div.hero button
-  background-color: $primary-color
-  color: #fff
-  font-weight: bold
-  font-size: 24px
-  border-radius: 12px
-  padding: 12px
-  border: none
-  cursor: pointer
+div.hero a.button
+  box-shadow: none;
 
 
 
@@ -311,6 +304,7 @@ div.cta button
 
 .content > div pre code
   display: block
+  overflow: auto
   margin: 2em 0 2em -2em
   padding: 1em
   font-size: 70%
@@ -489,5 +483,14 @@ footer .copyright
     flex-direction: column
   footer .g > .x3
     width: 100%
+  footer nav li::marker
+    padding-right: 2px
+
+@media only screen and (max-width: 400px)
+  div.hero
+    h1
+      font-size: 80px
+    h2
+      font-size: 24px
 
 @import "overrides.sass"
