@@ -85,11 +85,11 @@ jobs:
             path: ./changes/ci/scripts/build
             args: []
           params:
-            CF_API_URL:  https://api.run.pivotal.io
-            CF_USERNAME: ((pws.username))
-            CF_PASSWORD: ((pws.password))
-            CF_ORG:      starkandwayne
-            CF_SPACE:    shieldproject
+            CF_API_URL:  (( grab meta.pws.api ))
+            CF_USERNAME: (( grab meta.pws.username ))
+            CF_PASSWORD: (( grab meta.pws.password ))
+            CF_ORG:      (( grab meta.pws.org ))
+            CF_SPACE:    (( grab meta.pws.space ))
             REPO_ROOT:   changes
             REPO_OUT:    pushme
             BRANCH:      (( grab meta.github.website.branch ))
@@ -111,12 +111,13 @@ jobs:
         params:
           rebase: true
           repository: pushme/changes
+
   - name: staging
     plan:
-      - aggregate:
-        -  get: code
-           passed: [build]
-           trigger: true
+      - in_parallel:
+        - get: code
+          passed: [build]
+          trigger: true
       - task: build
         config:
           platform: linux
@@ -131,11 +132,11 @@ jobs:
             path: ./code/ci/scripts/stage
             args: []
           params:
-            CF_API_URL:  https://api.run.pivotal.io
-            CF_USERNAME: (( vault "secret/pivotal/bot:username" ))
-            CF_PASSWORD: (( vault "secret/pivotal/bot:password" ))
-            CF_ORG:      starkandwayne
-            CF_SPACE:    shieldproject
+            CF_API_URL:  (( grab meta.pws.api ))
+            CF_USERNAME: (( grab meta.pws.username ))
+            CF_PASSWORD: (( grab meta.pws.password ))
+            CF_ORG:      (( grab meta.pws.org ))
+            CF_SPACE:    (( grab meta.pws.space ))
             MANIFEST:    manifest-stage.yml
             REPO_ROOT:   code
         on_success:
@@ -161,7 +162,7 @@ jobs:
 
   - name: prod
     plan:
-      - aggregate:
+      - in_parallel:
         - { get: code, passed: [staging] }
       - task: build
         config:
@@ -177,11 +178,11 @@ jobs:
             path: ./code/ci/scripts/stage
             args: []
           params:
-            CF_API_URL:  https://api.run.pivotal.io
-            CF_USERNAME: (( vault "secret/pivotal/bot:username" ))
-            CF_PASSWORD: (( vault "secret/pivotal/bot:password" ))
-            CF_ORG:      starkandwayne
-            CF_SPACE:    shieldproject
+            CF_API_URL:  (( grab meta.pws.api ))
+            CF_USERNAME: (( grab meta.pws.username ))
+            CF_PASSWORD: (( grab meta.pws.password ))
+            CF_ORG:      (( grab meta.pws.org ))
+            CF_SPACE:    (( grab meta.pws.space ))
             MANIFEST:    manifest.yml
             REPO_ROOT:   code
         on_success:
@@ -243,6 +244,7 @@ resources:
       url:      (( grab meta.shout.url ))
       username: (( grab meta.shout.username ))
       password: (( grab meta.shout.password ))
+
   - name: shield
     type: git
     source:
