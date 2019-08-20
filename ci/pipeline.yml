@@ -43,11 +43,9 @@ jobs:
   - name: build
     plan:
       - in_parallel:
-        - get: changes
-          trigger: true
-        - get: releases
-          trigger: true
-        - get: shield
+        - { get: changes }
+        - { get: releases, trigger: true }
+        - { get: shield }
       - task: checkout-tag
         config:
           platform: linux
@@ -85,11 +83,6 @@ jobs:
             path: ./changes/ci/scripts/build
             args: []
           params:
-            CF_API_URL:  (( grab meta.pws.api ))
-            CF_USERNAME: (( grab meta.pws.username ))
-            CF_PASSWORD: (( grab meta.pws.password ))
-            CF_ORG:      (( grab meta.pws.org ))
-            CF_SPACE:    (( grab meta.pws.space ))
             REPO_ROOT:   changes
             REPO_OUT:    pushme
             BRANCH:      (( grab meta.github.website.branch ))
@@ -107,18 +100,15 @@ jobs:
             message: website build job '$BUILD_JOB_NAME' failed.
             ok:      no
             link:    (( grab meta.shout.links.build ))
-      - put: code
+      - put: master@github
         params:
           rebase: true
           repository: pushme/changes
 
   - name: staging
     plan:
-      - in_parallel:
-        - get: code
-          passed: [build]
-          trigger: true
-      - task: build
+      - { get: staging@github, trigger: true }
+      - task: deploy
         config:
           platform: linux
           image_resource:
@@ -127,7 +117,8 @@ jobs:
               repository: huntprod/verse
               tag:        latest
           inputs:
-            - name: code
+            - name: staging@github
+              path: code
           run:
             path: ./code/ci/scripts/stage
             args: []
@@ -157,14 +148,13 @@ jobs:
         params:
           topic:   (( grab meta.shout.topic ))
           method:  announce
-          message: Changes deployed to the staging site.  Please review them and then trigger the `prod` job in the pipeline.
+          message: Changes deployed to the staging site.  Please review them and then merge origin/staging → origin/master.
           link:    (( grab meta.shout.links.pipeline ))
 
-  - name: prod
+  - name: production
     plan:
-      - in_parallel:
-        - { get: code, passed: [staging] }
-      - task: build
+      - { get: master@github, trigger: true }
+      - task: deploy
         config:
           platform: linux
           image_resource:
@@ -173,7 +163,8 @@ jobs:
               repository: huntprod/verse
               tag:        latest
           inputs:
-            - name: code
+            - name: master@github
+              path: code
           run:
             path: ./code/ci/scripts/stage
             args: []
@@ -223,11 +214,18 @@ resources:
       ignore_paths:
         - htdocs
 
-  - name: code
+  - name: master@github
     type: git
     source:
       uri:         (( grab meta.github.website.uri ))
-      branch:      (( grab meta.github.website.branch ))
+      branch:      (( grab meta.github.website.master || "master" ))
+      private_key: (( grab meta.github.website.private_key ))
+
+  - name: staging@github
+    type: git
+    source:
+      uri:         (( grab meta.github.website.uri ))
+      branch:      (( grab meta.github.website.staging || "staging" ))
       private_key: (( grab meta.github.website.private_key ))
 
   - name: releases

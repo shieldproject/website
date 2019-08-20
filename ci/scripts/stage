@@ -16,10 +16,56 @@ curl -sL 'https://packages.cloudfoundry.org/stable?release=linux64-binary&versio
 mv cf /usr/bin/cf
 chmod 0755 /usr/bin/cf
 
-export CF_DIAL_TIMEOUT=30
-header "Publishing $(spruce json cf/$MANIFEST | jq -r '.applications[0].routes[0].route') via cf manifest cf/$MANIFEST"
 cd $REPO_ROOT
+if [[ ! -f cf/$MANIFEST ]]; then
+  echo "!!! cf/$MANIFEST Cloud Foundry deployment manifest not found."
+  exit 1
+fi
+
+header "Publishing $(spruce json cf/$MANIFEST | jq -r '.applications[0].routes[0].route') via cf manifest cf/$MANIFEST"
+
+UG_APP_NAME_OLD=$(spruce json cf/$MANIFEST | jq -r '.applications[0].name')
+UG_APP_NAME_NEW="new-${UG_APP_NAME_OLD}"
+
+export CF_DIAL_TIMEOUT=30
 cf api $CF_API_URL
 cf auth $CF_USERNAME "$CF_PASSWORD"
 cf target -o $CF_ORG -s $CF_SPACE
-cf push -f cf/$MANIFEST
+
+echo "[ci/cd] pushing $UG_APP_NAME_NEW (blue) app, with no routes"
+cf delete -f $UG_APP_NAME_NEW || true
+cf push -f cf/$MANIFEST $UG_APP_NAME_NEW --no-route
+echo "[ci/cd] mapping routes"
+for route in $(spruce json cf/$MANIFEST | jq -r '.applications[0].routes[].route'); do
+  echo "[ci/cd] mapping route '$route'"
+  opts=
+  ok=0
+  for domain in $(cf domains | grep owned | awk '{print $1}' | sort); do
+    if [[ $route == $domain ]]; then
+      ok=1
+      opts="$domain"
+      break
+    elif [[ ${route%%.$domain} != $route ]]; then
+      ok=1
+      opts="$domain --hostname ${route%%.$domain}"
+      break
+    fi
+  done
+  if [[ $ok == 0 ]]; then
+    echo "no domain found for route '$route'"
+    exit 1
+  fi
+  cf map-route   $UG_APP_NAME_NEW $opts
+  cf unmap-route $UG_APP_NAME_OLD $opts
+done
+echo "[ci/cd] replacing $UG_APP_NAME_OLD (green) with $UG_APP_NAME_NEW (blue) app"
+cf delete -f $UG_APP_NAME_OLD
+cf rename $UG_APP_NAME_NEW $UG_APP_NAME_OLD
+
+echo
+echo
+cf apps
+echo
+echo
+echo DONE
+exit 0

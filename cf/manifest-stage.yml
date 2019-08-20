@@ -1,7 +1,7 @@
 applications:
   - name: staging
     memory: 32M
-    instances: 2
+    instances: 1
     buildpack: staticfile_buildpack
     path: ../htdocs
     routes:
