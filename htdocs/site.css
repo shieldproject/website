@@ -517,3 +517,14 @@ footer {
   .band.trello a, .band.trello h2 span {
     color: yellow;
     border-color: yellow; }
+
+.blog.content.nosidebar div:nth-child(1) {
+  display: none; }
+
+.blog.content.nosidebar div:nth-child(2) {
+  width: 100%; }
+
+.blog.content .meta {
+  opacity: 0.6;
+  margin: 0;
+  font-size: 70%; }

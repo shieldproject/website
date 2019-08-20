@@ -2,16 +2,18 @@
 
   <div class="header">
     <div>
-      <h1>[% article.attrs.title %]</h1>
-      [% if article.attrs.subtitle %]<h2>[% article.attrs.subtitle %]</h2>[% end %]
+      <h1>The SHIELD Blog</h1>
     </div>
   </div>
 
-  <div class="content">
+  <div class="blog content [% article.attrs.class %]">
     <div class="autotoc">
     </div>
 
     <div data-autotoc-headings="h2" data-autotoc-nav=".autotoc">
+      <h1>[% article.attrs.title %]</h1>
+      <p class="meta">[% article.attrs.dated %]</p>
+
       [% article.attrs.body %]
     </div>
   </div>

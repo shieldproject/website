@@ -1,0 +1,51 @@
+# vim:ft=markdown:tw=76
+title:     (Re)Starting the SHIELD Roadmap Calls
+permalink: restarting-the-shield-roadmap-calls
+format:    markdown
+featured:  yes
+dated:     Aug 20 2019
+author:    jhunt
+
+class:     nosidebar
+
+abstract: |
+  In the summer of 2018, the SHIELD Team started holding monthly
+  _Roadmap Calls_ to keep interested parties updated and involved in the
+  goings-on of SHIELD.  At some point, we stopped holding those.  Now, we're
+  restarting them again.  Come talk to us!
+
+--- |-
+In the summer of 2018, the SHIELD Team started holding monthly
+_Roadmap Calls_ to keep interested parties updated and involved in the
+goings-on of SHIELD.  At some point, we stopped holding those.  Now, we're
+restarting them again.  Come talk to us!
+
+--- |-
+This month (August of 2019), we resumed holding regularly scheduled _Roadmap
+Calls_, where the developers and release engineers working on SHIELD
+provide updates, explain where we are at in the roadmap, where we want to
+go, and answer questions form anyone who pops in.
+
+We'll be holding these calls on the **4th Thursday** of every month at **11am
+EDT**.  More details can be found on the [Community Roadmap Call page][1]
+(on shieldproject.io).
+
+We will be continuing our policy of _not_ recording these calls.  We've
+watched recorded community board calls and they are super boring.  The team
+also feels that recording calls can give some people undue apprehension wth
+respect to getting involved, and may actively deter some from participating.
+
+We _will_ continue providing written meeting minutes (probably accompanied
+by blog posts) on the [shieldproject.io][1] website.
+
+We hope that these calls help to put faces to names, and remind everyone
+involves that the people who create SHIELD and the people who use SHIELD
+are just that: people.  It's all too easy to get lost in the clean lines of
+GitHub and forget that behind those screen names are living, breathing human
+beings.
+
+We also want to have a forum in which to discuss the direction of the
+project, its velocity in pursuing that direction, and more.  So [stop on
+in][1], say hi, and join in the fun!
+
+[1]: https://shieldproject.io/community/call/
