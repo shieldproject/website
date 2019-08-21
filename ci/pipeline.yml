@@ -13,14 +13,15 @@ meta:
 
   github:
     website:
-      uri: git@github.com:shieldproject/website
-      branch: master
+      uri:          git@github.com:shieldproject/website
+      master:       master
+      staging:      staging
       private_key:  ((github.private_key))
       access_token: ((github.access_token))
 
     shield:
-      uri: git@github.com:shieldproject/shield
-      branch: master
+      uri:          git@github.com:shieldproject/shield
+      branch:       master
       private_key:  ((github.private_key))
       access_token: ((github.access_token))
 
@@ -85,7 +86,7 @@ jobs:
           params:
             REPO_ROOT:   changes
             REPO_OUT:    pushme
-            BRANCH:      (( grab meta.github.website.branch ))
+            BRANCH:      (( grab meta.github.website.master ))
         on_success:
           put: notify
           params:
@@ -209,7 +210,7 @@ resources:
     type: git
     source:
       uri:         (( grab meta.github.website.uri ))
-      branch:      (( grab meta.github.website.branch ))
+      branch:      (( grab meta.github.website.master ))
       private_key: (( grab meta.github.website.private_key ))
       ignore_paths:
         - htdocs
@@ -218,14 +219,14 @@ resources:
     type: git
     source:
       uri:         (( grab meta.github.website.uri ))
-      branch:      (( grab meta.github.website.master || "master" ))
+      branch:      (( grab meta.github.website.master ))
       private_key: (( grab meta.github.website.private_key ))
 
   - name: staging@github
     type: git
     source:
       uri:         (( grab meta.github.website.uri ))
-      branch:      (( grab meta.github.website.staging || "staging" ))
+      branch:      (( grab meta.github.website.staging ))
       private_key: (( grab meta.github.website.private_key ))
 
   - name: releases
