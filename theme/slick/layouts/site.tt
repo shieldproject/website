@@ -29,7 +29,7 @@
 <title>[% article.attrs.title %] - [% site.title %]</title>
 
 [% else %]
-<title>[% site.title %]</title>
+<title>[% if extra_title %][% extra_title %] - [% end %][% site.title %]</title>
 
 [% end %]
 <link rel="icon" href="/favicon.ico">

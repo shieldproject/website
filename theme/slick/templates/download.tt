@@ -1,3 +1,4 @@
+[% extra_title = 'Download' -%]
   <div class="header">
     <div>
       <h1>Download SHIELD</h1>

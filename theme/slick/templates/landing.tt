@@ -1,3 +1,4 @@
+[% extra_title = page.attrs.title -%]
 [% for band in page.attrs.bands -%]
   [% if band.type == "hero" %]s
   <div class="hero">

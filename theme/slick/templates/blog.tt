@@ -1,3 +1,4 @@
+[% extra_title = 'Blog' -%]
   <div class="header">
     <div>
       <h1>SHIELD Blog</h1>
