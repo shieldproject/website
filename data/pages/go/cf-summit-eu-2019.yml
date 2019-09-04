@@ -1,0 +1,59 @@
+---
+# vim:ft=markdown:tw=76
+title:    SHIELD ♥ Cloud Foundry
+url:      /go/cf-summit-eu-2019/index.html
+format:   markdown
+template: landing.tt
+
+bands:
+  - type: hero
+    title:    SHIELD 8.4 Is Out!
+  - type: field
+    body: |
+      ## Just in Time for CFEU 2019!
+
+      The SHIELD Project is pleased to announce the immediate availability
+      of version 8.4.1 of the cloud-native data protection solution for
+      Cloud Foundry and Kubernetes!
+
+      <p style="font-size: 20vh; text-align: center">🎉</p>
+
+  - type: field
+    style: "margin: 0"
+    body: |
+      <img src="/mkt/cfeu2019.jpg" style="max-width: 100%; width: 100%">
+
+  - type: field
+    body: |
+      ## Battle-Tested
+
+      In this latest version of SHIELD we did some serious stress-testing of
+      the inner bits and bobs, and flushed out a bunch of oddball deadlocks
+      that, while not _likely_ to occur in production, are at least
+      possible.
+
+      From the database layer to the websockets-infused message bus, things
+      are a whole lot more stable in 8.4.1, in the face of poor network
+      conditions, misbehaving clients, and even malicious actors!
+
+  - type: field
+    style: "color: #fff; background-color: #0067ac; margin: 0; padding: 20vh 20vw"
+    body: |
+      ## Now With etcd Support
+
+      SHIELD can now back up your etcd key-value stores.  Perfect
+      for those Kubernetes clusters you've been meaning to backup...
+
+  - type: field
+    body: |
+      ## Production Ready
+
+      Whether you want to protect data in your Cloud Foundry operstions
+      deployments, Kubernetes data services, or your application workloads,
+      SHIELD might be a good fit for you!
+
+  - type: field
+    style: "margin-top: 0;"
+    body: |
+      <img src="/brand/4x/shield-s1s@4x.png" style="max-width: 100%; width: 100%">
+

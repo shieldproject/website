@@ -1,0 +1,31 @@
+[% for band in page.attrs.bands -%]
+  [% if band.type == "hero" %]s
+  <div class="hero">
+    <div>
+      <h1>[% band.title %]</h1>
+      [% if band.subtitle %]<h2>[% band.subtitle %]</h2>[% end %]
+      [% if band.cta %]<a class="button" href="[% band.cta.url %]">[% band.cta.text %]</a>[% end %]
+    </div>
+  </div>
+  [% else if band.type == "x3" %]
+  <div class="band-x3">
+    [% for item in band.items %]
+    <li>
+      <i></i>
+      <h2>[% item.title %]</h2>
+      <p>[% item.body %]</p>
+    </li>
+    [% end %]
+  </div>
+  [% else if band.type == "cta" %]
+  <div class="cta">
+    <h2>[% band.cta.title %]</span></h2>
+    [% filter markdown %][% band.cta.body %][% end %]
+    <a class="button" href="[% band.cta.url %]">[% band.cta.text %]</a>
+  </div>
+  [% else if band.type == "field" %]
+  <div class="cta"[% if band.style %] style="[% band.style %]"[% end %]>
+    [% filter markdown %][% band.body %][% end %]
+  </div>
+  [% end %]
+[% end %]
