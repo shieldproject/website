@@ -6,9 +6,11 @@ format:   markdown
 template: call.tt
 
 next:
+  - id:   20190926
+    date: September 26th, 2019
+previous:
   - id:   20190822
     date: August 22nd, 2019
-previous:
   - id:   20180913
     date: September 2018
   - id:   20180809
@@ -19,13 +21,13 @@ previous:
 
 # Joining the Call
 
-On the second Thursday of every month, we hold a conference call to discuss
+On the fourth Thursday of every month, we hold a conference call to discuss
 the SHIELD project, and its overall direction.  Topics include latest news,
 development progress, and future direction.
 
 The next SHIELD Roadmap Call is
 <br>
-**Thursday, August 22nd** at **11:00am EDT**.
+**Thursday, September 26th** at **11:00am EDT**.
 
 We use zoom: <https://zoom.us/j/7165551212>
 
@@ -36,14 +38,13 @@ You can also call in (the Meeting ID is **716 555 1212**):
 
 Calls are not recorded.
 
-# Agenda for August 22nd, 2019
+# Agenda for September 26th, 2019
 
 1. Introductions
 
 2. Announcements
-   - Resumption of the monthly call (!!)
    - SHIELD v8.5.0
-   - Planned Website Improvements
+   - More Website Content!
 
 3. Development Progress Update
    - [Trello Board][trello] Review
@@ -56,6 +57,48 @@ Calls are not recorded.
 We don't record the roadmap calls, but we do tae copious amounts of notes
 and attempt to summarize them below.  Wouldn't your rather skim a report
 _on_ a meeting, rather than watch a static recording _of_ the meeting??
+
+<h2 id="20190822">August 22nd, 2019</h2>
+
+These are the notes from our fourth community call, held at 11:00am EDT on
+Thursday, August 22nd, 2019.
+
+## Rebooting the Roadmap Call
+
+Sometimes life happens, and gets in the way of other things.  We're okay now
+though, so the SHIELD Team is going to resume the Roadmap Calls monthly.
+
+## SHIELD v8.4 is out &mdash; v8.5 On The Horizon
+
+The SHIELD Team released [version 8.4](v8.4) of SHIELD on August 9th, and is
+busily preparing for a mid-September release of [version 8.5](v8.5-mile).
+
+[v8.4]:      https://github.com/shieldproject/shield/releases/tag/v8.4.0
+[v8.5-mile]: https://github.com/shieldproject/shield/milestone/5
+
+## etcd!
+
+Stark & Wayne sponsored an internship over the Summer of 2019 in which four
+enterprising University of Buffalo CS Students built a backup plugin for
+CoreOS' etcd key-value system.  Congratulations to Sriniketh, Pururva,
+Jason, and Naveed!
+
+## Website Redesign
+
+This is our website, but you may not recognize it.  We just got a nifty
+new redesign.  Now that the day-to-day annoyance of modifying the website
+content is more well-in-hand, the team expects to start putting up more and
+more blog posts and documentation!
+
+## Blogs, Blogs, and More Docs!
+
+The SHIELD Team has been putting forth a concerted effort to write more
+approachable "first timer" content to get people interested in deploying
+SHIELD to protect their valuable cloud data assets.
+
+Hopefully, by the time of our next Communty Call (September 26th), we'll
+have something more concrete to show off.
+
 
 <h2 id="20180913">September 13th, 2018</h2>
 
