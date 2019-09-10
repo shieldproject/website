@@ -104,7 +104,12 @@
       "notes": "# New Features\n\n- SHIELD now features a new `etcd` plugin for backing up and restoring your etcd key-value stores.  It supports single- and multi-node clusters and can authenticate via roles and X.509 certificates.  If you want, you can restrict the backup to a subset of the etcd tree (via a prefix setting).  It also supports _additive restore_ for situations that need it. You can also do a clean restore of the etcd cluster.\n\n# Improvements\n\n- The `cancel`, `task`, `restore-archive` and `purge-archive`\n  commands in the SHIELD CLI now properly support short UUIDs,\n  like all other commands.\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.4.0",
       "version": "8.4.0"
+    },
+    {
+      "notes": "# Improvements\n\n* Added a /v2/mbus/status API endpoint that returns metrics about the state of\n\tthe event message bus. This allows for some introspection into what websocket\n\tconnections may be doing at that moment.\n* The UI now has less wasted space when displaying a bunch of cards for data\n\tsystems.\n* Implemented a configurable timeout when making SSH connections to agents. A\n\tlower default now also keeps dead agents from taking up large amounts of\n\tscheduler worker time.\n* SHIELD now tracks when the last time an agent erred was.\n* Hidden agents are now sorted under a separate header in the web UI.\n* Hiding, showing, and deleting agents can now be done from the CLI.\n\n\n# Bug Fixes\n\n* We no longer leak the file descriptors and goroutines for detached websocket\n\tclients\n* Workers can no longer be starved out when sending events to the message bus\n\tif the receiver of the message bus is misbehaving because these event sends\n\tare now asynchronous.\n* Fixed a bug where a worker could derefence a nil pointer when certain\n\tdatabase selects returned no rows.\n* The database layer now has more stringent locking, which both avoids certain\n\tthreads locking each other out in SQLite, and also makes certain series of\n\tdatabase operations effectively atomic.\n* A couple of fixups would deadlock themselves out of the database and prevent\n\tfixups from actually running. Now they don't.\n* Fixups now only run once instead of on every startup, like nature intended.\n* The agent \"Last Checked At\" timestamp was being updated when the task was\n  pulled off the scheduler, whether or not the agent was actually checked\n  (due to other potential errors).\n* Named a fixup without a name.\n* Agents that failed their status checks are now once again marked as such.\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.4.1",
+      "version": "8.4.1"
     }
   ],
-  "latest": "8.4.0"
+  "latest": "8.4.1"
 }

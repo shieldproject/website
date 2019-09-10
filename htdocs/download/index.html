@@ -37,7 +37,7 @@
     <div>
       <nav>
         <h2>Latest Stable</h2>
-        <li><a href="#latest">SHIELD v8.4.0</a></li>
+        <li><a href="#latest">SHIELD v8.4.1</a></li>
         <h2>Historic Releases</h2>
         
         <li><a href="#v8.3.0">8.3.0</a></li>
@@ -51,23 +51,48 @@
       </nav>
     </div>
 
-    <div id="v8.4.0">
-      <h1 id="latest">SHIELD v8.4.0</h1>
+    <div id="v8.4.1">
+      <h1 id="latest">SHIELD v8.4.1</h1>
       
-        <h2>New Features</h2>
+        <h2>Improvements</h2>
 
 <ul>
-<li>SHIELD now features a new <code>etcd</code> plugin for backing up and restoring your etcd key-value stores.  It supports single- and multi-node clusters and can authenticate via roles and X.509 certificates.  If you want, you can restrict the backup to a subset of the etcd tree (via a prefix setting).  It also supports <em>additive restore</em> for situations that need it. You can also do a clean restore of the etcd cluster.</li>
+<li>Added a /v2/mbus/status API endpoint that returns metrics about the state of
+the event message bus. This allows for some introspection into what websocket
+connections may be doing at that moment.</li>
+<li>The UI now has less wasted space when displaying a bunch of cards for data
+systems.</li>
+<li>Implemented a configurable timeout when making SSH connections to agents. A
+lower default now also keeps dead agents from taking up large amounts of
+scheduler worker time.</li>
+<li>SHIELD now tracks when the last time an agent erred was.</li>
+<li>Hidden agents are now sorted under a separate header in the web UI.</li>
+<li>Hiding, showing, and deleting agents can now be done from the CLI.</li>
 </ul>
 
-<h2>Improvements</h2>
+<h2>Bug Fixes</h2>
 
 <ul>
-<li>The <code>cancel</code>, <code>task</code>, <code>restore-archive</code> and <code>purge-archive</code>
-commands in the SHIELD CLI now properly support short UUIDs,
-like all other commands.</li>
+<li>We no longer leak the file descriptors and goroutines for detached websocket
+clients</li>
+<li>Workers can no longer be starved out when sending events to the message bus
+if the receiver of the message bus is misbehaving because these event sends
+are now asynchronous.</li>
+<li>Fixed a bug where a worker could derefence a nil pointer when certain
+database selects returned no rows.</li>
+<li>The database layer now has more stringent locking, which both avoids certain
+threads locking each other out in SQLite, and also makes certain series of
+database operations effectively atomic.</li>
+<li>A couple of fixups would deadlock themselves out of the database and prevent
+fixups from actually running. Now they don't.</li>
+<li>Fixups now only run once instead of on every startup, like nature intended.</li>
+<li>The agent "Last Checked At" timestamp was being updated when the task was
+pulled off the scheduler, whether or not the agent was actually checked
+(due to other potential errors).</li>
+<li>Named a fixup without a name.</li>
+<li>Agents that failed their status checks are now once again marked as such.</li>
 </ul>
-        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.4.0" target="_blank">Download v8.4.0</a>
+        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.4.1" target="_blank">Download v8.4.1</a>
       
 
       
