@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>Documentation - SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/site.css?d51129b9dca47a3183236d6f49a533636168b196">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+</head>
+<body>
+  <header class="top">
+    <img src="/logo.png?6eed3f85a6b3b055aec7dfb67c8cd7129acc1ab7">
+    <nav>
+      <li><a href="/">Home</a></li>
+      <li><a href="/download/">Download</a></li>
+      <li><a href="/community/">Community</a></li>
+      <li><a href="/docs/latest/ops/">Docs</a></li>
+      <!--li><a href="/docs/latest/dev/">Developers</a></li-->
+    </nav>
+  </header>
+
+  <div class="header">
+    <div>
+      <h1>SHIELD Documentation</h1>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="autotoc-nav">
+    </div>
+
+    <div data-autotoc-headings="h2" data-autotoc-title="Table of Contents" data-autotoc-nav=".autotoc-nav">
+      <h1>SHIELD Development</h1>
+
+<p>This document contains notes on SHIELD, Golang, and life in
+general, that are only of interest to people writing SHIELD code
+itself.</p>
+
+<h2>Golang Dependencies</h2>
+
+<p>We have ditched <code>godep</code> in favor of <code>govendor</code>.  You can install
+<code>govendor</code> like this:</p>
+
+<pre><code>go get github.com/kardianos/govendor
+go install github.com/kardianos/govendor
+</code></pre>
+
+<p>To <strong>remove a dependency</strong> that we no longer need:</p>
+
+<pre><code>govendor remove github.com/markbates/goth/gothic
+</code></pre>
+
+<p>To <strong>add a new dependency</strong> manually:</p>
+
+<pre><code>govendor add github.com/jhunt/go-cli
+</code></pre>
+
+<p>To <strong>add all new dependencies, automagically</strong>:</p>
+
+<pre><code>govendor add +external
+</code></pre>
+
+<p>To <strong>prune the vendored dependencies</strong>:</p>
+
+<pre><code>govendor remove +unused
+</code></pre>
+
+<p>To <strong>see what is currently unnused</strong>:</p>
+
+<pre><code>govendor list +unused
+</code></pre>
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="g">
+      <div class="x3">
+        <img src="/swlogo.png?0b567bdcee59ac95e3eaf667ec543ebc1631d6c0">
+
+        <p>SHIELD is maintained by Stark &amp; Wayne,
+        a leading Cloud-Native consulting firm.</p>
+      </div>
+
+      <div class="x3">
+        <nav>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/community/">Community</a></li>
+          <li><a href="/docs/latest/ops/">Docs</a></li>
+          <!--li><a href="/docs/latest/dev/">Developers</a></li-->
+        </nav>
+      </div>
+
+      <div class="x3">
+      </div>
+    </div>
+
+    <div class="copyright">
+      <p>Copyright &copy; 2019 The SHIELD Authors.  All rights reserved.</p>
+    </div>
+  </footer>
+  <script type="text/javascript" src="/site.js?d2112e355882784cf7f38561cf3ccb0bd5da3111"></script>
+</body>
+</html>

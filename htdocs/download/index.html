@@ -37,8 +37,10 @@
     <div>
       <nav>
         <h2>Latest Stable</h2>
-        <li><a href="#latest">SHIELD v8.4.1</a></li>
+        <li><a href="#latest">SHIELD v8.5.0</a></li>
         <h2>Historic Releases</h2>
+        
+        <li><a href="#v8.4.1">8.4.1</a></li>
         
         <li><a href="#v8.3.0">8.3.0</a></li>
         
@@ -51,10 +53,60 @@
       </nav>
     </div>
 
-    <div id="v8.4.1">
-      <h1 id="latest">SHIELD v8.4.1</h1>
+    <div id="v8.5.0">
+      <h1 id="latest">SHIELD v8.5.0</h1>
       
         <h2>Improvements</h2>
+
+<ul>
+<li><p>The <code>shield status</code> command is twice as pretty and three times
+as useful.</p></li>
+<li><p>Cloud Storage detail pages in the web interface now show a
+timeline similar to the one shown for Data Systems, so that
+SHIELD operators have an easier time of troubleshooting failing
+storage configurations.</p></li>
+<li><p>The SHIELD CLI now displays task+log data for the last
+test-store task of a given store (for <code>shield store X</code> and
+<code>shield global-store Y</code>), to assist in troubleshooting failing
+storage configurations.</p></li>
+<li><p>Operators now have a web interface and some CLI commands for
+inspecting the state of SHIELD Data Fixups, and re-running them
+(if / when necessary).</p></li>
+<li><p>The <code>mongo</code> target plugin can now have options applied
+individually to just <code>mongodump</code> or <code>mongorestore</code>.</p></li>
+<li><p>Passwords and RSA private keys are now properly obscured in
+the web interface detail pages for both systems and cloud
+storage.  People without rights to see such credentials will
+still see the "REDACTED" string instead; but people with the
+required privilege will instead see the blurred-out obscured
+text that they can hover over to reveal.</p></li>
+<li><p>The <code>shield tasks</code> command can now filter down to only tasks
+that involve a particular tenant or global cloud storage system.</p></li>
+</ul>
+
+<h2>Bug Fixes</h2>
+
+<ul>
+<li><p>Data Fixups will now be properly skipped if they've already been
+applied.  Additionally, names / dates / summaries will be
+updated <em>every time</em> the SHIELD Core boots up, to catch typos
+and mispellings there.</p></li>
+<li><p>The Data System detail page in the web interface no longer has a
+race condition between the start of an AJAX call for the plugin
+configuration details and a <code>shield:navigate</code> away from the
+page.  Other such race conditions involving AJAX should now also
+be fixed.</p></li>
+<li><p>Switching between tenants (with differing levels of access) now
+properly re-renders the sidebar to show your new privileges.</p></li>
+<li><p>The <code>shield job X</code> command now populates the "Status" and
+"Agent" fields, using data in the API responses.</p></li>
+</ul>
+        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.5.0" target="_blank">Download v8.5.0</a>
+      
+
+      
+      <h1 id="v8.4.1">SHIELD v8.4.1</h1>
+      <h2>Improvements</h2>
 
 <ul>
 <li>Added a /v2/mbus/status API endpoint that returns metrics about the state of
@@ -92,9 +144,7 @@ pulled off the scheduler, whether or not the agent was actually checked
 <li>Named a fixup without a name.</li>
 <li>Agents that failed their status checks are now once again marked as such.</li>
 </ul>
-        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.4.1" target="_blank">Download v8.4.1</a>
-      
-
+      <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.4.1" target="_blank">Download v8.4.1 from Github</a>
       
       <h1 id="v8.3.0">SHIELD v8.3.0</h1>
       <h2>Improvements</h2>

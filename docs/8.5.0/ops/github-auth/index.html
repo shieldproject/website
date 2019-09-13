@@ -1,0 +1,195 @@
+<h1>Github Authentication</h1>
+
+<p>Github can be used as an external OAuth2 provider for controlling
+SHIELD authentication and authorizations.  Both public Github
+(github.com) and private Enterprise Github are supported.</p>
+
+<p>All you as a SHIELD site operator need to do is configure the
+SHIELD Core with a new authentication provider backend, and
+register an OAuth Application via the Github web interface.</p>
+
+<h2>Registering a Github OAuth Application</h2>
+
+<p>To start, access the <em>Settings</em> page by expanding the account
+fly-out menu underneath your profile picture, in the top
+right-hand side of the Github web interface:</p>
+
+<p><img src="github2.png" alt="Accessing Settings : Screenshot" /></p>
+
+<p>Then, access the <em>Oauth Apps</em> panel, under the <em>Developer
+Settings</em> header on the left side of the screen:</p>
+
+<p><img src="github3.png" alt="GitHub Setup" /></p>
+
+<p>Then, click on the <em>Register a new application</em> button to bring up
+the form for registering your SHIELD to Github:</p>
+
+<p><img src="github4.png" alt="GitHub Setup" /></p>
+
+<p>Then, just fill out the form:</p>
+
+<!-- FIXME: need better screenshots.
+            less emphasis on navigation,
+            more emphasis on the form to fill out -->
+
+<p>The <code>Authorization callback URL</code> field must be set to:</p>
+
+<pre><code>https://$shield/auth/$identifier/redir
+</code></pre>
+
+<p>Where <code>https://$shield</code> is the address of the SHIELD instance, and
+<code>$identifier</code> is the name you configured the authentication provider
+with, via the SHIELD Core configuration file.</p>
+
+<p>Github will generate a new Client ID and Client Secret.  Take note
+of these, as they are necessary for the next step.</p>
+
+<h2>Configuring SHIELD</h2>
+
+<p>To configure SHIELD to work with Github, you need to add a new
+<em>authentication provider</em> configuration stanza to the SHIELD Core
+configuration file:</p>
+
+<pre><code># ... all the other shield core configuration ...
+
+auth:
+  - identifier: github  # or whatever you used when registering
+    name:       Github
+    backend:    github
+    properties:
+      client_id:      YOUR-GITHUB-CLIENT-ID
+      client_secret:  YOUR-GITHUB-CLIENT-SECRET
+
+      mapping:  []    # more on this later
+</code></pre>
+
+<p>The <code>auth</code> key is a list of all configured authentication
+providers; if your configuration already features other providers,
+like token or UAA, you will just need to append the Github
+configuration to that.</p>
+
+<p>The top-level of each <code>auth</code> item has the following required keys:</p>
+
+<ul>
+<li><p><strong>identifier</strong> - An internal name, used by SHIELD to
+differentiate this authentication provider configuration from all
+of the others.  This is used in the Github Application
+Redirect URL, so it should not be changed lightly.</p></li>
+<li><p><strong>name</strong> - A human-friendly name that will be displayed to
+web and CLI users when they are trying to decide which
+authentication method they wish to use.</p></li>
+<li><p><strong>backend</strong> - What provider backend to use.  For Github, this
+will always be <code>github</code>.</p></li>
+<li><p><strong>properties</strong> - Properties specific to the Github
+authentication provider.  Detailed next.</p></li>
+</ul>
+
+<h3>Configuring Github Authentication Properties</h3>
+
+<p>The <code>properties</code> key has the following sub-keys:</p>
+
+<ul>
+<li><p><strong>client_id</strong> - The Github Client ID for your registered
+OAuth application, available from the Github web interface.</p></li>
+<li><p><strong>client_secret</strong> - The Github Client Secret for your
+registered OAuth application, available from the Github web
+interface.</p></li>
+<li><p><strong>github_endpoint</strong> - (not shown above) An optional URL where
+SHIELD can find the Github endpoint.  This is primarily used
+for Enterprise Github customers who run an isolated,
+on-premise Github.  Public Github users need not set this.</p></li>
+<li><p><strong>mapping</strong> - A list of rules for mapping Github organizations
+and teams to SHIELD tenants and roles.</p></li>
+</ul>
+
+<h3>Mappings</h3>
+
+<p>Each element of the <code>properties.mapping</code> list specifies a rule for
+translating Github's organizations and teams into SHIELD tenants
+and roles.  This rule scheme allows for a great deal of
+flexibility in bridging the two systems, allowing you to mix
+multiple Github orgs into a single SHIELD tenant, split a single
+org into multiple tenants, etc.</p>
+
+<p>The format of each rule is:</p>
+
+<pre><code>- github: Github Organization Name
+  tenant: SHIELD Tenant Name
+  rights:
+    - team: Github Team Name
+      role: SHIELD Role
+    # ... etc ...
+</code></pre>
+
+<p>The <code>github</code> field matches the Github organization name.  If a
+user is found to belong to this organization, the rest of the rule
+is processed.  Processing starts by looking through the list of
+<code>rights</code>, until a match on <code>team</code> to Github team name is found, at
+which point the specified <code>role</code> is assigned to the user, on the
+given <code>tenant</code>.</p>
+
+<p>Here's an example:</p>
+
+<pre><code>auth:
+  - identifier: github
+    name:       Github
+    backend:    github
+    properties:
+      client_id:      YOUR-GITHUB-CLIENT-ID
+      client_secret:  YOUR-GITHUB-CLIENT-SECRET
+
+      mapping:
+        - github: cloudfoundry-community
+          tenant: Cloud Foundry Community
+          rights:
+            - team: Owners
+              role: admin
+            - team: Engineers
+              role: engineer
+            - role: operator
+</code></pre>
+
+<p>In this configuration, SHIELD will assign someone in the <em>Owners</em>
+team of the <em>cloudfoundry-community</em> org to the <em>Cloud Foundry
+Community</em> SHIELD tenant, as an <em>admin</em>.  Members of the
+<em>Engineers</em> Github team (on the same org) who are not in <em>Owners</em>
+will be assigned the <em>engineer</em> role instead.  Everyone else in
+the Github org will be assigned the <em>operator</em> role.</p>
+
+<p>These <code>rights</code> rules are processed until one matches; subsequent
+rules are skipped.</p>
+
+<p>If there is more than one mapping, each of them is tried, in
+order;  this can lead to multiple tenant assignments for a single
+user, which provides a lot of power to the SHIELD site operator.</p>
+
+<p>Tenants that do not already exist in the database, but have been
+defined in the authentication configuration, will be created as
+needed.</p>
+
+<p>Valid values for the <code>role</code> field are:</p>
+
+<ul>
+<li><strong>admin</strong> - Full control over the tenant</li>
+<li><strong>engineer</strong> - Control over the configuration of stores,
+targets, retention policies, and jobs.</li>
+<li><strong>operator</strong> - Control over running jobs, pausing and unpausing
+scheduled jobs, and performing restore operations.</li>
+</ul>
+
+<h3>The SYSTEM Tenant</h3>
+
+<p>There is a special tenant, called the <em>SYSTEM</em> tenant, that exists
+solely to allow SHIELD site operators to assign system-level
+rights and roles to Github users, based on the same rules as
+tenant-level role assignment.</p>
+
+<p>The <em>SYSTEM</em> tenant has its own set of assignable roles:</p>
+
+<ul>
+<li><strong>admin</strong> - Full control over all of SHIELD.</li>
+<li><strong>manager</strong> - Control over tenants and manual role assigments.</li>
+<li><strong>engineer</strong> - Control over shared resources like global storage
+definitions and retention policy templates.</li>
+</ul>
+

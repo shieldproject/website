@@ -1,0 +1,40 @@
+<h1>SHIELD Development</h1>
+
+<p>This document contains notes on SHIELD, Golang, and life in
+general, that are only of interest to people writing SHIELD code
+itself.</p>
+
+<h2>Golang Dependencies</h2>
+
+<p>We have ditched <code>godep</code> in favor of <code>govendor</code>.  You can install
+<code>govendor</code> like this:</p>
+
+<pre><code>go get github.com/kardianos/govendor
+go install github.com/kardianos/govendor
+</code></pre>
+
+<p>To <strong>remove a dependency</strong> that we no longer need:</p>
+
+<pre><code>govendor remove github.com/markbates/goth/gothic
+</code></pre>
+
+<p>To <strong>add a new dependency</strong> manually:</p>
+
+<pre><code>govendor add github.com/jhunt/go-cli
+</code></pre>
+
+<p>To <strong>add all new dependencies, automagically</strong>:</p>
+
+<pre><code>govendor add +external
+</code></pre>
+
+<p>To <strong>prune the vendored dependencies</strong>:</p>
+
+<pre><code>govendor remove +unused
+</code></pre>
+
+<p>To <strong>see what is currently unnused</strong>:</p>
+
+<pre><code>govendor list +unused
+</code></pre>
+
