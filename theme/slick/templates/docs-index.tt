@@ -1,0 +1,21 @@
+[% extra_title = 'Documentation' -%]
+  <div class="header">
+    <div>
+      <h1>SHIELD Documentation</h1>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="autotoc-nav">
+    </div>
+
+    <div data-autotoc-headings="h2" data-autotoc-title="Table of Contents" data-autotoc-nav=".autotoc-nav">
+      <p>These are our docs, for lots of different versions of SHIELD:</p>
+
+      <ul>
+        [% for v in versions %]
+        <li><a href="/docs/[% v %]/ops">SHIELD v[% v %]</a></li>
+        [% end %]
+      </ul>
+    </div>
+  </div>

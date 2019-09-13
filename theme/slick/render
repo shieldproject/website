@@ -25,6 +25,18 @@ find sub {
 }, $assets;
 
 if (exist "{root}/docs") {
+	my %versions;
+
+	my $src = path("{root}/docs");
+	opendir my $dh, $src or die "$src: $!\n";
+	while (readdir $dh) {
+		next unless m/^\d/;
+		next unless -d "$src/$_";
+		my ($x, $y, $z) = split /\./;
+		$versions{ $x * 1000000 + $y * 1000 + $z } = "$x.$y.$z";
+	}
+	closedir $dh;
+
 	copy "{root}/docs";
 	find sub {
 		return unless m/\.html$/;
@@ -32,6 +44,10 @@ if (exist "{root}/docs") {
 			using => 'docs.tt',
 			at    => $File::Find::name;
 	}, path("{site}/docs/");
+
+	render { versions => [map { $versions{$_} } sort keys %versions] },
+		using  => "docs-index.tt",
+		at     => "{site}/docs/index.html";
 }
 
 my @blog = reverse
