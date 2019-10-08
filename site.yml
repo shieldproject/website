@@ -4,3 +4,6 @@ site:
   subtitle: Data Protection For A Modern Cloud
   canon:    https://shieldproject.io
   theme:    slick
+
+  analytics:
+    google: UA-50822525-7

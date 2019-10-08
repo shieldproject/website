@@ -35,6 +35,9 @@
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/site.css?[% site.cache.site-css %]">
 <link rel="alternate home" type="application/rss+xml" title="[% site.title %] - RSS feed" href="/feed.xml">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=[% site.analytics.google %]"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','[% site.analytics.google %]');</script>
 </head>
 <body>
   <header class="top">
