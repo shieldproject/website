@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,target-densitydpi=device-dpi">
+<meta name="generator" content="verse">
+<meta name="X-UA-Compatible" content="IE=edge">
+
+
+<title>Documentation - SHIELD</title>
+
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/site.css?d51129b9dca47a3183236d6f49a533636168b196">
+<link rel="alternate home" type="application/rss+xml" title="SHIELD - RSS feed" href="/feed.xml">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-50822525-7"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-50822525-7');</script>
+</head>
+<body>
+  <header class="top">
+    <img src="/logo.png?6eed3f85a6b3b055aec7dfb67c8cd7129acc1ab7">
+    <nav>
+      <li><a href="/">Home</a></li>
+      <li><a href="/download/">Download</a></li>
+      <li><a href="/community/">Community</a></li>
+      <li><a href="/docs/latest/ops/">Docs</a></li>
+      <!--li><a href="/docs/latest/dev/">Developers</a></li-->
+    </nav>
+  </header>
+
+  <div class="header">
+    <div>
+      <h1>SHIELD Documentation</h1>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="autotoc-nav">
+    </div>
+
+    <div data-autotoc-headings="h2" data-autotoc-title="Table of Contents" data-autotoc-nav=".autotoc-nav">
+      <h1>SHIELD Agent Protocol</h1>
+
+<p>The Agents of SHIELD are the workhorse of the data protection
+solution.  They perform backup and restore tasks.</p>
+
+<p>All communication with the Agents is initiated by the Core.
+Agents <strong>never</strong> initiate a connection to the Core themselves.</p>
+
+<p>All communication is handled over an SSH connection.  This
+provides endpoint identity validation (keys must match) and
+confidentiality (so that credentials to target / storage systems
+are not compromised).  The SSH protocol is documented fully in
+<a href="https://tools.ietf.org/rfc/rfc4251.txt">RFC 4251 (Architecture)</a>, <a href="https://tools.ietf.org/rfc/rfc4252.txt">RFC 4252 (AUTH
+Protocol)</a>, <a href="https://tools.ietf.org/rfc/rfc4253.txt">RFC 4253 (Transport Layer)</a>, and
+<a href="https://tools.ietf.org/rfc/rfc4254.txt">RFC 4254 (Connection Protocol)</a>.</p>
+
+<p>Communication between the Core and the Agent is intermittent; the
+Core does <strong>not</strong> maintain a persistent SSH connection to any
+Agent.  Instead, as tasks are run on by the Core Scheduler,
+connections are made to the involved Agents as needed.</p>
+
+<p>SHIELD uses the <a href="https://tools.ietf.org/rfc/rfc4254.txt">Connection Protocol (RFC 4254)</a> to issue
+commands from the SHIELD Core to its participating Agents.  Each
+connection from the Core to an Agent initiates a new SSH Session.
+Once that Session is fully set up, an <code>SSH_MSG_CHANNEL_REQUEST</code> is
+sent, and a new Channel, of type "exec" is established.  The
+<em>command</em> string sent with this channel is a JSON-encoded
+Agent-Request.</p>
+
+<p>(For more information on SSH channels, refer to RFC 4254).</p>
+
+<p>The format of an Agent-Request is as follows:</p>
+
+<pre><code>{
+  "operation"       : "OP-STRING",
+
+  "target_plugin"   : "PLUGIN-NAME",
+  "target_endpoint" : "JSON-encoded STRING",
+
+  "store_plugin"    : "PLUGIN-NAME",
+  "store_endpoint"  : "JSON-encoded STRING",
+
+  "restore_key"     : "OPAQUE-IDENTIFIER",
+}
+</code></pre>
+
+<p>As of SHIELD v0.10.8, the only recognized operations are:</p>
+
+<ul>
+<li>backup</li>
+<li>restore</li>
+<li>purge</li>
+</ul>
+
+<h2>Future Direction</h2>
+
+<p>For the 7.x version of SHIELD, the <a href="https://github.com/starkandwayne/shield/blob/master/ROADMAP.md">ROADMAP</a> lays out several
+ambitious usability goals that require changes to the Agent
+Protocol.  In order to give operators and site administrators the
+smoothest possible roll-out, we need to be highly aware of
+backwards-compatibility at every turn.</p>
+
+<p>The following new functionality needs to be added:</p>
+
+<ul>
+<li><p><strong>Metadata</strong> - Agents must respond to metadata queries from the
+SHIELD core and provide information about themselves, including
+identifiers (name / address), version details, available plugins
+(and <em>their</em> versions), metadata for how to configure each
+plugin, etc.</p></li>
+<li><p><strong>Storage Tests</strong> - Agents must respond to "test" requests by
+running plugin-specific health checks against the given endpoint
+configurations.  This helps operators answer questions like "can
+I retrieve archives from S3?"</p></li>
+<li><p><strong>Plugin Validation</strong> - Agents must respond to "validate"
+requests by running plugin validation for the given plugin,
+against the given configuration.</p></li>
+</ul>
+
+<p>To this end, Agents will need to be able to handle the following
+new request types:</p>
+
+<h3>"status"</h3>
+
+<p>The SHIELD Core requests Agent status by issuing the following
+Agent-Request:</p>
+
+<pre><code>{
+  "operation" : "status"
+}
+</code></pre>
+
+<p>Older SHIELD agents will respond to this with an error.  SHIELD
+Core will have to mark the agent as v0.0.0 (or whatever the most
+recent version before agents learned how to respond properly), and
+treat the health as "degraded"</p>
+
+<p>Newer SHIELD agents will respond with the following JSON:</p>
+
+<pre><code>{
+  "name"    : "&lt;name-set-by-admin&gt;",
+  "version" : "&lt;X.Y.Z&gt;",
+  "health"  : "ok",
+  "plugins" : {
+    "s3" : {
+      "name"    : "S3 Backup + Storage Plugin",
+      "author"  : "Stark \u0026 Wayne",
+      "version" : "0.0.1",
+      "features": {
+          "target" : "no",
+          "store"  : "yes"
+      },
+      "config" : {
+        "store" : [
+          { FIELD-DEFINITION },
+          ...
+        ]
+      }
+    },
+    ...
+  }
+}
+</code></pre>
+
+<p>The <code>name</code> and <code>version</code> field are just strings.  The Web UI will
+interpret <code>version</code> and search for appropriate misconfigurations
+and other pitfalls between Core version and Agent version.</p>
+
+<p>The <code>health</code> field indicates an Agent-defined assertion of the
+overall health of the Agent.  The specifics of what goes into
+making this decision are left to the Agent implementation.  The
+possible values are:</p>
+
+<ul>
+<li>"ok" - Everything is good; no problems detected.</li>
+<li>"degraded" - Non-fatal issues were detected.  For example,
+some plugin scripts may not be executable.</li>
+<li>"failing" - Fatal issues were detected.  No plugins, invalid
+plugins detected, other environmental issues, etc.</li>
+</ul>
+
+<p>(Note that a SHIELD core may upgrade the critical-ness of a health
+alert.  For example, a non-responsive agent may be marked as
+"failing")</p>
+
+<p>The <code>plugins</code> field contains a map of plugin metadata, keyed by
+executable name.  This allows the Core to build up a list of
+capabilities for each agent, and validate configuration before it
+is attempted on-Agent.</p>
+
+<p>The values of the <code>plugins</code> map are the JSON output by executing
+the <code>info</code> command.  Legacy plugin binaries will not include the
+<code>config</code> top-level key; that is a new addition.</p>
+
+<h3>"test"</h3>
+
+<p>The SHIELD Core requests a plugin configuration test by issuing
+the following Agent-Request:</p>
+
+<pre><code>{
+  "operation" : "test"
+  "plugin"    : "&lt;PLUGIN-NAME&gt;"
+  "endpoint"  : {
+     ...
+  }
+}
+</code></pre>
+
+<p>Older SHIELD agents will respond to this with an error.  SHIELD
+Core must interpret this as a non-blocking failure of plugin
+testing.  For purposes of gauging Cloud Storage Health, the
+storage plugin should be considered failed.  Other circumstances
+may call for more or less caution.</p>
+
+<p>Newer SHIELD agents will respond with the following JSON:</p>
+
+<pre><code>{
+  "status"  : "ok",
+  "message" : "Targeting S3 at s3.example.com"
+}
+</code></pre>
+
+<p>or, in the event of failure:</p>
+
+<pre><code>{
+  "status"  : "failed",
+  "message" : "Unable to contact s3.example.com - connection refused"
+}
+</code></pre>
+
+<p>The only two valid values for <code>status</code> are <code>"ok"</code> and <code>"failed"</code>.</p>
+
+<p>The <code>message</code> can be displayed to the end user if the UI deems it
+useful and appropriate.  Plugin authors are discouraged from
+embedding sensitive information in the status message.</p>
+
+<h3>"validate"</h3>
+
+<p>The SHIELD Core requests validation of a given plugin + endpoint
+by issuing the following Agent-Request:</p>
+
+<pre><code>{
+  "operation" : "validate"
+  "plugin"    : "&lt;PLUGIN-NAME&gt;"
+  "endpoint"  : {
+     ...
+  }
+</code></pre>
+
+<p>A <em>validation</em> is run by the plugin against the endpoint
+configuration (passed here as a first-class map, instead of a
+doubly JSON-encoded representation).</p>
+
+<p>Older SHIELD agents will respond to this with an error.  SHIELD
+Core must interpret that as a nonblocking failure.  The
+configuration <em>may</em> be valid, but the Agent is unable to perform
+the validation, so it is unknown.</p>
+
+<p>Newer SHIELD agents will respond with the output of the plugin
+<code>validate</code> execution run, and a channel exit code of 0 for success
+and non-zero for failure.  (This is how existing tasks are
+reported)</p>
+
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="g">
+      <div class="x3">
+        <img src="/swlogo.png?0b567bdcee59ac95e3eaf667ec543ebc1631d6c0">
+
+        <p>SHIELD is maintained by Stark &amp; Wayne,
+        a leading Cloud-Native consulting firm.</p>
+      </div>
+
+      <div class="x3">
+        <nav>
+          <li><a href="/">Home</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="/community/">Community</a></li>
+          <li><a href="/docs/latest/ops/">Docs</a></li>
+          <!--li><a href="/docs/latest/dev/">Developers</a></li-->
+        </nav>
+      </div>
+
+      <div class="x3">
+      </div>
+    </div>
+
+    <div class="copyright">
+      <p>Copyright &copy; 2019 The SHIELD Authors.  All rights reserved.</p>
+    </div>
+  </footer>
+  <script type="text/javascript" src="/site.js?d2112e355882784cf7f38561cf3ccb0bd5da3111"></script>
+</body>
+</html>
