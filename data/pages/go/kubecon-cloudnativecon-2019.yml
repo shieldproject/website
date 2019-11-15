@@ -1,0 +1,74 @@
+---
+# vim:ft=markdown:tw=76
+title:    SHIELD ♥ Kubernetes
+url:      /go/kubecon-cloudnativecon-2019/index.html
+format:   markdown
+template: landing.tt
+
+bands:
+  - type:  hero
+    title: SHIELD 8.6 Is Out!
+  - type:  field
+    body: |
+      <p style="font-size: 20vh; text-align: center">🎉</p>
+
+      ## Just in Time for KubeCon 2019!
+
+      The SHIELD Project is pleased to announce the immediate availability
+      of version 8.6.1 of the cloud-native data protection solution for
+      Cloud Foundry and Kubernetes!
+
+  - type: field
+    style: "margin: 0"
+    body: |
+      <img src="/mkt/cfeu2019.jpg" style="max-width: 100%; width: 100%">
+
+  - type: cta
+    cta:
+      title: Get it at GitHub
+      body: |
+        Whether you want to deploy via BOSH, Docker, or Kubernetes,
+        get your hot-off-the-presses SHIELD release over at GitHub!
+
+      url:   https://github.com/shieldproject
+      text:  Download v8.6.1
+
+  - type: field
+    style: "margin: 0"
+    body: |
+      <img src="/mkt/github.png" style="max-width: 100%; width: 100%; border: 1px solid #000; border-width:1px 0; box-shadow: 0 0 25px #333">
+
+  - type: field
+    body: |
+      ## Battle-Tested
+
+      In this latest version of SHIELD we did some serious stress-testing of
+      the inner bits and bobs, and flushed out a bunch of oddball deadlocks
+      that, while not _likely_ to occur in production, are at least
+      possible.
+
+      From the database layer to the websockets-infused message bus, things
+      are a whole lot more stable in 8.6.1, in the face of poor network
+      conditions, misbehaving clients, and even malicious actors!
+
+  - type: field
+    style: "color: #fff; background-color: #0067ac; margin: 0; padding: 20vh 20vw"
+    body: |
+      ## Now With etcd Support
+
+      SHIELD can now back up your etcd key-value stores.  Perfect
+      for those Kubernetes clusters you've been meaning to backup...
+
+  - type: field
+    body: |
+      ## Production Ready
+
+      Whether you want to protect data in your Cloud Foundry operstions
+      deployments, Kubernetes data services, or your application workloads,
+      SHIELD might be a good fit for you!
+
+  - type: field
+    style: "margin-top: 0;"
+    body: |
+      <img src="/brand/4x/shield-s1s@4x.png" style="max-width: 100%; width: 100%">
+
