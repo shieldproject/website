@@ -21,7 +21,7 @@ bands:
   - type: field
     style: "margin: 0"
     body: |
-      <img src="/mkt/cfeu2019.jpg" style="max-width: 100%; width: 100%">
+      <img src="/mkt/kccnc2019.jpg" style="max-width: 100%; width: 100%">
 
   - type: cta
     cta:
