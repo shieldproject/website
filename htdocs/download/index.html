@@ -40,7 +40,7 @@
     <div>
       <nav>
         <h2>Latest Stable</h2>
-        <li><a href="#latest">SHIELD v8.6.1</a></li>
+        <li><a href="#latest">SHIELD v8.6.2</a></li>
         <h2>Historic Releases</h2>
         
         <li><a href="#v8.5.0">8.5.0</a></li>
@@ -58,37 +58,12 @@
       </nav>
     </div>
 
-    <div id="v8.6.1">
-      <h1 id="latest">SHIELD v8.6.1</h1>
+    <div id="v8.6.2">
+      <h1 id="latest">SHIELD v8.6.2</h1>
       
-        <p>This release chiefly introduces logic to existing and new database
-schema migrations to fix fallout from the 8.6.0 release, in which
-we mistakenly modified a historic migration to do something.</p>
-
-<p>All database upgrade paths, including pre-8.6.0 → present,
-(failing) 8.6.0 deployment → present, and brand new deployments,
-should all work now.</p>
-
-<h2>Improvements</h2>
-
-<ul>
-<li>The <code>fs</code> plugin is now quieter by default, and will only turn on
-per-file debug logging if asked to do so via its own
-configuration.  This should greatly speed up backup operations
-on busy SHIELDs, since it reduces the database lock contention.</li>
-</ul>
-
-<h2>Bug Fixes</h2>
-
-<ul>
-<li><p>The front-end configuration wizard now properly looks up
-plugin metadata for an agent.  Previously, there was a
-Javascript variable shadowing bug that caused the front-end to
-return any arbitrary plugin metadata as the "correct" one.</p></li>
-<li><p>Task cancelation had a n inverted boolean assertion on global
-tenant-iness that has been fixed.</p></li>
-</ul>
-        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.6.1" target="_blank">Download v8.6.1</a>
+        <p>This release fixes issues with failed 8.5.0 → 8.6.0 migrations
+that left the interim <code>jobs_new</code> table around.</p>
+        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.6.2" target="_blank">Download v8.6.2</a>
       
 
       
