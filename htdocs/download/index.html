@@ -40,7 +40,7 @@
     <div>
       <nav>
         <h2>Latest Stable</h2>
-        <li><a href="#latest">SHIELD v8.6.2</a></li>
+        <li><a href="#latest">SHIELD v8.6.3</a></li>
         <h2>Historic Releases</h2>
         
         <li><a href="#v8.5.0">8.5.0</a></li>
@@ -58,12 +58,20 @@
       </nav>
     </div>
 
-    <div id="v8.6.2">
-      <h1 id="latest">SHIELD v8.6.2</h1>
+    <div id="v8.6.3">
+      <h1 id="latest">SHIELD v8.6.3</h1>
       
-        <p>This release fixes issues with failed 8.5.0 → 8.6.0 migrations
-that left the interim <code>jobs_new</code> table around.</p>
-        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.6.2" target="_blank">Download v8.6.2</a>
+        <h2>Bug Fixes</h2>
+
+<ul>
+<li>The Web UI, when sorting, is now case-insensitive.</li>
+<li>The data-system-specific storage footprint in the Web UI now no longer
+counts purged archives against the storage footprint.</li>
+<li>The core no longer leaks a SQL prepared statement when making requests
+to the SQLite3 backend, fixing an unbounded memory leak.</li>
+<li>The migration to database schema v12 now reports errors more granularly.</li>
+</ul>
+        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.6.3" target="_blank">Download v8.6.3</a>
       
 
       

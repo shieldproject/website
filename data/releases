@@ -129,7 +129,12 @@
       "notes": "This release fixes issues with failed 8.5.0 → 8.6.0 migrations\nthat left the interim `jobs_new` table around.\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.6.2",
       "version": "8.6.2"
+    },
+    {
+      "notes": "# Bug Fixes\n\n* The Web UI, when sorting, is now case-insensitive.\n* The data-system-specific storage footprint in the Web UI now no longer\n  counts purged archives against the storage footprint.\n* The core no longer leaks a SQL prepared statement when making requests\n  to the SQLite3 backend, fixing an unbounded memory leak.\n* The migration to database schema v12 now reports errors more granularly.\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.6.3",
+      "version": "8.6.3"
     }
   ],
-  "latest": "8.6.2"
+  "latest": "8.6.3"
 }
