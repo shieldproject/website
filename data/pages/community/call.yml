@@ -6,9 +6,11 @@ format:   markdown
 template: call.tt
 
 next:
+previous:
+  - id:   20200123
+    date: January 23rd, 2020
   - id:   20190926
     date: September 26th, 2019
-previous:
   - id:   20190822
     date: August 22nd, 2019
   - id:   20180913
@@ -38,30 +40,16 @@ You can also call in (the Meeting ID is **716 555 1212**):
 
 Calls are not recorded.
 
-# Agenda for September 26th, 2019
-
-1. Introductions
-
-2. Announcements
-   - SHIELD v8.5.0
-   - More Website Content!
-
-3. Development Progress Update
-   - [Trello Board][trello] Review
-   - Dev Team Status Report
-
-4. Open Forum
-
 # Previous Calls
 
 We don't record the roadmap calls, but we do take copious amounts of notes
 and attempt to summarize them below.  Wouldn't your rather skim a report
 _on_ a meeting, rather than watch a static recording _of_ the meeting??
 
-<h2 id="20190822">January 23nd, 2020</h2>
+<h2 id="20200123">January 23nd, 2020</h2>
 
 These are the notes from our fifth community call, held at 11:00am EDT on
-Thursday, August 23nd, 2019.
+Thursday, January 23nd, 2020.
 
 **Happy New Year!**
 
