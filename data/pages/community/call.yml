@@ -54,9 +54,44 @@ Calls are not recorded.
 
 # Previous Calls
 
-We don't record the roadmap calls, but we do tae copious amounts of notes
+We don't record the roadmap calls, but we do take copious amounts of notes
 and attempt to summarize them below.  Wouldn't your rather skim a report
 _on_ a meeting, rather than watch a static recording _of_ the meeting??
+
+<h2 id="20190822">January 23nd, 2020</h2>
+
+These are the notes from our fifth community call, held at 11:00am EDT on
+Thursday, August 23nd, 2019.
+
+**Happy New Year!**
+
+## Spring 2020 Roadmap Goals
+
+Our main goals for SHIELD in 2020:
+  
+1. Scalability:
+    - We currently are hitting a ulimit of about 180 agents.
+
+    - We will be exploring Postgres as a replacement for Sqlite to better
+      handle the database lockout problem with lots of agents.
+
+    - We will be looking to stop writing task logs to the database to further
+      reduce strain on the database.
+
+    - One of our goals is HA SHIELD. (Externalize vault/scheduler).
+
+    - Active ssh fabric for agents.
+
+2. Containers:
+    - Continued improvements with SHIELD on k8s via helm.
+    
+    - Move bosh release to the containers release + SHIELD docker image.
+
+    - Changes to CI/CD to reflect new packaging 
+
+After reviewing our roadmap we had discussions about some of the obstacles that
+we need to overcome to accomplish our goals for 2020. We talked at length about how
+we should best handle our transition from Sqlite to Postgres.
 
 <h2 id="20190822">August 22nd, 2019</h2>
 
