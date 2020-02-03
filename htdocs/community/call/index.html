@@ -40,8 +40,12 @@
     <div>
       <nav>
         <h2>Coming Up</h2>
-        <li><a href="#next">September 26th, 2019</a></li>
+        <li><a href="#next"></a></li>
         <h2>Previous Calls</h2>
+        
+        <li><a href="#20200123">January 23rd, 2020</a></li>
+        
+        <li><a href="#20190926">September 26th, 2019</a></li>
         
         <li><a href="#20190822">August 22nd, 2019</a></li>
         
@@ -76,30 +80,47 @@ development progress, and future direction.</p>
 
 <p>Calls are not recorded.</p>
 
-<h1>Agenda for September 26th, 2019</h1>
-
-<ol>
-<li><p>Introductions</p></li>
-<li><p>Announcements</p>
-
-<ul>
-<li>SHIELD v8.5.0</li>
-<li>More Website Content!</li>
-</ul></li>
-<li><p>Development Progress Update</p>
-
-<ul>
-<li><a href="https://trello.com/b/qLZCvexK/shield">Trello Board</a> Review</li>
-<li>Dev Team Status Report</li>
-</ul></li>
-<li><p>Open Forum</p></li>
-</ol>
-
 <h1>Previous Calls</h1>
 
-<p>We don't record the roadmap calls, but we do tae copious amounts of notes
+<p>We don't record the roadmap calls, but we do take copious amounts of notes
 and attempt to summarize them below.  Wouldn't your rather skim a report
 <em>on</em> a meeting, rather than watch a static recording <em>of</em> the meeting??</p>
+
+<h2 id="20200123">January 23nd, 2020</h2>
+
+<p>These are the notes from our fifth community call, held at 11:00am EDT on
+Thursday, January 23nd, 2020.</p>
+
+<p><strong>Happy New Year!</strong></p>
+
+<h2>Spring 2020 Roadmap Goals</h2>
+
+<p>Our main goals for SHIELD in 2020:</p>
+
+<ol>
+<li><p>Scalability:</p>
+
+<ul>
+<li><p>We currently are hitting a ulimit of about 180 agents.</p></li>
+<li><p>We will be exploring Postgres as a replacement for Sqlite to better
+handle the database lockout problem with lots of agents.</p></li>
+<li><p>We will be looking to stop writing task logs to the database to further
+reduce strain on the database.</p></li>
+<li><p>One of our goals is HA SHIELD. (Externalize vault/scheduler).</p></li>
+<li><p>Active ssh fabric for agents.</p></li>
+</ul></li>
+<li><p>Containers:</p>
+
+<ul>
+<li><p>Continued improvements with SHIELD on k8s via helm.</p></li>
+<li><p>Move bosh release to the containers release + SHIELD docker image.</p></li>
+<li><p>Changes to CI/CD to reflect new packaging </p></li>
+</ul></li>
+</ol>
+
+<p>After reviewing our roadmap we had discussions about some of the obstacles that
+we need to overcome to accomplish our goals for 2020. We talked at length about how
+we should best handle our transition from Sqlite to Postgres.</p>
 
 <h2 id="20190822">August 22nd, 2019</h2>
 
