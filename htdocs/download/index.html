@@ -40,8 +40,10 @@
     <div>
       <nav>
         <h2>Latest Stable</h2>
-        <li><a href="#latest">SHIELD v8.6.3</a></li>
+        <li><a href="#latest">SHIELD v8.7.0</a></li>
         <h2>Historic Releases</h2>
+        
+        <li><a href="#v8.6.3">8.6.3</a></li>
         
         <li><a href="#v8.5.0">8.5.0</a></li>
         
@@ -58,10 +60,21 @@
       </nav>
     </div>
 
-    <div id="v8.6.3">
-      <h1 id="latest">SHIELD v8.6.3</h1>
+    <div id="v8.7.0">
+      <h1 id="latest">SHIELD v8.7.0</h1>
       
-        <h2>Bug Fixes</h2>
+        <p>New Features</p>
+
+<ul>
+<li>SHIELD now features a new <code>metashield</code> plugin for backing up and restoring your shield core(s). This is a standardized way
+for SHIELD to backup/restore itself or another SHIELD instance.</li>
+</ul>
+        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.7.0" target="_blank">Download v8.7.0</a>
+      
+
+      
+      <h1 id="v8.6.3">SHIELD v8.6.3</h1>
+      <h2>Bug Fixes</h2>
 
 <ul>
 <li>The Web UI, when sorting, is now case-insensitive.</li>
@@ -71,9 +84,7 @@ counts purged archives against the storage footprint.</li>
 to the SQLite3 backend, fixing an unbounded memory leak.</li>
 <li>The migration to database schema v12 now reports errors more granularly.</li>
 </ul>
-        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.6.3" target="_blank">Download v8.6.3</a>
-      
-
+      <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.6.3" target="_blank">Download v8.6.3 from Github</a>
       
       <h1 id="v8.5.0">SHIELD v8.5.0</h1>
       <h2>Improvements</h2>
