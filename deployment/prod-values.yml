@@ -1,0 +1,16 @@
+ingress:
+  hosts:
+    - shieldproject.io
+    - www.shieldproject.io
+    - shieldproject.k8s.lke.starkandwayne.com
+  tls:
+    enabled: true
+    certIssuer: "lab-ca-issuer"
+
+app:
+  org: shieldproject
+  repo: website
+
+  setup_script: |
+    #!/bin/sh
+    mv /tmp/website/htdocs/* /var/www/
