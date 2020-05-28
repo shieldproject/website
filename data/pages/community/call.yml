@@ -56,7 +56,7 @@ Thursday, January 23nd, 2020.
 ## Spring 2020 Roadmap Goals
 
 Our main goals for SHIELD in 2020:
-  
+
 1. Scalability:
     - We currently are hitting a ulimit of about 180 agents.
 
@@ -72,7 +72,7 @@ Our main goals for SHIELD in 2020:
 
 2. Containers:
     - Continued improvements with SHIELD on k8s via helm.
-    
+
     - Move bosh release to the containers release + SHIELD docker image.
 
     - Changes to CI/CD to reflect new packaging 
@@ -119,7 +119,7 @@ The SHIELD Team has been putting forth a concerted effort to write more
 approachable "first timer" content to get people interested in deploying
 SHIELD to protect their valuable cloud data assets.
 
-Hopefully, by the time of our next Communty Call (September 26th), we'll
+Hopefully, by the time of our next Community Call (September 26th), we'll
 have something more concrete to show off.
 
 
@@ -185,7 +185,7 @@ No it cannot, but it should.
 
 **Mutual Network Visibility of SHIELD Agents** - _In v6, the only
 communication channel was unidirectional, wherein the SHIELD core
-connected to each SHIELD agent to orchestrate a baackup.  This does not
+connected to each SHIELD agent to orchestrate a backup.  This does not
 seem to be the case in v8._
 
 This isn't really a question, but we'll let that slide.
@@ -262,7 +262,7 @@ We have started using a [Trello Board][trello] for coordinating developer
 activity.  If you want to get involved in hacking on SHIELD, ask in
 the #help channel on [Slack][slack].
 
-Github Issues will still be the place to report bugs and ask for feature
+GitHub Issues will still be the place to report bugs and ask for feature
 requests.  Trello is more for things that require multiple different
 states, prioritization, backlog management, etc.
 
