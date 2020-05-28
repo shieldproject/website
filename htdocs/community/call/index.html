@@ -43,6 +43,8 @@
         <li><a href="#next"></a></li>
         <h2>Previous Calls</h2>
         
+        <li><a href="#20200528">May 28th, 2020</a></li>
+        
         <li><a href="#20200123">January 23rd, 2020</a></li>
         
         <li><a href="#20190926">September 26th, 2019</a></li>
@@ -67,16 +69,9 @@ development progress, and future direction.</p>
 
 <p>The next SHIELD Roadmap Call is
 <br>
-<strong>Thursday, September 26th</strong> at <strong>11:00am EDT</strong>.</p>
+<strong>Thursday, June 25th</strong> at <strong>11:00am EDT</strong>.</p>
 
-<p>We use zoom: <a href="https://zoom.us/j/7165551212">https://zoom.us/j/7165551212</a></p>
-
-<p>You can also call in (the Meeting ID is <strong>716 555 1212</strong>):</p>
-
-<ul>
-<li>US: <strong>+1 646 876 9923</strong> or <strong>+1 669 900 6833</strong></li>
-<li><a href="https://zoom.us/u/cdjcbHG2o">International numbers available</a></li>
-</ul>
+<p>We use zoom: <a href="https://us02web.zoom.us/j/7165551212">https://us02web.zoom.us/j/7165551212</a></p>
 
 <p>Calls are not recorded.</p>
 
@@ -85,6 +80,150 @@ development progress, and future direction.</p>
 <p>We don't record the roadmap calls, but we do take copious amounts of notes
 and attempt to summarize them below.  Wouldn't your rather skim a report
 <em>on</em> a meeting, rather than watch a static recording <em>of</em> the meeting??</p>
+
+<h2 id="20200528">May 28th, 2020</h2>
+
+<p>These are the notes from our sixth community call, held at 11:00am EDT on
+Thursday, May 28th, 2020.</p>
+
+<h2>The Future of SHIELD</h2>
+
+<p>Most of this Roadmap call was devoted to the discussion of structural cracks
+and flaws in the core architecture of SHIELD, and of systemic failures in
+past choices.  The world moves on, technology improves, and sometimes the
+ideas that seemed good at the time become worse, until they are no longer
+viable.</p>
+
+<p>To that end, we are planning an ambitious, unfunded open source push to fix
+most or all of these problems.  Namely:</p>
+
+<ol>
+<li>Replace Tenants with Folders</li>
+<li>Vue.js for the Web UI (dropping lens.js / AEGIS)</li>
+<li>A Better CLI Experience</li>
+<li>Externalize the Vault</li>
+<li>Externalize the Database</li>
+<li>Externalize the Scheduler</li>
+<li>SSH Active Fabric</li>
+</ol>
+
+<h3>Tenants will be replaced with Folders</h3>
+
+<p>Few people we have spoken to actually use tenancy, and the leakiness of the
+ACLs involved contributed to that.  In the end, those who <em>were</em> using
+tenancy were doing so for organizing systems into groups / categories /
+taxonomies (i.e. all of the production databases, this CF, that K8s)</p>
+
+<h3>Vue.js for the Web UI (dropping lens.js / AEGIS)</h3>
+
+<p>We've had nothing but issues (bugs, inconsistencies, inaccuracies) with the
+SHIELD Web UI.  While we still think its a useful thing to have, we no
+longer believe that it is (a) required or (b) benefits from a non-standard
+front-end framework.</p>
+
+<p>So, we'll be rewriting it in Vue.js, with more node-iness than before, and
+accompanied by library-level unit tests that are part of CI/CD runs.  This
+means that AEGIS goes away (to be replaced by native Vue.js data
+management), and the websocket gets an overhaul to accommodate (more on that
+later)</p>
+
+<h3>A Better CLI Experience</h3>
+
+<p>The CLI experience for SHIELD needs smoothed out.  Our new goal is to be
+able to dispense entirely with the UI, and use the CLI for everything, if we
+so choose.</p>
+
+<h3>Externalize the Vault</h3>
+
+<p>SHIELD will no longer manage its own Vault.  When we first started this, it
+was easier and better for us to ship our own Vault instance, dedicated to
+SHIELD.  But in the modern era of Helm charts and other automation, it's
+much easier to properly set up a Vault.  Plus, most people are already
+running one anyway.</p>
+
+<p>Removing the responsibility of managing the Vault from SHIELD will simplify
+our codebase, and make deployments more flexible.  <em>Distributions</em> of SHIELD
+may opt to continue running their own dedicated Vault process, at their
+discretion.</p>
+
+<h3>Externalize the Database</h3>
+
+<p>SQLite doesn't scale, not the way we're using it.  This change moves forward
+on two fronts: getting task logs out of the database proper, and switching
+to a database-agnostic ORM layer like <code>gorm</code> (which has come a long way since
+we first evaluated it).  We don't have hefty performance requirements from
+our database layer, and programming effort (and complexity!) should be
+concentrated elsewhere.</p>
+
+<p>Our initial target is PostgreSQL (which is about as easy to spin as SQLite
+these days anyway), but if we end up effortlessly supporting other RDBMSes
+via an ORM, all the better.</p>
+
+<h3>Externalize the Scheduler</h3>
+
+<p>Currently, we cannot scale the SHIELD Core, either for availability or
+performance reasons, because the scheduler is entirely in memory.  To
+support horizontal scale-out, we will be externalizing the state of the
+scheduler into something like Redis (or the database) to allow multiple
+cores to operate concurrently.</p>
+
+<h3>SSH Active Fabric</h3>
+
+<p>The time has come to solve the NAT problem, and allow SHIELD agents from
+behind a network address translation scheme to work with a core on the other
+side.  To do this, we will be flipping the direction of communication, and
+using the <a href="https://github.com/jhunt/go-sfab">sfab</a> library to do it.</p>
+
+<p>Under this new scheme, SHIELD agents will SSH <em>into</em> the SHIELD core,
+authenticate themselves and await instructions.  The SHIELD core will then
+hand out tasks (dispatched via the sfab framework) to agents, or skip task
+scheduling for unknown / unreachable agents.</p>
+
+<p>This is a very large shift, architecturally, and it will guarantee that we
+are not able to handle backwards compatibility with SHIELD v8.</p>
+
+<h2>The v9 Project</h2>
+
+<p>Given all the change we want to make, we are going to break with the v8.x
+series and implement SHIELD v9 as a new system, with similar concepts and
+the same supported data systems.  This new SHIELD will not be a drop-in
+replacement for v8.x and prior releases.  As such we expect to be able to
+move forward more quickly with the large changes we are about to implement.</p>
+
+<p>Work will proceed under a v9 branch.  This work will be 100% open source,
+volunteer-driven.  We will coordinate effort via the GitHub issue tracker.</p>
+
+<h2>K8s, SIGs, and Go Libraries</h2>
+
+<p>We've been watching the core teams in the Kubernetes project for a while
+now, and their federated approach to both code and governance seems to be
+working out quite well.  While we don't have the same requirements of a
+governance structure (BDFL seems to be working), we will begin to emulate
+the federate code structure by pulling parts of SHIELD Core implementation
+into standalone(-ish) code bases that act as libraries.</p>
+
+<p>When this is all said and done, the core binary as we know it today will
+mostly be glue code, implementing the API and data persistence layer, but
+otherwise relying on the libraries of SHIELD and SHIELD-like functionality
+to do all the heavy lifting.</p>
+
+<p>This (we believe) will grant us the ability to test some obscure edge cases
+that are particularly tricky to reproduce with a full complement of SHIELD
+core, storage system, agent, and target system.  Our goal is to get 80% or
+better C0 code coverage during an extraction port, but more importantly to
+have a harness in place for writing regression tests for library-bound bugs,
+going forward.</p>
+
+<p>Work has been proceeding, in skunkworks projects, on this front for a month
+or so now, and the results are promising.</p>
+
+<h2>Kubernetes Controller + CRDs</h2>
+
+<p>Extracting core functionality into one or more (tested) libraries also
+enables us to experiment with other substrates for the ideas behind SHIELD.
+Namely, we'll be able to quickly experiment with Kubernetes, by turning the
+database objects into Kubernetes Custom Resources, and swapping out our API
+for that of the Kubernetes API.</p>
 
 <h2 id="20200123">January 23nd, 2020</h2>
 

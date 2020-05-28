@@ -7,6 +7,8 @@ template: call.tt
 
 next:
 previous:
+  - id:   20200528
+    date: May 28th, 2020
   - id:   20200123
     date: January 23rd, 2020
   - id:   20190926
@@ -29,14 +31,9 @@ development progress, and future direction.
 
 The next SHIELD Roadmap Call is
 <br>
-**Thursday, September 26th** at **11:00am EDT**.
+**Thursday, June 25th** at **11:00am EDT**.
 
-We use zoom: <https://zoom.us/j/7165551212>
-
-You can also call in (the Meeting ID is **716 555 1212**):
-
-- US: **+1 646 876 9923** or **+1 669 900 6833**
-- [International numbers available](https://zoom.us/u/cdjcbHG2o)
+We use zoom: <https://us02web.zoom.us/j/7165551212>
 
 Calls are not recorded.
 
@@ -45,6 +42,149 @@ Calls are not recorded.
 We don't record the roadmap calls, but we do take copious amounts of notes
 and attempt to summarize them below.  Wouldn't your rather skim a report
 _on_ a meeting, rather than watch a static recording _of_ the meeting??
+
+<h2 id="20200528">May 28th, 2020</h2>
+
+These are the notes from our sixth community call, held at 11:00am EDT on
+Thursday, May 28th, 2020.
+
+## The Future of SHIELD
+
+Most of this Roadmap call was devoted to the discussion of structural cracks
+and flaws in the core architecture of SHIELD, and of systemic failures in
+past choices.  The world moves on, technology improves, and sometimes the
+ideas that seemed good at the time become worse, until they are no longer
+viable.
+
+To that end, we are planning an ambitious, unfunded open source push to fix
+most or all of these problems.  Namely:
+
+  1. Replace Tenants with Folders
+  2. Vue.js for the Web UI (dropping lens.js / AEGIS)
+  2. A Better CLI Experience
+  3. Externalize the Vault
+  4. Externalize the Database
+  5. Externalize the Scheduler
+  6. SSH Active Fabric
+
+### Tenants will be replaced with Folders
+
+Few people we have spoken to actually use tenancy, and the leakiness of the
+ACLs involved contributed to that.  In the end, those who _were_ using
+tenancy were doing so for organizing systems into groups / categories /
+taxonomies (i.e. all of the production databases, this CF, that K8s)
+
+### Vue.js for the Web UI (dropping lens.js / AEGIS)
+
+We've had nothing but issues (bugs, inconsistencies, inaccuracies) with the
+SHIELD Web UI.  While we still think its a useful thing to have, we no
+longer believe that it is (a) required or (b) benefits from a non-standard
+front-end framework.
+
+So, we'll be rewriting it in Vue.js, with more node-iness than before, and
+accompanied by library-level unit tests that are part of CI/CD runs.  This
+means that AEGIS goes away (to be replaced by native Vue.js data
+management), and the websocket gets an overhaul to accommodate (more on that
+later)
+
+### A Better CLI Experience
+
+The CLI experience for SHIELD needs smoothed out.  Our new goal is to be
+able to dispense entirely with the UI, and use the CLI for everything, if we
+so choose.
+
+### Externalize the Vault
+
+SHIELD will no longer manage its own Vault.  When we first started this, it
+was easier and better for us to ship our own Vault instance, dedicated to
+SHIELD.  But in the modern era of Helm charts and other automation, it's
+much easier to properly set up a Vault.  Plus, most people are already
+running one anyway.
+
+Removing the responsibility of managing the Vault from SHIELD will simplify
+our codebase, and make deployments more flexible.  _Distributions_ of SHIELD
+may opt to continue running their own dedicated Vault process, at their
+discretion.
+
+### Externalize the Database
+
+SQLite doesn't scale, not the way we're using it.  This change moves forward
+on two fronts: getting task logs out of the database proper, and switching
+to a database-agnostic ORM layer like `gorm` (which has come a long way since
+we first evaluated it).  We don't have hefty performance requirements from
+our database layer, and programming effort (and complexity!) should be
+concentrated elsewhere.
+
+Our initial target is PostgreSQL (which is about as easy to spin as SQLite
+these days anyway), but if we end up effortlessly supporting other RDBMSes
+via an ORM, all the better.
+
+### Externalize the Scheduler
+
+Currently, we cannot scale the SHIELD Core, either for availability or
+performance reasons, because the scheduler is entirely in memory.  To
+support horizontal scale-out, we will be externalizing the state of the
+scheduler into something like Redis (or the database) to allow multiple
+cores to operate concurrently.
+
+### SSH Active Fabric
+
+The time has come to solve the NAT problem, and allow SHIELD agents from
+behind a network address translation scheme to work with a core on the other
+side.  To do this, we will be flipping the direction of communication, and
+using the [sfab](https://github.com/jhunt/go-sfab) library to do it.
+
+Under this new scheme, SHIELD agents will SSH _into_ the SHIELD core,
+authenticate themselves and await instructions.  The SHIELD core will then
+hand out tasks (dispatched via the sfab framework) to agents, or skip task
+scheduling for unknown / unreachable agents.
+
+This is a very large shift, architecturally, and it will guarantee that we
+are not able to handle backwards compatibility with SHIELD v8.
+
+## The v9 Project
+
+Given all the change we want to make, we are going to break with the v8.x
+series and implement SHIELD v9 as a new system, with similar concepts and
+the same supported data systems.  This new SHIELD will not be a drop-in
+replacement for v8.x and prior releases.  As such we expect to be able to
+move forward more quickly with the large changes we are about to implement.
+
+Work will proceed under a v9 branch.  This work will be 100% open source,
+volunteer-driven.  We will coordinate effort via the GitHub issue tracker.
+
+## K8s, SIGs, and Go Libraries
+
+We've been watching the core teams in the Kubernetes project for a while
+now, and their federated approach to both code and governance seems to be
+working out quite well.  While we don't have the same requirements of a
+governance structure (BDFL seems to be working), we will begin to emulate
+the federate code structure by pulling parts of SHIELD Core implementation
+into standalone(-ish) code bases that act as libraries.
+
+When this is all said and done, the core binary as we know it today will
+mostly be glue code, implementing the API and data persistence layer, but
+otherwise relying on the libraries of SHIELD and SHIELD-like functionality
+to do all the heavy lifting.
+
+This (we believe) will grant us the ability to test some obscure edge cases
+that are particularly tricky to reproduce with a full complement of SHIELD
+core, storage system, agent, and target system.  Our goal is to get 80% or
+better C0 code coverage during an extraction port, but more importantly to
+have a harness in place for writing regression tests for library-bound bugs,
+going forward.
+
+Work has been proceeding, in skunkworks projects, on this front for a month
+or so now, and the results are promising.
+
+## Kubernetes Controller + CRDs
+
+Extracting core functionality into one or more (tested) libraries also
+enables us to experiment with other substrates for the ideas behind SHIELD.
+Namely, we'll be able to quickly experiment with Kubernetes, by turning the
+database objects into Kubernetes Custom Resources, and swapping out our API
+for that of the Kubernetes API.
+
 
 <h2 id="20200123">January 23nd, 2020</h2>
 
