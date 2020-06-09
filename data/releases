@@ -139,7 +139,12 @@
       "notes": "New Features\n\n- SHIELD now features a new `metashield` plugin for backing up and restoring your shield core(s). This is a standardized way\nfor SHIELD to backup/restore itself or another SHIELD instance.\n",
       "url": "https://github.com/starkandwayne/shield/releases/tag/v8.7.0",
       "version": "8.7.0"
+    },
+    {
+      "notes": "# Improvements\n\n- Docker images are now compiling via the go 1.13 toolchain.\n\n- Agent Registration can now occur through chained load balancers,\n  with standards-compliant comma-separated X-Forwarded-For\n  headers.  Why you would want to do this is beyond me, but ¯\\_(ツ)\\_/¯\n\n- The `metashield` plugin now trusts system X.509 Root CAs if no\n  specific CA is supplied.\n\n- Bootstrap restoration is simpler now, and the UI for init /\n  restore is more streamlined.  See #680.\n",
+      "url": "https://github.com/starkandwayne/shield/releases/tag/v8.7.3",
+      "version": "8.7.3"
     }
   ],
-  "latest": "8.7.0"
+  "latest": "8.7.3"
 }

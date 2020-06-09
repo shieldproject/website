@@ -40,7 +40,7 @@
     <div>
       <nav>
         <h2>Latest Stable</h2>
-        <li><a href="#latest">SHIELD v8.7.0</a></li>
+        <li><a href="#latest">SHIELD v8.7.3</a></li>
         <h2>Historic Releases</h2>
         
         <li><a href="#v8.6.3">8.6.3</a></li>
@@ -60,16 +60,22 @@
       </nav>
     </div>
 
-    <div id="v8.7.0">
-      <h1 id="latest">SHIELD v8.7.0</h1>
+    <div id="v8.7.3">
+      <h1 id="latest">SHIELD v8.7.3</h1>
       
-        <p>New Features</p>
+        <h2>Improvements</h2>
 
 <ul>
-<li>SHIELD now features a new <code>metashield</code> plugin for backing up and restoring your shield core(s). This is a standardized way
-for SHIELD to backup/restore itself or another SHIELD instance.</li>
+<li><p>Docker images are now compiling via the go 1.13 toolchain.</p></li>
+<li><p>Agent Registration can now occur through chained load balancers,
+with standards-compliant comma-separated X-Forwarded-For
+headers.  Why you would want to do this is beyond me, but ¯_(ツ)_/¯</p></li>
+<li><p>The <code>metashield</code> plugin now trusts system X.509 Root CAs if no
+specific CA is supplied.</p></li>
+<li><p>Bootstrap restoration is simpler now, and the UI for init /
+restore is more streamlined.  See #680.</p></li>
 </ul>
-        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.7.0" target="_blank">Download v8.7.0</a>
+        <a class="button" href="https://github.com/starkandwayne/shield/releases/tag/v8.7.3" target="_blank">Download v8.7.3</a>
       
 
       
