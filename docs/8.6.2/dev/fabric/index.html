@@ -15,7 +15,7 @@ and implemented, based on site and operator need.  We call these
 <em>fabrics</em>.</p>
 
 <p>Each <em>fabric</em> implements the <code>fabric.Fabric</code> interface, as defined
-in <code>https://github.com/starkandwayne/shield/tree/v8.6.2/core/fabric/fabric.go</code>:</p>
+in <code>https://github.com/shieldproject/shield/tree/v8.6.2/core/fabric/fabric.go</code>:</p>
 
 <pre><code>type Fabric interface {
     /* back up a target to a store, encrypt it,
@@ -84,7 +84,7 @@ scheduler and its priority queue.</p>
     delay: 15 # seconds
 </code></pre>
 
-<p>The Dummy Fabric is defined in <code>https://github.com/starkandwayne/shield/tree/v8.6.2/core/fabric/dummy.go</code>.</p>
+<p>The Dummy Fabric is defined in <code>https://github.com/shieldproject/shield/tree/v8.6.2/core/fabric/dummy.go</code>.</p>
 
 <h2>The Error Fabric</h2>
 
@@ -92,7 +92,7 @@ scheduler and its priority queue.</p>
 detail.  Operators should never configure this fabric in their
 SHIELD cores.  Every method results in a failed task.</p>
 
-<p>The Error Fabric is defined in <code>https://github.com/starkandwayne/shield/tree/v8.6.2/core/fabric/error.go</code>.</p>
+<p>The Error Fabric is defined in <code>https://github.com/shieldproject/shield/tree/v8.6.2/core/fabric/error.go</code>.</p>
 
 <h2>The Legacy (Active SSH) Fabric</h2>
 
@@ -110,5 +110,5 @@ listening agents:</p>
       ... an RSA private key, in PEM format ...
 </code></pre>
 
-<p>The Legacy Fabric is defined in <code>https://github.com/starkandwayne/shield/tree/v8.6.2/core/fabric/legacy.go</code>.</p>
+<p>The Legacy Fabric is defined in <code>https://github.com/shieldproject/shield/tree/v8.6.2/core/fabric/legacy.go</code>.</p>
 

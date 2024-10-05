@@ -1,13 +1,13 @@
 ---
 meta:
-  name:   shieldproject.io
+  name:   shieldproject.cloud
   target: shield@pipes
-  url:    https://pipes.starkandwayne.com
+  url:    https://pipes.scalecf.net
 
   pws:
     username: ((pws.username))
     password: ((pws.password))
-    org:      starkandwayne
+    org:      shieldproject
     space:    shieldproject
     api:      https://api.run.pivotal.io
 

@@ -12,7 +12,7 @@ toplinks: yes
 --- |-
 EOF
 
-cat ${1:-~/code/go/shield/src/github.com/starkandwayne/shield/docs/API.md} |\
+cat ${1:-~/code/go/shield/src/github.com/shieldproject/shield/docs/API.md} |\
   sed -e 's/^# .*/# SHIELD API Reference/'
 
 ) > data/pages/dev/api.yml

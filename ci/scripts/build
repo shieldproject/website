@@ -14,7 +14,7 @@ header() {
 
 VERSION=$(cat releases/version)
 CURRENT_VERSION=$(spruce json $REPO_ROOT/data/releases | jq -r .latest)
-RELEASE="https://github.com/starkandwayne/shield/releases/tag/$(cat releases/tag)"
+RELEASE="https://github.com/shieldproject/shield/releases/tag/$(cat releases/tag)"
 BASE_DIR=$(pwd)
 
 if [[ "$CURRENT_VERSION" != "$VERSION" ]]; then
@@ -53,7 +53,7 @@ if [[ -n "$(cd ${REPO_ROOT}; git status --porcelain)" ]]; then
 	pushd ${REPO_ROOT}
 
 	if [[ -z $(git config --global user.email) ]]; then
-		git config --global user.email "ci@starkandwayne.com"
+		git config --global user.email "ci@shieldproject.com"
 	fi
 	if [[ -z $(git config --global user.name) ]]; then
 		git config --global user.name "CI Bot"

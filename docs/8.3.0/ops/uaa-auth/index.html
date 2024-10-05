@@ -155,7 +155,7 @@ granted (by UAA).  Then, that user is granted access to the named
       uaa_endpoint:   https://uaa.shield.10.244.156.2.netip.cc:8443
 
       mapping:
-        - tenant: Stark &amp; Wayne
+        - tenant: shieldproject
           rights:
             - scim: uaa.admin
               role: admin
@@ -165,7 +165,7 @@ granted (by UAA).  Then, that user is granted access to the named
 </code></pre>
 
 <p>In this configuration, SHIELD will assign someone with the
-<code>uaa.admin</code> SCIM right to the <em>Stark &amp; Wayne</em> SHIELD tenant, as an
+<code>uaa.admin</code> SCIM right to the <em>shieldproject</em> SHIELD tenant, as an
 <em>admin</em>.  Anyone with the <code>uaa.write</code> SCIM right who don't have
 <code>uaa.admin</code> will be assigned the <em>engineer</em> role instead.
 Everyone else who can authenticate to this UAA will be assigned

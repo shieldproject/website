@@ -1475,7 +1475,7 @@ sections:
 
                 "plugins": {
                   "fs": {
-                    "author"   : "Stark & Wayne",
+                    "author"   : "shieldproject",
                     "features" : {
                       "store"  : "yes",
                       "target" : "no"
@@ -1701,7 +1701,7 @@ sections:
 
                 "plugins": {
                   "fs": {
-                    "author"   : "Stark & Wayne",
+                    "author"   : "shieldproject",
                     "features" : {
                       "store"  : "yes",
                       "target" : "no"

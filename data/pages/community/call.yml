@@ -337,8 +337,8 @@ SHIELD core's database, so that the core can SSH back into the agent
 and retrieve metadata from them.
 
 This poses a severe problem with NAT'ed installations which lack the
-required _mutual network visibility_ to make this work.  What we (Stark
-& Wayne) have been doing is just colocating the SHIELD core in the same
+required _mutual network visibility_ to make this work.  What we (ShieldProject)
+have been doing is just colocating the SHIELD core in the same
 NAT "scope" as the systems being orchestrated.
 
 We've designed a few alternatives to this.  One is a SHIELD-aware NAT
